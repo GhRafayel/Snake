@@ -55,7 +55,6 @@
 
 .no-scrollbar {
   -ms-overflow-style: none;
-  scrollbar-width: none;
 }
 
 @theme inline {
@@ -122,9 +121,7 @@ body {
       font-family: inherit;
   }
   .btn:hover {
-    @apply
-    bg-blue-600
-    underline-offset-1
+    @apply bg-blue-600 underline-offset-1
   }
 
 }
