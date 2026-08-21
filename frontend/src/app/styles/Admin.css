@@ -1,0 +1,226 @@
+/* layout */
+.adm-page {
+  @apply min-h-screen w-full transition-colors duration-300 flex justify-center px-4 py-10;
+}
+
+.adm-light {
+  --color-background-primary: rgba(15, 23, 42, 0.03);
+  --color-background-secondary: #ffffff;
+  --color-text-primary: #111827;
+  --color-text-secondary: #52525b;
+  --color-text-tertiary: rgba(17, 24, 39, 0.45);
+  --color-border-secondary: rgba(15, 23, 42, 0.1);
+  --color-border-strong: rgba(15, 23, 42, 0.18);
+  --color-border-tertiary: rgba(15, 23, 42, 0.06);
+  --color-secondary: rgba(15, 23, 42, 0.05);
+  --color-accent-soft: rgba(34, 197, 94, 0.14);
+}
+
+.adm-shell {
+  @apply mx-auto flex w-full max-w-3xl flex-col gap-6;
+}
+
+/* card */
+.adm-card {
+  @apply w-full overflow-hidden rounded-2xl border border-(--color-border-secondary) bg-(--color-background-secondary) shadow-2xl shadow-black/20;
+}
+
+.adm-cardHead {
+  @apply flex items-center justify-between gap-4 border-b border-(--color-border-secondary) bg-(--color-background-primary) px-6 py-5;
+}
+
+.adm-titleRow {
+  @apply flex items-center gap-3;
+}
+
+.adm-iconBadge {
+  @apply flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-(--color-accent-soft) text-(--color-accent);
+}
+
+.adm-title {
+  @apply text-lg font-semibold tracking-tight text-(--color-text-primary);
+}
+
+.adm-subtitle {
+  @apply text-xs text-(--color-text-secondary);
+}
+
+.adm-cardBody {
+  @apply flex flex-col gap-5 p-6;
+}
+
+/* search */
+.adm-searchBar {
+  @apply flex w-full gap-2;
+}
+
+.adm-searchWrap {
+  @apply relative flex-1;
+}
+
+.adm-searchIcon {
+  @apply pointer-events-none absolute top-1/2 left-3.5 z-10 -translate-y-1/2 text-(--color-text-tertiary);
+}
+
+.adm-input.adm-searchInput {
+  @apply pl-11;
+}
+
+/* alerts */
+.adm-alert {
+  @apply flex items-center gap-2 rounded-lg border border-(--color-danger)/30 bg-(--color-danger)/10 px-3 py-2.5 text-xs font-medium text-(--color-danger);
+}
+
+/* results */
+.adm-resultsList {
+  @apply flex flex-col gap-1.5;
+}
+
+.adm-resultRow {
+  @apply flex w-full items-center gap-3 rounded-xl border border-transparent bg-(--color-background-primary) px-3 py-3 transition-all cursor-pointer;
+}
+
+.adm-resultRow:hover {
+  @apply border-(--color-border-secondary) bg-(--color-accent-soft) -translate-y-0.5;
+}
+
+.adm-avatar {
+  @apply flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-(--color-accent) text-xs font-bold tracking-wide text-white uppercase;
+}
+
+.adm-userInfo {
+  @apply flex min-w-0 flex-1 flex-col gap-0.5;
+}
+
+.adm-username {
+  @apply truncate text-sm font-semibold text-(--color-text-primary);
+}
+
+.adm-userEmail {
+  @apply truncate text-xs text-(--color-text-secondary);
+}
+
+.adm-resultMeta {
+  @apply flex shrink-0 items-center gap-2;
+}
+
+.adm-chevron {
+  @apply text-(--color-text-tertiary) transition-transform group-hover:translate-x-0.5 group-hover:text-(--color-accent);
+}
+
+.adm-empty {
+  @apply flex flex-col items-center gap-2 py-10 text-center text-sm text-(--color-text-secondary);
+}
+
+/* badges */
+.adm-badge {
+  @apply inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-bold tracking-wide uppercase;
+}
+
+.adm-badgeAdmin {
+  @apply bg-(--color-accent-soft) text-(--color-accent);
+}
+
+.adm-badgePlayer {
+  @apply bg-(--color-border-secondary) text-(--color-text-secondary);
+}
+
+/* detail / edit panel */
+.adm-detailHead {
+  @apply flex items-center justify-between gap-4 border-b border-(--color-border-secondary) pb-4;
+}
+
+.adm-detailUser {
+  @apply flex items-center gap-3;
+}
+
+.adm-detailName {
+  @apply text-base font-semibold text-(--color-text-primary);
+}
+
+.adm-detailSub {
+  @apply text-xs text-(--color-text-secondary);
+}
+
+.adm-closeBtn {
+  @apply flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center rounded-full text-(--color-text-secondary) transition-colors hover:bg-(--color-border-secondary) hover:text-(--color-text-primary);
+}
+
+/* form */
+.adm-formGrid {
+  @apply grid grid-cols-1 gap-4 pt-5 sm:grid-cols-2;
+}
+
+.adm-field {
+  @apply flex flex-col gap-1.5;
+}
+
+.adm-fieldLabel {
+  @apply flex items-center gap-1.5 text-[11px] font-semibold tracking-wide text-(--color-text-secondary) uppercase;
+}
+
+.adm-input {
+  @apply w-full rounded-lg border border-(--color-border-secondary) bg-(--color-background-primary) px-3 py-2 text-sm text-(--color-text-primary) outline-none transition-colors;
+}
+
+.adm-input::placeholder {
+  @apply text-(--color-text-tertiary);
+}
+
+.adm-input:focus {
+  @apply border-(--color-accent) shadow-[0_0_0_3px_var(--color-accent-soft)];
+}
+
+.adm-input:disabled {
+  @apply cursor-not-allowed opacity-50;
+}
+
+.adm-hint {
+  @apply text-[11px] text-(--color-text-tertiary);
+}
+
+/* actions */
+.adm-actions {
+  @apply mt-2 flex flex-wrap items-center gap-2 border-t border-(--color-border-secondary) pt-5;
+}
+
+.adm-btn {
+  @apply inline-flex cursor-pointer items-center gap-1.5 rounded-full px-4 py-2 text-xs font-semibold transition-all disabled:cursor-not-allowed disabled:opacity-50;
+}
+
+.adm-btn:not(:disabled):hover {
+  @apply -translate-y-0.5;
+}
+
+.adm-btnPrimary {
+  @apply bg-(--color-accent) text-white shadow-sm shadow-(--color-accent)/30;
+}
+
+.adm-btnGhost {
+  @apply border border-(--color-border-secondary) bg-(--color-background-primary) text-(--color-text-secondary);
+}
+
+.adm-btnGhost:not(:disabled):hover {
+  @apply border-(--color-border-strong) text-(--color-text-primary);
+}
+
+.adm-btnDanger {
+  @apply border border-(--color-danger) bg-transparent text-(--color-danger);
+}
+
+.adm-btnDanger:not(:disabled):hover {
+  @apply bg-(--color-danger) text-white;
+}
+
+/* danger zone */
+.adm-dangerBox {
+  @apply mt-3 flex w-full flex-col gap-3 rounded-xl border border-(--color-danger)/30 bg-(--color-danger)/5 p-4;
+}
+
+.adm-dangerText {
+  @apply flex items-start gap-2 text-sm text-(--color-text-primary);
+}
+
+.adm-message {
+  @apply flex items-center gap-1.5 text-xs font-medium text-(--color-danger);
+}

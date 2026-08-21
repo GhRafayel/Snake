@@ -1,0 +1,130 @@
+@import url('https://fonts.googleapis.com/css2?family=Bungee&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap');
+@import "./styles/Nav.css";
+@import "./styles/Form.css";
+@import "./styles/MatchCard.css";
+@import "./styles/Dashboard.css";
+@import "./styles/Profil.css";
+@import "./styles/Arena.css";
+@import "./styles/Friends.css";
+@import "./styles/Admin.css";
+@import "tailwindcss";
+
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --text-bright: #ffffff;
+  --text-muted: #888888;
+  --text-base: #cccccc;
+  --neon-green: #39ff14;
+  --neon-green-glow: rgba(57, 255, 20, 0.5);
+  --bg-void: #050507;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --color-game-field:     #0F1F18;
+  --color-border-subtle:  rgba(31, 41, 55, 0.10);
+  --color-accent-text:    #27500A;   
+  --color-info:           #185FA5;
+  --color-info-text:      #042C53;
+  --color-success:        #1D9E75;
+  --color-success-strong: #22c55e;
+  --color-success-soft:   #E1F5EE;
+  --color-warning:        #BA7517;
+  --color-warning-soft:   #FAEEDA;
+  --color-warning-text:   #633806;
+  --color-overlay-soft:   rgba(255, 255, 255, 0.10);
+  --color-snake-you:      #97C459;
+  --color-food:           #F09595;
+  --color-background-primary:   rgba(255, 255, 255, 0.03);
+  --color-background-secondary: #0e1013;
+  --color-text-primary:         #f2f3f5;
+  --color-text-secondary:       #9aa0a6;
+  --color-text-tertiary:        rgba(242, 243, 245, 0.45);
+  --color-border-secondary:     rgba(255, 255, 255, 0.08);
+  --color-border-strong:        rgba(255, 255, 255, 0.16);
+  --color-border-tertiary:      rgba(255, 255, 255, 0.06);
+  --color-secondary:            rgba(255, 255, 255, 0.05);
+  --color-accent:               #22c55e;
+  --color-accent-soft:          rgba(34, 197, 94, 0.12);
+  --color-danger:                #f87171;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@theme inline {
+  --color-text-bright: var(--text-bright);
+  --color-text-muted: var(--text-muted);
+  --color-text-base: var(--text-base);
+  --color-neon-green: var(--neon-green);
+  --color-bg-void: var(--bg-void);
+  --color-border-subtle: var(--border-subtle);
+  --font-mono: var(--font-geist-mono);
+  --font-bungee: 'Bungee', cursive;
+}
+
+@keyframes pulse-scale {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer components {
+  .bg {
+    @apply relative bg-center bg-no-repeat bg-cover;
+    background-image: url("/backgroundSnake.png");
+  }
+}
+
+@layer components {
+  .glass {
+    @apply
+    transition-all duration-1500
+    bg-white/50
+    rounded-2xl
+    shadow-[0_4px_30px_rgba(0,0,0,0.1)]
+    border border-white/40
+  }
+
+  .glass:hover {
+    @apply backdrop-blur-[7.5px]
+  }
+}
+
+@layer components {
+  .btn {
+    @apply 
+      inline-flex
+      items-center
+      justify-center
+      bg-neon-green
+      gap-2
+      px-6 
+      py-3
+      rounded-lg
+      text-[0.9375rem]
+      font-semibold
+      tracking-[0.01em]
+      cursor-pointer
+      border border-transparent
+      transition-all duration-150
+      no-underline
+      whitespace-nowrap;
+      font-family: inherit;
+  }
+  .btn:hover {
+    @apply
+    bg-blue-600
+    underline-offset-1
+  }
+
+}

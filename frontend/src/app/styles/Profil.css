@@ -1,0 +1,306 @@
+.pf-page {
+  @apply flex min-h-screen w-full justify-center px-4 py-10 transition-colors duration-300 sm:px-6;
+}
+
+.pf-light {
+  --color-background-primary: rgba(15, 23, 42, 0.03);
+  --color-background-secondary: #ffffff;
+  --color-text-primary: #111827;
+  --color-text-secondary: #52525b;
+  --color-text-tertiary: rgba(17, 24, 39, 0.45);
+  --color-border-secondary: rgba(15, 23, 42, 0.1);
+  --color-border-strong: rgba(15, 23, 42, 0.18);
+  --color-border-tertiary: rgba(15, 23, 42, 0.06);
+  --color-secondary: rgba(15, 23, 42, 0.05);
+  --color-accent-soft: rgba(34, 197, 94, 0.14);
+}
+
+/* two-column shell: settings + friends rail on large screens, stacked on mobile */
+.pf-shell {
+  @apply grid w-full max-w-5xl grid-cols-1 content-start items-start gap-6 lg:grid-cols-[minmax(0,1fr)_22rem];
+}
+
+.pf-main {
+  @apply flex min-w-0 flex-col gap-6;
+}
+
+.pf-aside {
+  @apply flex min-w-0 flex-col gap-6 lg:sticky lg:top-30;
+}
+
+/* profile header card */
+.pf-header {
+  @apply flex flex-wrap items-center gap-4 rounded-2xl border border-(--color-border-secondary) bg-(--color-background-secondary) p-6 shadow-2xl shadow-black/20;
+}
+
+.pf-avatarLg {
+  @apply flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-(--color-accent) text-xl font-bold text-white uppercase shadow-sm shadow-(--color-accent)/30;
+}
+
+.pf-headerInfo {
+  @apply flex min-w-0 flex-1 flex-col gap-1.5;
+}
+
+.pf-headerName {
+  @apply truncate text-xl font-semibold tracking-tight text-(--color-text-primary);
+}
+
+.pf-roleBadge {
+  @apply inline-flex w-fit items-center gap-1 rounded-full bg-(--color-accent-soft) px-2.5 py-1 text-[10px] font-bold tracking-wide text-(--color-accent) uppercase;
+}
+
+/* card (matches .adm-card look) */
+.pf-card {
+  @apply w-full overflow-hidden rounded-2xl border border-(--color-border-secondary) bg-(--color-background-secondary) shadow-2xl shadow-black/20;
+}
+
+.pf-cardBody {
+  @apply flex flex-col gap-6 p-5 sm:p-6;
+}
+
+/* horizontal separator between sections */
+.pf-divider {
+  @apply -mx-5 my-1 border-t border-(--color-border-secondary) sm:-mx-6;
+}
+
+.pf-section {
+  @apply w-full;
+}
+
+.pf-sectionHead {
+  @apply mb-3 flex flex-col gap-1;
+}
+
+.pf-eyebrow {
+  @apply text-[11px] font-semibold tracking-[0.14em] text-(--color-text-secondary) uppercase;
+}
+
+.pf-title {
+  @apply text-lg font-semibold tracking-tight text-(--color-text-primary);
+}
+
+.pf-chevron {
+  @apply shrink-0 text-(--color-text-secondary) transition-transform duration-200;
+}
+
+.pf-chevron-open {
+  @apply rotate-180;
+}
+
+/* the "row" list */
+.pf-rows {
+  @apply flex flex-col border-t border-(--color-border-secondary);
+}
+
+.pf-row {
+  @apply flex w-full flex-wrap items-center justify-between gap-3 border-b border-(--color-border-secondary) px-1 py-4 transition-colors;
+}
+
+.pf-row:hover {
+  @apply bg-(--color-accent-soft);
+}
+
+.pf-rowStack {
+  @apply items-start;
+}
+
+.pf-rowMessage {
+  @apply border-none py-2;
+}
+
+.pf-lbl {
+  @apply flex items-center gap-3 text-sm font-medium text-(--color-text-primary);
+}
+
+.pf-lblForm {
+  @apply w-full flex-1 items-start sm:w-auto;
+}
+
+.pf-iconWrap {
+  @apply flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-(--color-accent-soft) text-(--color-accent);
+}
+
+.pf-iconWrapDanger {
+  @apply bg-(--color-danger)/10 text-(--color-danger);
+}
+
+.pf-val {
+  @apply flex items-center gap-2;
+}
+
+/* language chips */
+.pf-chipGroup {
+  @apply flex gap-1 rounded-full bg-(--color-accent-soft) p-1;
+}
+
+.pf-chip {
+  @apply cursor-pointer rounded-full px-3 py-1 text-xs font-semibold tracking-wide text-(--color-text-secondary) transition-colors;
+}
+
+.pf-chipActive {
+  @apply bg-(--color-accent) text-white;
+}
+
+/* theme toggle */
+.pf-themeBtn {
+  @apply flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-(--color-accent-soft) text-lg transition-transform;
+}
+
+.pf-themeBtn:hover {
+  transform: scale(1.08);
+}
+
+/* sound switch */
+.pf-toggle {
+  @apply relative h-6 w-11 cursor-pointer rounded-full bg-(--color-border-secondary) transition-colors duration-200;
+}
+
+.pf-toggleOn {
+  @apply bg-(--color-accent);
+}
+
+.pf-toggleThumb {
+  @apply absolute top-0.5 left-0.5 h-5 w-5 rounded-full bg-white shadow-sm transition-transform duration-200;
+}
+
+.pf-toggleOn .pf-toggleThumb {
+  transform: translateX(1.25rem);
+}
+
+/* volume control (mute toggle + slider) */
+.pf-volume {
+  @apply flex items-center gap-2 text-(--color-text-secondary);
+}
+
+.pf-volumeIconBtn {
+  @apply flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center rounded-full bg-(--color-accent-soft) text-(--color-accent) transition-colors;
+}
+
+.pf-volumeIconBtn:hover {
+  @apply bg-(--color-accent) text-white;
+}
+
+.pf-volumeRange {
+  @apply h-1 w-24 cursor-pointer appearance-none rounded-full  accent-(--color-accent);
+}
+
+.pf-volumeRange::-webkit-slider-thumb {
+  @apply h-3.5 w-3.5 appearance-none rounded-full bg-(--color-accent);
+}
+
+.pf-volumeRange::-moz-range-thumb {
+  @apply h-3.5 w-3.5 cursor-pointer rounded-full border-none bg-(--color-accent) 
+}
+
+/* buttons */
+.pf-btn {
+  @apply inline-flex cursor-pointer items-center justify-center gap-1.5 rounded-full px-4 py-2 text-xs font-semibold whitespace-nowrap transition-all disabled:cursor-not-allowed disabled:opacity-50;
+}
+
+.pf-btn:not(:disabled):hover {
+  @apply -translate-y-0.5;
+}
+
+.pf-btnPrimary {
+  @apply bg-(--color-accent) text-white shadow-sm shadow-(--color-accent)/30;
+}
+
+.pf-btnGhost {
+  @apply border border-(--color-border-secondary) bg-(--color-background-primary) text-(--color-text-secondary);
+}
+
+.pf-btnGhost:not(:disabled):hover {
+  @apply border-(--color-border-strong) text-(--color-text-primary);
+}
+
+.pf-btnDanger {
+  @apply border border-(--color-danger) bg-transparent text-(--color-danger);
+}
+
+.pf-btnDanger:not(:disabled):hover {
+  @apply bg-(--color-danger) text-white;
+}
+
+/* danger zone (delete account confirmation) */
+.pf-dangerBox {
+  @apply mt-1 flex w-full flex-col gap-3 rounded-xl border border-(--color-danger)/30 bg-(--color-danger)/5 p-4;
+}
+
+.pf-dangerText {
+  @apply text-sm text-(--color-text-primary);
+}
+
+.pf-dangerActions {
+  @apply flex justify-end gap-2;
+}
+
+/* password form */
+.pf-form {
+  @apply flex w-full flex-col gap-2 pt-2 sm:flex-row sm:items-center;
+}
+
+.pf-input {
+  @apply w-full rounded-lg border border-(--color-border-secondary) bg-(--color-background-primary) px-3 py-2 text-sm text-(--color-text-primary) transition-colors outline-none sm:w-auto;
+}
+
+.pf-input::placeholder {
+  @apply text-(--color-text-tertiary);
+}
+
+.pf-input:focus {
+  @apply border-(--color-accent) shadow-[0_0_0_3px_var(--color-accent-soft)];
+}
+
+.pf-message {
+  @apply flex items-center gap-1.5 text-xs font-medium text-(--color-danger);
+}
+
+/* snake color swatches */
+.pf-swatchGroup {
+  @apply flex flex-wrap gap-2;
+}
+
+.pf-swatch {
+  @apply h-7 w-7 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-transform;
+}
+
+.pf-swatch:hover {
+  transform: scale(1.12);
+}
+
+.pf-swatchActive {
+  @apply border-(--color-text-primary) shadow-[0_0_0_2px_var(--color-background-secondary)];
+}
+
+/* avatar picker grid */
+.pf-avatarGrid {
+  @apply flex flex-wrap gap-2;
+}
+
+.pf-avatarOption {
+  @apply h-11 w-11 shrink-0 cursor-pointer overflow-hidden rounded-full border-2 border-transparent p-0 transition-transform;
+}
+
+.pf-avatarOption:hover {
+  transform: scale(1.08);
+}
+
+.pf-avatarOptionActive {
+  @apply border-(--color-accent);
+}
+
+.pf-avatarOptionImg {
+  @apply h-full w-full object-cover;
+}
+/* reset code style  */
+
+.restCodeInput {
+  @apply          
+      w-full text-center tracking-[0.5em]
+      text-xl font-semibold px-4 py-3
+      rounded-xl border
+      border-blue-300 focus:ring-2
+      focus:ring-blue-500
+      focus:border-blue-500
+      outline-none transition
+}

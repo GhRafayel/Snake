@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Users" ADD COLUMN     "isBot" BOOLEAN NOT NULL DEFAULT false,
+ADD COLUMN     "score" INTEGER NOT NULL DEFAULT 0;

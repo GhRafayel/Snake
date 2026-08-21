@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "User" ALTER COLUMN "codeExpire" DROP NOT NULL,
+ALTER COLUMN "codeExpire" DROP DEFAULT,
+ALTER COLUMN "resetCode" DROP NOT NULL;

@@ -1,0 +1,146 @@
+generator client {
+  provider = "prisma-client-js"
+}
+datasource db {
+  provider = "postgresql"
+}
+model Users {
+  id                Int               @id @default(autoincrement())
+  Email             String            @unique
+  Password          String
+  Username          String
+  role              Role              @default(PLAYER)
+  language          String            @default("en")
+  theme             Boolean           @default(true)
+  color             String?
+  avatar            String            @default("default.png")
+  isBot             Boolean           @default(false)
+  score             Int               @default(0)
+  resetCode         String?
+  codeExpire        DateTime?
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+  gameRooms         GameRoom          []
+  roomsUsers        RoomUser          []
+  sessions          Sessions          []
+  history           UserStats?
+  sentRequests      FriendsRequest    [] @relation("SentRequests")
+  receivedRequests  FriendsRequest    [] @relation("ReceivedRequests")
+  gameParticipants	GameParticipants  []
+	gamesWon			    GameResults       [] @relation("Winner")
+}
+
+model Translation {
+  id        Int       @id @default(autoincrement())
+  key       String    @unique
+  values    Json
+  updatedAT DateTime  @updatedAt
+  createdAt DateTime  @default(now())
+}
+
+model UserStats {
+  id          Int      @id @default(autoincrement())
+  Email       String   @unique
+  user        Users    @relation(fields: [Email], references: [Email], onDelete: Cascade)
+  gamesWon    Int      @default(0)
+  gamesLost   Int      @default(0)
+  totalScore  Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model GameResults{
+	id            String @id @default(uuid())
+	roomId        String
+	room          GameRoom @relation(fields: [roomId], references: [id], onDelete: Cascade)
+	winnerId      Int?
+	winner        Users? @relation("Winner",fields: [winnerId], references:[id])
+	participants  GameParticipants[]
+	ticks			    Int
+	createdAt		  DateTime @default(now())
+	updatedAt		  DateTime @updatedAt
+}
+
+model RoomUser {
+
+  id       String   @id @default(uuid())
+  roomId   String
+  socketId String?
+  userId   Int
+  room     GameRoom @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  user     Users    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@unique([roomId, userId])
+}
+
+model GameRoom {
+  id            String     @id @default(uuid())
+  name          String     @default("Room")
+  maxUsers      Int        @default(4)
+  ownerId       Int?
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  type          RoomType   @default(PUBLIC)
+  status        RoomStatus @default(WAITING)
+  gameResults		GameResults[]
+	owner		      Users? @relation(fields: [ownerId], references: [id])
+	roomUsers     RoomUser[]
+}
+
+model Sessions {
+  id                  String    @id @default(uuid()) @db.Uuid
+  userId              Int
+  refreshTokenHash    String    @unique
+  expiresAt           DateTime
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+  revokedAt           DateTime?
+  users               Users     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@index([userId])
+}
+
+model FriendsRequest {
+  id            String @id @default(uuid())
+  senderId      Int
+  sender        Users @relation("SentRequests", fields: [senderId], references: [id], onDelete: Cascade)
+  receiverId    Int
+  receiver      Users @relation("ReceivedRequests", fields: [receiverId], references: [id], onDelete: Cascade)
+  status        RequestStatus @default(PENDING)
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+  @@unique([senderId, receiverId])
+}
+
+model GameParticipants{
+	id      String @id @default(uuid())
+	gameId  String
+	game    GameResults @relation(fields:[gameId], references:[id], onDelete: Cascade)
+	userId  Int
+	user    Users @relation(fields:[userId], references: [id], onDelete: Cascade)
+	alive   Boolean
+	score   Int
+	@@unique([gameId, userId])
+}
+
+enum Role {
+  PLAYER
+  ADMIN
+  BOT
+}
+
+enum RoomType {
+  PUBLIC
+  PRIVATE
+}
+
+enum RoomStatus {
+  WAITING
+  PLAYING
+  STARTING
+  FINISHED
+}
+
+enum RequestStatus {
+  ACCEPTED
+  PENDING
+  REJECTED
+}

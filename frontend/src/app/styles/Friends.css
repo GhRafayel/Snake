@@ -1,0 +1,88 @@
+.fr-list {
+  @apply flex max-h-80 flex-col gap-1 overflow-y-auto pr-1;
+}
+
+.fr-row {
+  @apply flex w-full items-center gap-3 rounded-xl px-2 py-2.5 transition-all duration-150;
+}
+
+.fr-row:hover {
+  @apply -translate-y-0.5 bg-(--color-accent-soft);
+}
+
+.fr-avatar {
+  @apply relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-xs font-bold;
+}
+
+.fr-av-0 { background: var(--color-warning-soft); color: #854F0B; }
+.fr-av-1 { background: #FBEAF0; color: #72243E; }
+.fr-av-2 { background: #EEEDFE; color: #3C3489; }
+.fr-av-3 { background: #E6F4EA; color: #1B5E32; }
+
+.fr-dot {
+  @apply absolute -right-0.5 -bottom-0.5 h-3 w-3 rounded-full border-2 border-(--color-background-secondary);
+}
+
+.fr-dot-active {
+  @apply bg-(--color-accent);
+}
+
+.fr-dot-away {
+  @apply bg-(--color-text-tertiary);
+}
+
+.fr-info {
+  @apply flex min-w-0 flex-1 flex-col;
+}
+
+.fr-name {
+  @apply truncate text-sm font-semibold text-(--color-text-primary);
+}
+
+.fr-status {
+  @apply w-fit truncate rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-(--color-text-secondary);
+}
+
+.fr-status-accepted {
+  @apply bg-(--color-accent-soft) text-(--color-accent);
+}
+
+.fr-status-pending {
+  @apply bg-(--color-warning-soft) text-(--color-text-secondary);
+}
+
+.fr-status-rejected {
+  @apply bg-(--color-secondary) text-(--color-text-tertiary);
+}
+
+.fr-rank {
+  @apply shrink-0 rounded-full border border-(--color-border-secondary) bg-(--color-background-primary) px-2 py-0.5 text-[11px] font-semibold text-(--color-text-secondary);
+}
+
+.fr-empty {
+  @apply flex flex-col items-center gap-1 py-8 text-center text-sm text-(--color-text-secondary);
+}
+
+.fr-chevron {
+  @apply shrink-0 text-(--color-text-secondary) transition-transform duration-200;
+}
+
+.fr-chevron-open {
+  @apply rotate-180;
+}
+
+.fr-actions {
+  @apply flex w-fit items-center gap-2 pt-0.5 cursor-pointer;
+}
+
+.fr-actionBtn {
+  @apply rounded-full px-2.5 py-1 text-[11px] font-semibold transition-colors duration-150 cursor-pointer;
+}
+
+.fr-actionAccept {
+  @apply bg-(--color-accent) text-white hover:opacity-90;
+}
+
+.fr-actionReject {
+  @apply border border-(--color-border-secondary) bg-(--color-background-primary) text-(--color-text-secondary) hover:bg-(--color-secondary);
+}

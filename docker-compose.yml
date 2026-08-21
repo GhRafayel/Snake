@@ -1,0 +1,89 @@
+services:
+  nginx:
+    build:
+      context: ./nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/certs:/etc/nginx/certs:ro
+    depends_on:
+      - frontend
+      - backend
+    networks:
+      - app_network
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      target: dev
+    container_name: frontend
+    env_file: ./.env
+    environment:
+      WATCHPACK_POLLING: "true"
+      PORT: 3000
+    volumes:
+      - ./frontend/src:/app/src
+      - ./frontend/public:/app/public
+    networks:
+      - app_network
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: ./backend
+      target: dev
+    container_name: backend
+    volumes:
+      - ./backend/src:/app/src
+      - ./backend/prisma:/app/prisma
+    networks:
+      - app_network
+    env_file: ./.env
+    ports:
+      - "4000:4000"
+      - "2000:2000"
+    command: >
+      sh -c "npx prisma db push && npm run start:dev"
+    depends_on:
+      redis:
+        condition: service_started
+    restart: unless-stopped
+  postgres:
+    image: postgres:16-alpine
+    profiles: ["local-db"]
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-snake}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-snake_pass}
+      POSTGRES_DB: ${POSTGRES_DB:-snakedb}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-snake} -d ${POSTGRES_DB:-snakedb}"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
+    networks:
+      - app_network
+
+  redis:
+    image: redis:7-alpine
+    restart: always
+    command: redis-server --save 60 1 --loglevel warning
+    volumes:
+      - redisdata:/data
+    networks:
+      - app_network
+
+volumes:
+  pgdata:
+  redisdata:
+
+networks:
+  app_network:
+    driver: bridge

@@ -1,0 +1,44 @@
+.match-card {
+  @apply
+    flex flex-col gap-3
+    rounded-xl
+    p-5 mt-6 sm:mt-10 lg:mt-20
+    border
+    transition-all duration-500
+    ease-in-out
+    hover:-translate-y-1
+    hover:shadow-[0_0_25px_var(--neon-green-glow)];
+}
+
+
+.match-card-button {
+  @apply
+    h-10
+    px-4
+    rounded-lg
+    border
+    text-sm
+    font-medium
+    transition-all
+    duration-300
+    ease-out
+    hover:-translate-y-0.5
+    hover:border-blue-400
+    hover:bg-blue-400/10
+    hover:shadow-[0_0_18px_rgba(96,165,250,0.35)]
+    active:translate-y-0
+    disabled:opacity-50
+    disabled:cursor-not-allowed;
+}
+
+.match-card-descition {
+  @apply
+    inline-block
+    mb-8 sm:mb-10 md:mb-12 lg:mb-15
+    border border-(--color-accent)
+    px-2 py-1 sm:px-3 sm:py-1.5 lg:px-3.5
+    font-mono uppercase tracking-widest
+    text-lg sm:text-xl md:text-2xl lg:text-3xl
+    rounded-xl sm:rounded-2xl
+    backdrop-blur-[8.5px]
+}

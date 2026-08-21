@@ -1,0 +1,52 @@
+.formInputDiv {
+    @apply
+    flex
+    justify-between
+    border-b-2
+    border-b-black
+    my-2
+    py-1
+    m-2
+}
+
+.formInputs {
+    @apply
+    bg-transparent
+    outline-none
+    placeholder-black
+    text-xl
+    placeholder:text-xl;
+}
+
+.formImgDiv {
+    @apply
+    flex
+    items-center
+    justify-center
+}
+
+.formBtnSubmit,
+.formBtnLog {
+    @apply
+    border
+    border-blue-300
+    rounded-2xl
+    cursor-pointer
+    text-center
+    text-lg
+    font-bold
+    hover:bg-blue-400
+    transition-all
+    duration-600
+    hover:text-blue-100
+    hover:border-gray-800
+    p-3;
+}
+
+.formBtnSubmit {
+    @apply w-full;
+}
+
+.formBtnLog {
+    @apply py-1 ml-1;
+}

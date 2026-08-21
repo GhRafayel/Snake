@@ -1,0 +1,141 @@
+.mockBody {
+    @apply grid min-h-[87.5vh] grid-cols-[80%_20%];
+}
+
+.mockBoard {
+    @apply flex flex-col gap-3 p-4 bg-(--color-background-secondary) border-r-[0.5px] border-r-(--color-border-tertiary);
+}
+
+.boardTop {
+    @apply flex items-center justify-between;
+}
+
+.boardTag {
+    @apply inline-flex items-center gap-1.5 px-2.5 py-0.75 rounded-full text-xs bg-(--color-accent-text) text-(--color-text-success);
+}
+
+.boardStats {
+    @apply flex gap-4.5 text-xs text-(--color-text-secondary);
+}
+
+.boardStats b {
+    @apply block text-base font-medium text-(--color-text-primary);
+}
+
+.playArea {
+    @apply flex flex-1 items-center justify-center relative overflow-hidden rounded-md min-h-70 bg-(--color-game-field);
+}
+
+.gridOverlay {
+    @apply absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-size-[22px_22px];
+}
+
+.snakeSeg {
+    @apply absolute w-5.5 h-5.5 rounded-sm bg-(--color-snake-you);
+}
+
+.foodDot {
+    @apply absolute w-4.5 h-4.5 rounded-full bg-(--color-food);
+}
+
+.youTag {
+    @apply absolute top-3 left-3 px-2 py-0.75 text-[11px] font-medium rounded bg-(--color-overlay-soft) text-(--color-success-soft);
+}
+
+.boardBottom {
+    @apply flex items-center justify-between text-xs text-(--color-text-secondary);
+}
+
+.kbd {
+    @apply inline-block px-1.5 py-0.5 rounded text-[11px] bg-(--color-background-primary) border-[0.5px] border-solid border-(--color-border-secondary) font-(--font-mono);
+}
+
+.mockSide {
+    @apply flex flex-col gap-3 p-3.5 min-w-0 bg-(--color-background-primary);
+}
+
+.sideHead {
+    @apply flex items-center justify-between;
+}
+
+.sideTitle {
+    @apply text-xs font-medium lowercase tracking-[0.02em] text-(--color-text-secondary);
+}
+
+.sideCount {
+    @apply text-[11px] text-(--color-text-tertiary);
+}
+
+.youCard {
+    @apply rounded-[10px] p-2.5 px-3 bg-(--color-info);
+}
+
+.youCard .row1 {
+    @apply flex items-center gap-2 text-xs text-(--color-info-text);
+}
+
+.youCard .row2 {
+    @apply flex items-baseline gap-1.5 mt-1;
+}
+
+.youCard .row2 .score {
+    @apply text-xl font-medium text-(--color-info-text);
+}
+
+.youCard .row2 .rank {
+    @apply text-xs text-(--color-info-text);
+}
+
+.playerRow {
+    @apply flex items-center gap-2 px-1 py-1.5 text-xs min-w-0;
+}
+
+.playerRow .pos {
+    @apply w-4.5 text-right text-[11px] tabular-nums text-(--color-text-tertiary);
+}
+
+.playerRow .swatch {
+    @apply w-2 h-2 rounded-xs shrink-0;
+}
+
+.playerRow .name {
+    @apply flex-1 truncate;
+}
+
+.playerRow .pts {
+    @apply text-[11px] tabular-nums text-(--color-text-secondary);
+}
+
+.playerRow.me {
+    @apply bg-(--color-info) rounded-md;
+}
+
+.playerRow.me .name,
+.playerRow.me .pts,
+.playerRow.me .pos {
+    @apply text-(--color-info-text) font-medium;
+}
+
+.ratingCard {
+    @apply rounded-md p-2.5 px-3 bg-(--color-secondary);
+}
+
+.ratingCard .label {
+    @apply text-[11px] text-white;
+}
+
+.ratingCard .value {
+    @apply flex items-baseline gap-1.5 mt-0.5;
+}
+
+.ratingCard .value .v {
+    @apply text-lg font-medium;
+}
+
+.ratingCard .value .delta {
+    @apply text-[11px] text-(--color-text-success);
+}
+
+.divider {
+    @apply h-[0.5px] my-0.5 bg-(--color-border-tertiary);
+}
