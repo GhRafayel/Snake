@@ -6,7 +6,7 @@
     max-w-50
     items-center
     gap-2
-    border border-zinc-700 rounded-full
+    border rounded-full
     px-2 py-2
     focus-within:border-zinc-500
     focus-within:ring-2
