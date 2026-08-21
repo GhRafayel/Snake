@@ -1,13 +1,12 @@
 "use client"
 
 import Room from "./Room"
-import { LanguageStore } from "@/src/components/Store/LanguageStore"
 import { useAuth } from "@/src/components/Provider/UserProvider";
 
 export default  function  Hero() {
 
-    const HomePage = LanguageStore((state) => state.translations).HomePage;
-    const { cntUser } = useAuth();
+    const { cntUser, LENUAGE } = useAuth();
+    const HomePage = LENUAGE.HomePage;
 
     return (
         <div className={`  py-20 px-8 pb-30 text-center relative ${cntUser?.theme ?? true ? "bg" : "bg-gray-200 "} `}>

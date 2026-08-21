@@ -4,7 +4,6 @@ import { useEffect }                        from "react";
 import { UserStore }                        from "@/src/components/Store/UserStore";
 import { ArenaStore }                       from "@/src/components/Store/ArenaStore";
 import { DifficultyStore }                  from "@/src/components/Store/DifficultyStore";
-import { LanguageStore }                    from "@/src/components/Store/LanguageStore";
 import { GameCanvasStore }                  from "@/src/components/Store/GameCanvasStore";
 import { OnlineUsersType }                  from "@/src/types/UserTypes/UserTypes";
 import { ArenaFriends }                     from "@/src/components/Friends/ArenaFriends";
@@ -16,16 +15,16 @@ import ArenaControls                        from "./ArenaControls";
 import GameBoard                            from "./AremaBoard/GameBoard";
 import Sidebar                              from "./ArenaSidebar/Sidebar";
 import LevelSelector                        from "./LevelSelector";
-import { useAuth } from "../Provider/UserProvider";
+import { useAuth }                          from "@/src/components/Provider/UserProvider";
 
 
 function Arena() {
 
+    const {cntUser, LENUAGE} = useAuth()
     const socketRef = useSocket()
-    const HD_LENG = LanguageStore((state) => state.translations.Header);
+    const HD_LENG = LENUAGE.Header;
     const AR_STORE = ArenaStore();
     const mode = AR_STORE.mode;
-    const {cntUser} = useAuth()
     const level = DifficultyStore((s) => s.level);
     const gameData = GameCanvasStore((state) => state.currGame);
     const {onlineUsers} = UserStore();

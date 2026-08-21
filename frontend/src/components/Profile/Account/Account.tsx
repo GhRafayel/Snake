@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { LogOut, Trash2 } from "lucide-react";
-import { LanguageStore } from '@/src/components/Store/LanguageStore';
 import { useAuth } from '@/src/components/Provider/UserProvider';
 import { useRouter } from "next/navigation";
 import UsernameEditor from './UsernameEditor';
@@ -15,8 +14,8 @@ type props = {
 
 export default function Account ({ setWindow, window } : props) {
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
-
-    const profil = LanguageStore(( state) => state.translations.Profile);
+    const {LENUAGE} = useAuth();
+    const profil = LENUAGE.Profile;
     const {ChangingCallback} = useAuth();
     const router = useRouter();
     
@@ -33,7 +32,7 @@ export default function Account ({ setWindow, window } : props) {
                     <button className="pf-btn pf-btnGhost"
                         onClick={ async () => {
                             const res = await fetch("/api/auth?path=/auth/logout",{method: "DELETE"});
-                            if (res.ok ) { ChangingCallback(undefined,"refreshUser"); router.refresh() } else setWindow({...window, request: !window.request});
+                            if (res.ok ) { ChangingCallback(undefined, "me"); router.refresh() } else setWindow({...window, request: !window.request});
                             }}
                         >
                         {profil.settings.lo}
@@ -72,7 +71,7 @@ export default function Account ({ setWindow, window } : props) {
                             <button className="pf-btn pf-btnDanger"
                                 onClick={ async () => {
                                     const res = await fetch("/api/auth?path=/auth/delete", {method: "DELETE"})
-                                    if (res.ok ) { ChangingCallback(undefined,"refreshUser"); router.refresh() } else setWindow({...window, request: true});
+                                    if (res.ok ) { ChangingCallback(undefined,"me"); router.refresh() } else setWindow({...window, request: true});
                                 }} >
                                 {profil.settings.account.yes}
                             </button>

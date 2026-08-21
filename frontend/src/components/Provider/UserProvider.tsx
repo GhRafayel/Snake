@@ -1,41 +1,43 @@
 "use client"
 
-import { createContext, useCallback, useContext, useEffect, useState} from "react"
+import { createContext, useCallback, useContext, useState} from "react"
 import { UserType,  UserContextType} from "@/src/types/UserTypes/UserTypes"
-import { LanguageStore } from "@/src/components/Store/LanguageStore"
+import { TranslationTypes } from "@/src/types/StoreTypes/StoreTypes"
 import { Lib } from "@/src/lib/lib"
 
 const UserContext = createContext<UserContextType | null>(null);
 type Props = {
     children: React.ReactNode,
     initialUser: UserType | null,
+    initialTranslations: TranslationTypes,
 }
 
-export default function UserProvider ({ children,  initialUser,} : Props ) {
+export default function UserProvider ({ children,  initialUser, initialTranslations } : Props ) {
 
     const [ cntUser, setCntUser ] = useState<UserType | null>(initialUser);
-  
-    useEffect(() => {
-        if (!cntUser) { ChangingCallback(undefined, "refreshUser"); return; }
-        LanguageStore.getState().setLanguage(cntUser.language)
-    },[cntUser]);
+    const [ LENUAGE, setLENUAGE] = useState<TranslationTypes>(initialTranslations);
 
-    const ChangingCallback = useCallback( async (body: Object | undefined, funName: string) => {
+    const ChangingCallback = useCallback( async (body: Object | undefined, endpoint: string) => {
         if (body === undefined)
         {
             try {
-                const res = await fetch("/api/edit?path=/users/me").then(r => r.json());
-                return setCntUser(res);
+                const res = await fetch("/api/edit?path=/users/" + endpoint).then(r => r.json());
+                if (endpoint === "me")
+                    return setCntUser(res);
+                return setLENUAGE({...res});
             }
-            catch { return setCntUser(null) };
+            catch {
+                if (endpoint === "me")
+                    return setCntUser(null)
+                return;
+            };
         }
-        const res = await Lib.patchRequest(`/api/edit?path=/users/`+ funName, body).then(r => r.json());
+        const res = await Lib.patchRequest("/api/edit?path=/users/" + endpoint, body).then(r => r.json());
         setCntUser({...res})
     },[]);
 
-
     return (
-        <UserContext.Provider value={{cntUser, ChangingCallback}}>
+        <UserContext.Provider value={{cntUser, LENUAGE, ChangingCallback}}>
             {children}
         </UserContext.Provider>
     )

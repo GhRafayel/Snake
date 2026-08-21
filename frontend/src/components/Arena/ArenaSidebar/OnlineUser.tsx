@@ -1,15 +1,14 @@
 
 import { useAuth } from "@/src/components/Provider/UserProvider";
 import { OnlineUsersType } from "@/src/types/UserTypes/UserTypes";
-import { LanguageStore } from "@/src/components/Store/LanguageStore";
 
 type Props = {
   obj?: OnlineUsersType;
 };
 
 export default function OnlineUser({ obj }: Props) {
-  const { cntUser } = useAuth();
-  const History = LanguageStore((state) => state.translations.History);
+  const { cntUser, LENUAGE } = useAuth();
+  const History = LENUAGE.History;
   if (!obj) return null;
   const isYou = cntUser?.id === obj.id;
 

@@ -1,15 +1,14 @@
 'use client';
 import { Palette } from 'lucide-react';
 import { useAuth } from '@/src/components/Provider/UserProvider';
-import { LanguageStore } from '@/src/components/Store/LanguageStore';
 
 
 const SNAKE_COLORS = [
     '#22c55e', '#22d3ee', '#d946ef', '#f97316', '#fbbf24', '#ef4444', '#a3e635', '#f472b6'
 ]
 export default function SnakeColorSelector() {
-  const { cntUser, ChangingCallback } = useAuth();
-  const PF_LENG = LanguageStore((state) => state.translations.Profile.settings)
+  const { cntUser, LENUAGE, ChangingCallback } = useAuth();
+  const PF_LENG = LENUAGE.Profile.settings;
   
   return (
     <div className="pf-row pf-rowStack">

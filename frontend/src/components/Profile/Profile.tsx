@@ -1,5 +1,4 @@
 'use client';
-import { LanguageStore } from "@/src/components/Store/LanguageStore";
 import { useAuth } from '@/src/components/Provider/UserProvider';
 import { useState } from 'react';
 
@@ -10,9 +9,9 @@ import Preferences from './Preferences/Preferences';
 import ProfilHeader from './ProfilHeaders';
 
 export default function Profile() {
-
-  const profil = LanguageStore((state) => state.translations.Profile);
-  const { cntUser } = useAuth();
+  
+  const { cntUser, LENUAGE } = useAuth();
+  const profil = LENUAGE.Profile;
   const [showChangePassword, setShowChangePassword] = useState(true);
   const [window, setWindow] = useState({request: false, prefsOpen: true, secureOpen: false, accountOpen: false});
 

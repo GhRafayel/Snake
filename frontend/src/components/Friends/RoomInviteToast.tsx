@@ -4,13 +4,12 @@ import { useRouter } from "next/navigation";
 import { InviteStore } from "@/src/components/Store/InviteStore";
 import { ArenaStore } from "@/src/components/Store/ArenaStore";
 import { useAuth } from "@/src/components/Provider/UserProvider";
-import { LanguageStore } from "@/src/components/Store/LanguageStore";
 
 export default function RoomInviteToast() {
     const router = useRouter();
     const invites = InviteStore((s) => s.invites);
-    const { cntUser } = useAuth();
-    const AR_LENG = LanguageStore((state) => state.translations.Arena);
+    const { cntUser, LENUAGE } = useAuth();
+    const AR_LENG = LENUAGE.Arena;
 
     if (invites.length === 0) return null;
 

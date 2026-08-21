@@ -1,5 +1,4 @@
 import { Globe, Music2, Sun, Moon, Image as ImageIcon } from 'lucide-react';
-import { LanguageStore } from "@/src/components/Store/LanguageStore"
 import { useAuth } from "@/src/components/Provider/UserProvider";
 import LanguageSelector from './LanguageSelector';
 import AvatarSelector from './AvatarSelector';
@@ -8,8 +7,8 @@ import VolumeControl from '../../Music/VolumeControl';
 import SnakeColorSelector from './SnakeColorSelector';
 
 export default function Preferences () {
-    const PF_LENG = LanguageStore((state) => state.translations.Profile);
-    const { cntUser } = useAuth();
+    const { cntUser, LENUAGE } = useAuth();
+    const PF_LENG = LENUAGE.Profile;
 
     return (
         <div className="pf-rows">

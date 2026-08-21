@@ -3,15 +3,14 @@
 import { useEffect, useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { useAuth } from "@/src/components/Provider/UserProvider";
-import { LanguageStore } from "../Store/LanguageStore";
-import { FriendStore } from "../Store/FriendStore";
+import { FriendStore } from "@/src/components/Store/FriendStore";
 
 export default function Friends() {
 
   const FR_STORE = FriendStore();
   const [open, setOpen] = useState(false);
-  const { cntUser } = useAuth();
-  const FR_LENG = LanguageStore((state) => state.translations.Friends);
+  const { cntUser, LENUAGE } = useAuth();
+  const FR_LENG = LENUAGE.Friends;
   
   useEffect(() => { 
     FR_STORE.fetchFriends(); 

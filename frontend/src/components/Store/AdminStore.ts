@@ -1,7 +1,34 @@
 import { create } from 'zustand';
 import { Lib } from '@/src/lib/lib';
-import { AdminUserType, AdminStoreType } from '@/src/types/StoreTypes/StoreTypes'; 
+import { AdminUserType,  } from '@/src/types/StoreTypes/StoreTypes'; 
+import { ListErrorKeyType } from '@/src/types/StoreTypes/StoreTypes';
+import { DetailErrorKeyType } from '@/src/types/StoreTypes/StoreTypes';
+import { SaveErrorKeyType } from '@/src/types/StoreTypes/StoreTypes';
+import { DeleteErrorKeyType } from '@/src/types/StoreTypes/StoreTypes';
+import { AdminUpdateType } from '@/src/types/StoreTypes/StoreTypes';
+export interface AdminStoreType {
+  query: string;
+  results: AdminUserType[];
+  listLoading: boolean;
+  listError: ListErrorKeyType;
 
+  selectedUser: AdminUserType | null;
+  detailLoading: boolean;
+  detailError: DetailErrorKeyType;
+
+  saving: boolean;
+  saveError: SaveErrorKeyType;
+
+  deleting: boolean;
+  deleteError: DeleteErrorKeyType;
+
+  setQuery: (query: string) => void;
+  searchUsers: (q: string) => Promise<void>;
+  selectUser: (id: number) => Promise<void>;
+  clearSelectedUser: () => void;
+  saveUser: (id: number, body: AdminUpdateType) => Promise<boolean>;
+  deleteUser: (id: number) => Promise<boolean>;
+}
 
 export const AdminStore = create<AdminStoreType>((set) => ({
   query: '',
@@ -20,10 +47,11 @@ export const AdminStore = create<AdminStoreType>((set) => ({
   deleteError: '',
 
   setQuery: (query) => set({ query }),
+
   searchUsers: async (q) => {
     set({ listLoading: true, listError: '' });
     try {
-      const res = await fetch(`/Lib/edit?path=/admin/users?q=${encodeURIComponent(q)}`);
+      const res = await fetch(`/api/edit?path=/admin/users?q=${encodeURIComponent(q)}`);
       if (!res.ok) {
         set({ listError: res.status === 403 ? 'forbidden' : 'loadUsersFailed', results: [] });
         return;
@@ -39,7 +67,7 @@ export const AdminStore = create<AdminStoreType>((set) => ({
   selectUser: async (id) => {
     set({ selectedUser: null, detailLoading: true, detailError: '' });
     try {
-      const res = await fetch(`/Lib/edit?path=/admin/users/${id}`);
+      const res = await fetch(`/api/edit?path=/admin/users/${id}`);
       if (!res.ok) {
         set({ detailError: res.status === 403 ? 'forbidden' : 'loadUserFailed' });
         return;
@@ -54,10 +82,11 @@ export const AdminStore = create<AdminStoreType>((set) => ({
   },
 
   clearSelectedUser: () => set({ selectedUser: null, detailError: '', saveError: '', deleteError: '' }),
+  
   saveUser: async (id, body) => {
     set({ saving: true, saveError: '' });
     try {
-      const res = await Lib.putRequest(`/Lib/edit?path=/admin/users/${id}`, body);
+      const res = await Lib.putRequest(`/api/edit?path=/admin/users/${id}`, body);
       if (!res.ok) {
         set({ saveError: res.status === 403 ? 'forbidden' : 'saveFailed' });
         return false;
@@ -81,7 +110,7 @@ export const AdminStore = create<AdminStoreType>((set) => ({
     set({ deleting: true, deleteError: '' });
 
     try {
-      const res = await fetch(`/Lib/edit?path=/admin/users/${id}`, {method: "DELETE"});
+      const res = await fetch(`/api/edit?path=/admin/users/${id}`, {method: "DELETE"});
       if (!res.ok) {
         set({ deleteError: res.status === 403 ? 'forbidden' : 'deleteFailed' });
         return false;

@@ -1,16 +1,16 @@
 'use client'
 
-import { DifficultyStore, MIN_BOT_LEVEL, MAX_BOT_LEVEL } from "@/src/components/Store/DifficultyStore";
-import { LanguageStore }    from "@/src/components/Store/LanguageStore";
-import { useAuth } from "../Provider/UserProvider";
+import { DifficultyStore, MIN_BOT_LEVEL, MAX_BOT_LEVEL }    from "@/src/components/Store/DifficultyStore";
+import { useAuth }                                          from "../Provider/UserProvider";
 
 const LEVELS = Array.from({ length: MAX_BOT_LEVEL - MIN_BOT_LEVEL + 1 }, (_, i) => MIN_BOT_LEVEL + i);
 
 export default function LevelSelector() {
+
+    const {cntUser, LENUAGE} = useAuth()
     const level = DifficultyStore((s) => s.level);
     const setLevel = DifficultyStore((s) => s.setLevel);
-    const {cntUser} = useAuth()
-    const AR_LENG = LanguageStore((state) => state.translations.Arena.header);
+    const AR_LENG = LENUAGE.Arena.header;
 
     return (
         <div className="flex items-center gap-2 py-2">

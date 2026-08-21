@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { User, Mail, KeyRound, Shield, Lock, Save, X, Trash2, TriangleAlert } from "lucide-react";
 import { AdminStore } from "@/src/components/Store/AdminStore";
-import { LanguageStore } from "@/src/components/Store/LanguageStore";
 import { useAuth } from "@/src/components/Provider/UserProvider";
 import { AdminUserType, AdminUpdateType} from "@/src/types/StoreTypes/StoreTypes";
 import { RoleType } from "@/src/types/UserTypes/UserTypes";
@@ -12,10 +11,10 @@ const ROLES: RoleType[] = ["PLAYER", "ADMIN", "BOT"];
 
 export default function AdminUserForm({ user, onCancel }: { user: AdminUserType; onCancel: () => void }) {
 
-  const A_LENG = LanguageStore((s) => s.translations.Admin.form);
+  const { cntUser, LENUAGE } = useAuth();
+  const A_LENG = LENUAGE.Admin.form;
   const A_STORE = AdminStore();
 
-  const { cntUser } = useAuth();
   const [form, setForm] = useState<AdminUpdateType>({Username: user.Username, Email: user.Email, role: user.role, Password: ""})
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const isSelf = cntUser?.id === user.id;

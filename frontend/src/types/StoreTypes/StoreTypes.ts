@@ -15,29 +15,7 @@ export interface AdminUserType {
 	role: RoleType;
 }
 
-export interface AdminStoreType {
-  query: string;
-  results: AdminUserType[];
-  listLoading: boolean;
-  listError: ListErrorKeyType;
 
-  selectedUser: AdminUserType | null;
-  detailLoading: boolean;
-  detailError: DetailErrorKeyType;
-
-  saving: boolean;
-  saveError: SaveErrorKeyType;
-
-  deleting: boolean;
-  deleteError: DeleteErrorKeyType;
-
-  setQuery: (query: string) => void;
-  searchUsers: (q: string) => Promise<void>;
-  selectUser: (id: number) => Promise<void>;
-  clearSelectedUser: () => void;
-  saveUser: (id: number, body: AdminUpdateType) => Promise<boolean>;
-  deleteUser: (id: number) => Promise<boolean>;
-}
 
 export interface AdminUpdateType {
   Username: string;

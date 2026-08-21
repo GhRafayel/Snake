@@ -1,12 +1,13 @@
 import { ChevronDown } from "lucide-react";
 import { useEffect, useState } from "react";
-import { LanguageStore } from "../Store/LanguageStore";
 import { FriendStore } from "../Store/FriendStore";
+import { useAuth } from "../Provider/UserProvider";
 
 export function ArenaFriends () {
+    const {LENUAGE} = useAuth()
     const [F_list, setF_list] = useState(true);
-    const FR_LENG = LanguageStore((state) => state.translations.Friends);
-    const AR_LENG = LanguageStore((state) => state.translations.Arena.saidBar);
+    const FR_LENG = LENUAGE.Friends;
+    const AR_LENG = LENUAGE.Arena.saidBar;
     const FR_STORE = FriendStore();
     const acceptedFriends = FR_STORE.friends.filter((friend) => friend.status === "ACCEPTED");
 

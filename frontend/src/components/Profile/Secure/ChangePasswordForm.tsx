@@ -2,15 +2,15 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 import { KeyRound } from 'lucide-react';
 import { Lib } from '@/src/lib/lib';
-import { LanguageStore } from "@/src/components/Store/LanguageStore";
 import ResetCodePage from './ResetCodePage';
-
+import { useAuth } from '../../Provider/UserProvider';
 interface ChangePasswordFormProps {
   setShowChangePassword: Dispatch<SetStateAction<boolean>>;
 }
 
 export default function ChangePasswordForm({ setShowChangePassword }: ChangePasswordFormProps) {
-  const profil = LanguageStore((state) => state.translations.Profile.settings.secure);
+  
+  const profil = useAuth().LENUAGE.Profile.settings.secure;
   const [code , setCode] = useState(false);
   const [newPassword, setNewPass] = useState("");
 

@@ -1,6 +1,5 @@
 "use client"
 
-import { LanguageStore } from "../Store/LanguageStore";
 import { useAuth } from "@/src/components/Provider/UserProvider"
 import { UserSearchType } from "@/src/types/UserTypes/UserTypes";
 import { useState, useEffect, useRef } from "react";
@@ -10,8 +9,9 @@ import { useRouter } from "next/navigation";
 
 export default function NavSearch ( ) {
 
+    const {LENUAGE} = useAuth();
     const [inputValue, setInputValue] = useState("");
-    const Header = LanguageStore((state) => state.translations.Header);
+    const Header = LENUAGE.Header;
     const {ChangingCallback, cntUser} = useAuth();
     const [filtered, setFiltered] = useState<UserSearchType[]>([]);
     const friendStore = FriendStore((set) => set.fetchFriends);
