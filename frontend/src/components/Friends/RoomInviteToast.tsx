@@ -4,13 +4,12 @@ import { useRouter } from "next/navigation";
 import { InviteStore } from "@/src/components/Store/InviteStore";
 import { ArenaStore } from "@/src/components/Store/ArenaStore";
 import { useAuth } from "@/src/components/Provider/UserProvider";
-import { LanguageStore } from "@/src/components/Store/LanguageStore";
 
 export default function RoomInviteToast() {
     const router = useRouter();
     const invites = InviteStore((s) => s.invites);
-    const { cntUser } = useAuth();
-    const AR_LENG = LanguageStore((state) => state.translations.Arena);
+    const { cntUser, LENUAGE } = useAuth();
+    const AR_LENG = LENUAGE.Arena;
 
     if (invites.length === 0) return null;
 
@@ -43,13 +42,14 @@ export default function RoomInviteToast() {
                                 InviteStore.getState().removeInvite(invite.roomId, invite.from.id);
                                 ArenaStore.getState().setPendingRoomId(invite.roomId);
                                 ArenaStore.getState().setMode("online");
-                                router.push(`/server/arena?r=${Date.now()}`);
+                                router.push(`/server/arena?mode=online&r=${Date.now()}`);
                             }}>
                             {AR_LENG.saidBar.position.join}
                         </button>
                         <button type="button" className="fr-actionBtn fr-actionReject"
                             onClick={() => InviteStore.getState().removeInvite(invite.roomId, invite.from.id)}>
                             {AR_LENG.saidBar.position.ignore}
+                            
                         </button>
                     </div>
                 </div>

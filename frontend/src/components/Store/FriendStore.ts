@@ -21,9 +21,14 @@ export const FriendStore = create<FriendStoreType>((set) => ( {
     invited: [],
 
     fetchFriends: async () => {
-      const res = await fetch("/api/edit?path=/friends");
-      const data = await res.json();
-      set({ friends: data });
+      try {
+          const res = await fetch("/api/edit?path=/friends");
+          if (!res.ok) return;
+          const data = await res.json();
+          set({ friends: data });
+      } catch {
+          console.log("Fetch friends failed");
+      }
     },
 
     deleteFriend : async (id: number) => {

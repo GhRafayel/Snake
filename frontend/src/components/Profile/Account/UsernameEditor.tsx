@@ -3,12 +3,11 @@ import { useState } from 'react';
 import { User } from 'lucide-react';
 import { Lib } from '@/src/lib/lib';
 import { useAuth } from '@/src/components/Provider/UserProvider';
-import { LanguageStore } from '@/src/components/Store/LanguageStore';
 
 export default function UsernameEditor() {
-  const profil = LanguageStore((state) => state.translations.Profile);
-  const { cntUser } = useAuth();
-  
+ 
+  const { cntUser, LENUAGE } = useAuth();
+   const profil = LENUAGE.Profile;
   const [editing, setEditing] = useState(false);
   const [value, setValue] = useState(cntUser?.Username ?? '');
   const [error, setError] = useState(false);

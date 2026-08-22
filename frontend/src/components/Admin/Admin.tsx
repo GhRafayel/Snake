@@ -3,7 +3,6 @@
 import { useEffect } from "react";
 import { Search, ShieldCheck, ChevronRight, TriangleAlert } from "lucide-react";
 import { useAuth } from "@/src/components/Provider/UserProvider";
-import { LanguageStore } from "@/src/components/Store/LanguageStore";
 import { AdminStore } from "@/src/components/Store/AdminStore";
 import AdminUserForm from "./AdminUserForm";
 
@@ -15,8 +14,8 @@ function getInitials(name: string) {
 
 export default function Admin() {
 
-  const { cntUser } = useAuth();
-  const A_LENG = LanguageStore((s) => s.translations.Admin);
+  const { cntUser, LENUAGE } = useAuth();
+  const A_LENG = LENUAGE.Admin; 
   const A_STORE = AdminStore();
 
   useEffect(() => {

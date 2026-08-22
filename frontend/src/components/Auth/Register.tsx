@@ -30,7 +30,7 @@ return (
                         return setPassword("Wrong password try again");
 					const {ConfirmPassword, ...data} = form;
 					await Lib.postRequest("/api/auth?path=/auth/register", {...data})
-					.then(res => res.ok ? (ChangingCallback(undefined, "refreshUser") , router.push("/")) : console.log(res));
+					.then(res => res.ok ? (ChangingCallback(undefined, "me") , router.push("/")) : console.log(res));
 				 }}
 			>
 				{registrData.map((item, i) => (<FormInputs key={i} item={item} />))}

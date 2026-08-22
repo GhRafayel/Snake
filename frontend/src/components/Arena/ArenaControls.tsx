@@ -1,10 +1,12 @@
 'use client'
 import { ArenaStore }       from "@/src/components/Store/ArenaStore";
-import { LanguageStore }    from "@/src/components/Store/LanguageStore";
+import { useAuth } from "../Provider/UserProvider";
 
 export default function ArenaControls() {
+    const {LENUAGE} = useAuth();
     const AR_STORE = ArenaStore();
-    const AR_LENG = LanguageStore((state) => state.translations.Arena.control);
+    const AR_LENG = LENUAGE.Arena.control;
+    
     return (
         <div className={`flex items-center justify-center text-xs  py-4`}>
             <div className="w-full flex justify-around">

@@ -3,13 +3,12 @@
 import Link from "next/link";
 import Avatar from "@/src/components/Nav/Avatar"
 import { useAuth } from "@/src/components/Provider/UserProvider"
-import { LanguageStore } from "@/src/components/Store/LanguageStore";
 import NavSearch from "./NavSearch";
 
 export default function Navbar() {
 
-  const { cntUser } = useAuth()
-  const NavHeader = LanguageStore((state) => state.translations.Header);
+  const { cntUser, LENUAGE } = useAuth()
+  const NavHeader = LENUAGE.Header;
 
   return (
     <nav className={`nav ${cntUser?.theme ?? true ? "bg-black" : "bg-gray-100 "}`}>

@@ -3,18 +3,17 @@ import { Trophy, Copy, Check}   from "lucide-react";
 import { Clock, Users }         from "lucide-react";
 import { useState }             from "react";
 import { ArenaStore }           from "@/src/components/Store/ArenaStore";
-import { LanguageStore }        from "@/src/components/Store/LanguageStore";
 import { useAuth }              from "@/src/components/Provider/UserProvider";
-
 import MobileFab                from "./MobileFab";
 import Timer                    from "./Timer";
 
 export default function ArenaHeader() {
-    const roomState = ArenaStore((s) => s.roomState);
-    const AR_LENG = LanguageStore((state) => state.translations.Arena.header);
-    const [copied, setCopied] = useState(false);
-    const {cntUser} = useAuth();
 
+    const {cntUser, LENUAGE} = useAuth();
+    const roomState = ArenaStore((s) => s.roomState);
+    const AR_LENG = LENUAGE.Arena.header;
+    const [copied, setCopied] = useState(false);
+    
     const stats: { icon: typeof Clock; value: React.ReactNode; label: string }[] = [
         { icon: Clock, value: <Timer />, label: AR_LENG.time },
         { icon: Users, value: roomState?.players ?? 0, label: AR_LENG.players },

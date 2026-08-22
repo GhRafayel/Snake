@@ -3,13 +3,12 @@
 import { useState } from "react";
 import { MessageSquareText, X, Send } from "lucide-react";
 import { useAuth } from "@/src/components/Provider/UserProvider";
-import { LanguageStore } from "@/src/components/Store/LanguageStore";
 import { Lib } from "@/src/lib/lib";
 
 export default function Contact() {
     const [isOpen, setIsOpen] = useState(false);
-    const { cntUser } = useAuth();
-    const contactData = LanguageStore((state) => state.translations.contact);
+    const { cntUser, LENUAGE } = useAuth();
+    const contactData = LENUAGE.contact;
 
     return (
         <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-4 pointer-events-none">

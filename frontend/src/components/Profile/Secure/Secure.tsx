@@ -1,8 +1,8 @@
 'use client';
 import { Dispatch, SetStateAction } from 'react';
 import { KeyRound } from 'lucide-react';
-import { LanguageStore } from "@/src/components/Store/LanguageStore";
 import ChangePasswordForm from './ChangePasswordForm';
+import { useAuth } from '../../Provider/UserProvider';
 
 interface ChangePasswordSectionProps {
   showChangePassword: boolean;
@@ -10,7 +10,7 @@ interface ChangePasswordSectionProps {
 }
 
 export default function Secure({ showChangePassword, setShowChangePassword }: ChangePasswordSectionProps) {
-  const PF_LENG = LanguageStore((state) => state.translations.Profile);
+  const PF_LENG = useAuth().LENUAGE.Profile;
 
   return (
     <div className="pf-row pf-rowStack">

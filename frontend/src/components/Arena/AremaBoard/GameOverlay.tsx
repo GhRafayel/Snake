@@ -5,19 +5,19 @@ import { useRouter }        from "next/navigation";
 import { ArenaStore }       from "@/src/components/Store/ArenaStore";
 import { GameCanvasStore }  from "@/src/components/Store/GameCanvasStore";
 import { useAuth }          from "@/src/components/Provider/UserProvider";
-import { LanguageStore }    from "@/src/components/Store/LanguageStore";
 
 export default function GameOverlay() {
+
+    const {LENUAGE, ChangingCallback} = useAuth()
     const gameState = ArenaStore((s) => s.gameState);
     const router = useRouter();
-    const {ChangingCallback} = useAuth()
-    const AR_LENG = LanguageStore((state) => state.translations.Arena.overlay);
+    const AR_LENG = LENUAGE.Arena.overlay;
 
     const showOver = gameState === 'OVER' || gameState === 'END';
     const showWin = gameState === 'WIN';
 
     useEffect(() => {
-        if (showOver || showWin) ChangingCallback(undefined,"refreshUser");
+        if (showOver || showWin) ChangingCallback(undefined,"me");
     }, [showOver, showWin]);
 
     if (!showOver && !showWin) return null;
@@ -30,7 +30,7 @@ export default function GameOverlay() {
         GameCanvasStore.getState().setInternalGameState('END');
         arena.setGameState('END');
         router.push(`/server/arena?r=${Date.now()}`);
-        ChangingCallback(undefined,"refreshUser");
+        ChangingCallback(undefined, "me");
         router.refresh();
     }
 

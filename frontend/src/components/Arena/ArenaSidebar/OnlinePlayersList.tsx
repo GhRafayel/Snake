@@ -4,13 +4,13 @@ import { Users }                from "lucide-react";
 import {  UserStore }           from "@/src/components/Store/UserStore";
 import { useAuth }              from "@/src/components/Provider/UserProvider";
 import { OnlineUsersType }      from "@/src/types/UserTypes/UserTypes";
-import { LanguageStore }        from "@/src/components/Store/LanguageStore";
 import OnlineUser               from "@/src/components/Arena/ArenaSidebar/OnlineUser";
 
 export default function OnlinePlayersList() {
-    const onlineUserList = LanguageStore((state)=> state.translations.Arena.saidBar);
+
+    const {cntUser, LENUAGE} = useAuth();
+    const onlineUserList = LENUAGE.Arena.saidBar; 
     const {onlineUsers} = UserStore();
-    const {cntUser} = useAuth();
 
     return (
         <div className="flex flex-col min-h-0 ">

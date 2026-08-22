@@ -1,15 +1,14 @@
 
 import { useAuth } from "@/src/components/Provider/UserProvider";
 import { OnlineUsersType } from "@/src/types/UserTypes/UserTypes";
-import { LanguageStore } from "@/src/components/Store/LanguageStore";
 
 type Props = {
   obj?: OnlineUsersType;
 };
 
 export default function OnlineUser({ obj }: Props) {
-  const { cntUser } = useAuth();
-  const History = LanguageStore((state) => state.translations.History);
+  const { cntUser, LENUAGE } = useAuth();
+  const History = LENUAGE.History;
   if (!obj) return null;
   const isYou = cntUser?.id === obj.id;
 
@@ -17,10 +16,8 @@ export default function OnlineUser({ obj }: Props) {
     <div
       className={`
         group relative flex flex-col gap-1 rounded-xl border px-3 py-2.5
-        transition-all duration-200 cursor-default
-        ${isYou
-          ? "border-indigo-500/30 bg-indigo-500/10 hover:bg-indigo-500/20"
-          : cntUser?.theme
+        transition-all duration-200 cursor-default border-indigo-500/30 bg-indigo-500/10 hover:bg-indigo-500/20
+        ${ cntUser?.theme
             ? "border-white/10 bg-white/3 hover:bg-white/8 hover:border-white/20"
             : "border-gray-200 bg-gray-50 hover:bg-gray-100 hover:border-gray-300"
         }

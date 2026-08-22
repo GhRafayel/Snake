@@ -166,9 +166,7 @@ export class UsersService {
 
 	async changeLanguage(id: number, body : { language: string})
 	{
-		const res =  await this.databaseService.users.update({ where: {id, }, data: body, })
-		console.log(res)
-		return res;
+		return await this.databaseService.users.update({ where: {id, }, data: body, })
 	}
 
 	async changeUsername(id: number, body: { Username: string }) {

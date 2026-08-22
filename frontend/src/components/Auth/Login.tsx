@@ -25,7 +25,7 @@ return (
 				e.preventDefault();
 				const form = Object.fromEntries(new FormData(e.currentTarget));
 			 	await Lib.postRequest("/api/auth?path=/auth/login", {...form} )
-				.then( async (res) => res.ok ? (ChangingCallback(undefined, "refreshUser"), router.push("/")) : (console.log(res), setLogin("Wrong Email or Password")))
+				.then( async (res) => res.ok ? (ChangingCallback(undefined, "me"), router.push("/")) : (console.log(res), setLogin("Wrong Email or Password")))
 			}}
             >
 				{loginData.map((item, i) => ( <FormInputs key={i} item={item}/>) )}

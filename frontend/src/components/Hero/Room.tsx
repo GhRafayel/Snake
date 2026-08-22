@@ -1,12 +1,11 @@
 "use client";
 
-import { LanguageStore } from "@/src/components/Store/LanguageStore";
 import { useAuth } from "@/src/components/Provider/UserProvider";
 import Cards from "./Cards";
 
 export default function Room({choice} : {choice: string} ) {
-    const {cntUser} = useAuth();
-    const data = LanguageStore((state)=> state.translations).HomePage.cards;
+    const {cntUser, LENUAGE} = useAuth();
+    const data = LENUAGE.HomePage.cards;
     return (
        <div className="py-10 px-8 pb-15 text-center flex flex-col items-center ">
 

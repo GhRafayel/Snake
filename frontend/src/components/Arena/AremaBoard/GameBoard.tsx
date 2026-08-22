@@ -4,22 +4,22 @@ import { useEffect }        from "react";
 import { Loader }           from "lucide-react";
 import { ArenaStore }       from "@/src/components/Store/ArenaStore";
 import { useAuth }          from "@/src/components/Provider/UserProvider";
-import { LanguageStore }    from "@/src/components/Store/LanguageStore";
 import { ArenaBoardType }   from "@/src/types/GameTypes/GameTypes";
 import GameCanvas           from "./GameCanvas";
 
 type RoomStatus = keyof ArenaBoardType;
 
 export default function GameBoard() {
+    const {cntUser, LENUAGE } = useAuth();
 
     const roomState = ArenaStore((s) => s.roomState);
     const countdownSeconds = ArenaStore((s) => s.countdownSeconds);
     const gameState = ArenaStore((s) => s.gameState);
-    const AR_LENG : ArenaBoardType = LanguageStore((state) => state.translations.Arena.board);
-    const {cntUser } = useAuth();
+    const AR_LENG = LENUAGE.Arena.board;
     const rawStatus = roomState?.roomStatus;
     const status = roomState ? AR_LENG[roomState.roomStatus as RoomStatus] : AR_LENG.connecting;
     const isGameOver = gameState === "WIN" || gameState === "OVER" || gameState === "END";
+    const showCanvas = rawStatus === "PLAYING" || isGameOver;
 
     useEffect(() => {
         if (rawStatus !== "STARTING") return;
@@ -30,9 +30,9 @@ export default function GameBoard() {
     }, [rawStatus]);
 
     return (
-        <div id="canvas-container" className="col-span-4 h-[calc(100vh-250px)] flex flex-col items-center justify-start mt-2">
+        <div id="canvas-container" className="col-span-4 mx-auto aspect-square w-full max-w-[calc(100vh-250px)] max-h-[calc(100vh-250px)] flex flex-col items-center justify-start mt-2" >
             {
-                (rawStatus === "PLAYING" || isGameOver) ?
+                showCanvas ?
                 (
                     <GameCanvas />
                 ) :

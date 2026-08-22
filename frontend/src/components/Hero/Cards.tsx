@@ -36,7 +36,7 @@ export default function Cards({ card } : Props) {
                         setState(true);
                         await new Promise((r) => setTimeout(r, 2000));
                         ArenaStore.getState().setMode(card.mode);
-                        router.push(`/server/arena?r=${Date.now()}`);
+                        router.push(`/server/arena?mode=${card.mode}&r=${Date.now()}`);
                     }}
                     className={`match-card-button ${cntUser?.theme ?? true ? "border-border-subtle  hover:text-blue-200" : ""}`}>
                     {card.button} 

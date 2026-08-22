@@ -1,4 +1,4 @@
-import { LanguageType } from "../StoreTypes/StoreTypes";
+import { LanguageType, TranslationTypes } from "../StoreTypes/StoreTypes";
 
 export type RoleType = "ADMIN" | "PLAYER" | "BOT";
 
@@ -14,8 +14,9 @@ export interface UserSearchType {
 }
 
 export type UserContextType = {
-    cntUser: UserType | null,
-    ChangingCallback: (value: Object | undefined, funName: string) => Promise<void>;
+    cntUser: UserType | null;
+    LENUAGE: TranslationTypes;
+    ChangingCallback: (value: Object | undefined, endpoint: string) => Promise<void>;
 }
 
 export type UserType = {
