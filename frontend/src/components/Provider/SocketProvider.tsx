@@ -5,35 +5,67 @@ import { useAuth } from "./UserProvider";
 import { createSoket} from "@/src/components/Socket/Socket";
 import { InviteStore } from "@/src/components/Store/InviteStore";
 import { RoomInviteType } from "@/src/types/GameTypes/GameTypes";
+import { ArenaStore } from "../Store/ArenaStore";
+import { UserStore } from "../Store/UserStore";
+import { RoomStateType, RoomCountdownType } from "@/src/types/GameTypes/GameTypes";
+import { OnlineUsersType }                  from "@/src/types/UserTypes/UserTypes";
 
 export default function SocketProvider({ children }: { children: React.ReactNode }) {
     const { cntUser } = useAuth();
-    const SOCKET_PORT = 2000;
 
     useEffect(() => {
       if (!cntUser) return;
 
-      // I did this for having connection with other computers
-      const url = `http://${window.location.hostname}:${SOCKET_PORT}`;
-      //const url = process.env.NEXT_PUBLIC_SOCKET_URL;
-      const socketref = createSoket(url);
+      const socket = createSoket();
+      if (!socket) return;
 
-      socketref.on("connect",  () =>  console.log("✅ Socket connected!", socketref.id));
-      socketref.on("disconnect", () => console.log("❌ Socket disconnected"));
+      const handleConnection = () => {
+        console.log("✅ Socket connected!", socket.id)
+      };
+      
+      const handleDisconnect = () => {
+        console.log("❌ Socket disconnected")
+      };
+
+      const handleOnlineUsers = (gameData: OnlineUsersType[]) => {
+          UserStore.setState({ onlineUsers: gameData });
+      };
+
+      const handleRoomUpdate = (gameData: RoomStateType) => {
+          ArenaStore.getState().setRoomState({ ...gameData });
+          if (gameData.roomStatus !== "STARTING")
+              ArenaStore.getState().setCountdownSeconds(null);
+      };
+
+      const handleRoomCountdown = (gameData: RoomCountdownType) => {
+          ArenaStore.getState().setCountdownSeconds(gameData.seconds);
+      };
 
       const handleRoomInvite = (invite: RoomInviteType) => {
         if (invite.from.id === cntUser.id) return;
         InviteStore.getState().addInvite(invite);
-      };
-      socketref.on("room-invite", handleRoomInvite);
+    };
 
-      if (!socketref.connected)  socketref.connect();
+      socket.on("connect", handleConnection );
+      socket.on("disconnect", handleDisconnect);
+      socket.on("online-users", handleOnlineUsers);
+      socket.on("room-update", handleRoomUpdate);
+      socket.on("room-countdown", handleRoomCountdown);
+      socket.on("room-invite", handleRoomInvite);
+
+      if (!socket.connected)  socket.connect();
+
       return () => {
-        socketref.off("connect");
-        socketref.off("disconnect");
-        socketref.off("room-invite", handleRoomInvite);
+        socket.off("connect");
+        socket.off("disconnect");
+        socket.off("online-users", handleOnlineUsers);
+        socket.off("room-update", handleRoomUpdate);
+        socket.off("room-countdown", handleRoomCountdown);
+        socket.off("room-invite", handleRoomInvite);
+        socket.disconnect();
       };
 
     },[cntUser?.id])
+
     return children;
 }

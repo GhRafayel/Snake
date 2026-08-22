@@ -22,9 +22,10 @@ const geistMono = Geist_Mono({
 export default async function RootLayout( { children } : Readonly< { children: React.ReactNode }> ) {
 
   const accessToken = (await cookies()).get("accessToken")?.value
-  let user = await Lib.getUser(accessToken);
-  let language  = await Lib.getLanguage(user ? user.language : null);
-  let theme  = user ? user.theme : true;
+  const user = await Lib.getUser(accessToken);
+  const language  = await Lib.getLanguage(user ? user.language : null);
+  const theme  = user ? user.theme : true;
+ 
   
   return (
     <html lang="en" style={{ colorScheme: theme ?  "dark" : "light" }} className={`no-scrollbar ${geistSans.variable} ${geistMono.variable} h-full antialiased`} >

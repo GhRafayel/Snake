@@ -1,26 +1,23 @@
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, CheckCircle, UsersRound, Trophy } from "lucide-react";
 import { useEffect, useState } from "react";
 import { FriendStore } from "../Store/FriendStore";
 import { useAuth } from "../Provider/UserProvider";
 
-export function ArenaFriends () {
-    const {LENUAGE} = useAuth()
+export default function ArenaFriends () {
+    const {LENUAGE, cntUser} = useAuth()
     const [F_list, setF_list] = useState(true);
     const FR_LENG = LENUAGE.Friends;
-    const AR_LENG = LENUAGE.Arena.saidBar;
     const FR_STORE = FriendStore();
     const acceptedFriends = FR_STORE.friends.filter((friend) => friend.status === "ACCEPTED");
-
     useEffect(() => {FR_STORE.fetchFriends()},[]);
 
 
     return (
-        <section className="pf-card ">
-            <div className="pf-cardBody">
+        <section className={`flex flex-col gap-6 p-5 sm:p-6 `}>
 
-                <header className="fr-header flex cursor-pointer items-center justify-between" onClick={() => setF_list(!F_list)} >
+                <header className={`fr-header flex cursor-pointer items-center justify-between ` }onClick={() => setF_list(!F_list)} >
                     <div>
-                        <h3 className="pf-title">{FR_LENG.friends}</h3>
+                        <h3 className={`text-lg font-semibold tracking-tight ${cntUser?.theme ?? true ? "text-gray-300" : "text-gray-700"}`}>{FR_LENG.friends}</h3>
                     </div>
                     <ChevronDown size={18} className={`fr-chevron ${F_list ? 'fr-chevron-open' : ''}`} />
                 </header>
@@ -31,26 +28,35 @@ export function ArenaFriends () {
                         {acceptedFriends.map((item, i) => {
                             const isInvited = FR_STORE.invited.includes(item.id);
                             return (
-                            <div className="fr-row" key={i}>
-                                <span className={`fr-avatar fr-av-${i % 4}`}>
-                                    {item.Username.slice(0, 2).toUpperCase()}
-                                    <span className={`fr-dot ${item.isOnline ? 'fr-dot-active' : 'fr-dot-away'}`} />
-                                </span>
-                                <div className="fr-info">
-                                    <button type="button" className="fr-actionBtn fr-actionAccept" disabled={!item.isOnline || isInvited}
-                                        onClick={() => FR_STORE.handleInvite(item.id)}
-                                    >
-                                        {isInvited ? AR_LENG.invited : AR_LENG.position.join}
+                            <div className="flex w-full min-w-0 items-center justify-between gap-3 rounded-xl px-2 py-2.5 transition-all duration-150 border pt-2  border-indigo-500/30 bg-indigo-500/10 hover:bg-indigo-500/20" key={i}>
+
+                                <div className="flex  gap-10 items-center  justify-between ">
+                                    <span className={`fr-avatar fr-av-${i % 4}`}>
+                                        {item.Username.slice(0, 2).toUpperCase()}
+                                        <span className={`fr-dot ${item.isOnline ? 'fr-dot-active' : 'fr-dot-away'}`} />
+                                    </span>
+                                    <button className="flex items-center gap-2 px-4 py-2 rounded-lg" onClick={() => FR_STORE.handleInvite(item.id)}>
+                                        {isInvited ? <CheckCircle size={30} className="text-green-500 cursor-pointer" /> : <UsersRound size={30} className="text-green-500 cursor-pointer"/>}
                                     </button>
                                 </div>
-                                <span className="fr-rank">{item.score}</span>
+
+                                <div className=" shrink-0  text-center p-1 ">
+                                    <div key={i} className={`flex items-center gap-2 rounded-lg px-3 py-1.5 ${cntUser?.theme ?? true ? "bg-white/5" : "bg-black/5"}`} >
+                                        <Trophy className={`h-3.5 w-3.5 shrink-0 ${cntUser?.theme ?? true ? "text-gray-500" : "text-gray-400"}`} />
+                                        <span className={`text-xs sm:text-sm font-semibold tabular-nums ${cntUser?.theme ?? true ? "text-gray-100" : "text-gray-900"}`}>
+                                            {LENUAGE.History.pts}
+                                        </span>
+                                        <span className={`text-[10px] sm:text-[11px] ${cntUser?.theme ?? true ? "text-gray-500" : "text-gray-500"}`}>
+                                           {item.score}
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
                             );
                         })}
                         </div>
                     ) : ( <div className="fr-empty">{FR_LENG.empty}</div> )
                 )}
-            </div>
-        </section>
+         </section>
     )
 }

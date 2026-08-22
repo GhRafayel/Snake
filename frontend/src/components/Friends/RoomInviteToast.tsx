@@ -42,13 +42,14 @@ export default function RoomInviteToast() {
                                 InviteStore.getState().removeInvite(invite.roomId, invite.from.id);
                                 ArenaStore.getState().setPendingRoomId(invite.roomId);
                                 ArenaStore.getState().setMode("online");
-                                router.push(`/server/arena?r=${Date.now()}`);
+                                router.push(`/server/arena?mode=online&r=${Date.now()}`);
                             }}>
                             {AR_LENG.saidBar.position.join}
                         </button>
                         <button type="button" className="fr-actionBtn fr-actionReject"
                             onClick={() => InviteStore.getState().removeInvite(invite.roomId, invite.from.id)}>
                             {AR_LENG.saidBar.position.ignore}
+                            
                         </button>
                     </div>
                 </div>

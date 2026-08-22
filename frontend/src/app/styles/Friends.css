@@ -32,11 +32,15 @@
 }
 
 .fr-info {
-  @apply flex min-w-0 flex-1 flex-col;
+  @apply flex min-w-0 flex-1 flex-col gap-1.5;
+}
+
+.fr-topline {
+  @apply flex w-full items-center justify-between gap-2;
 }
 
 .fr-name {
-  @apply truncate text-sm font-semibold text-(--color-text-primary);
+  @apply min-w-0 truncate text-sm font-semibold text-(--color-text-primary);
 }
 
 .fr-status {
@@ -72,11 +76,11 @@
 }
 
 .fr-actions {
-  @apply flex w-fit items-center gap-2 pt-0.5 cursor-pointer;
+  @apply flex w-full items-center gap-2 pt-0.5 cursor-pointer;
 }
 
 .fr-actionBtn {
-  @apply rounded-full px-2.5 py-1 text-[11px] font-semibold transition-colors duration-150 cursor-pointer;
+  @apply w-full min-w-0 truncate text-center rounded-full px-2.5 py-1 text-[11px] font-semibold leading-tight transition-colors duration-150 cursor-pointer;
 }
 
 .fr-actionAccept {
@@ -84,5 +88,5 @@
 }
 
 .fr-actionReject {
-  @apply border border-(--color-border-secondary) bg-(--color-background-primary) text-(--color-text-secondary) hover:bg-(--color-secondary);
+  @apply border border-gray-500 bg-(--color-background-primary) text-(--color-text-secondary) hover:bg-(--color-secondary);
 }

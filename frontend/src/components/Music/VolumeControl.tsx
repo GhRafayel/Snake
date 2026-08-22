@@ -12,7 +12,7 @@ export default function VolumeControl({musicName} : {musicName : MusicNameType})
   const {cntUser} = useAuth();
 
   return (
-    <div className={`pf-volume ${cntUser?.theme ?? true ? "" : " p-2 border rounded-2xl "}`}>
+    <div className={`pf-volume  p-2 border rounded-2xl "}  border-indigo-500/30 bg-indigo-500/10 hover:bg-indigo-500/20`}>
       <button type="button" className="pf-volumeIconBtn" onClick={() => toggleMusic(musicName)} aria-label="Toggle sound">
         <Icon size={16} />
       </button>

@@ -36,8 +36,7 @@ export default function UserProvider ({ children,  initialUser, initialTranslati
         setCntUser({...res})
     },[]);
 
-    const value = useMemo(
-        () => ({ cntUser, LENUAGE, ChangingCallback }),
+    const value = useMemo( () => ({ cntUser, LENUAGE, ChangingCallback }),
         [cntUser, LENUAGE, ChangingCallback]
     );
 

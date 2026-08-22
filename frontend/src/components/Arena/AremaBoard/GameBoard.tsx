@@ -19,6 +19,7 @@ export default function GameBoard() {
     const rawStatus = roomState?.roomStatus;
     const status = roomState ? AR_LENG[roomState.roomStatus as RoomStatus] : AR_LENG.connecting;
     const isGameOver = gameState === "WIN" || gameState === "OVER" || gameState === "END";
+    const showCanvas = rawStatus === "PLAYING" || isGameOver;
 
     useEffect(() => {
         if (rawStatus !== "STARTING") return;
@@ -29,9 +30,9 @@ export default function GameBoard() {
     }, [rawStatus]);
 
     return (
-        <div id="canvas-container" className="col-span-4 h-[calc(100vh-250px)] flex flex-col items-center justify-start mt-2">
+        <div id="canvas-container" className="col-span-4 mx-auto aspect-square w-full max-w-[calc(100vh-250px)] max-h-[calc(100vh-250px)] flex flex-col items-center justify-start mt-2" >
             {
-                (rawStatus === "PLAYING" || isGameOver) ?
+                showCanvas ?
                 (
                     <GameCanvas />
                 ) :

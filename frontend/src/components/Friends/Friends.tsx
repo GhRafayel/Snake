@@ -44,13 +44,10 @@ export default function Friends() {
                       {item.status === 'PENDING' && !!cntUser && item.senderId !== cntUser.id ? (
                         <div className="fr-actions">
 
-                          <button type="button" className="fr-actionBtn fr-actionAccept" 
-                                  onClick={async() => await FR_STORE.acceptFriend(item.requestId) }
-                          >
+                          <button type="button" className="fr-actionBtn fr-actionAccept" onClick={async() => await FR_STORE.acceptFriend(item.requestId) } >
                             {FR_LENG.accept}
                           </button>
-                          <button type="button" className="fr-actionBtn fr-actionReject" 
-                                  onClick={async () => await FR_STORE.rejectFriend(item.requestId) } >
+                          <button type="button" className="fr-actionBtn fr-actionReject"  onClick={async () => await FR_STORE.rejectFriend(item.requestId) } >
                             {FR_LENG.reject}
                           </button>
                         </div>
