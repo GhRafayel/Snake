@@ -161,10 +161,11 @@ export interface TranslationTypes {
 			},
 		},
 		contact: {
-			contact:  string; 
-			send:  string; 
-			title:  string; 
-			des:  string; 
+			contact:  string;
+			send:  string;
+			title:  string;
+			des:  string;
+			invites: string;
 		},
 		Friends: {
 			social:  string; 

@@ -266,6 +266,7 @@ export const language : TranslationTypes = {
             send: "Send",
             title: "Send a message to administration",
             des: "Write your message here...",
+            invites: "Pending Invites",
         },
         Friends: {
             social: "Social",
