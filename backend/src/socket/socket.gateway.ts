@@ -161,16 +161,21 @@ export class SocketGateway implements OnGatewayConnection, OnGatewayDisconnect, 
         client.disconnect();
         return null;
       }
-      const payload = await this.tokenService.verifyAccessToken(accessToken);
-      const user = await this.usersService.findOne(payload.userId);
-      if (!user) {
+      try {
+        const payload = await this.tokenService.verifyAccessToken(accessToken);
+        const user = await this.usersService.findOne(payload.userId);
+        if (!user) {
+          client.disconnect();
+          return null;
+        }
+        return {
+          ...user,
+          history: user.history ?? { gamesWon: 0, gamesLost: 0, totalScore: 0 },
+        };
+      } catch {
         client.disconnect();
         return null;
       }
-      return {
-        ...user,
-        history: user.history ?? { gamesWon: 0, gamesLost: 0, totalScore: 0 },
-      };
     }
 
     async handleConnection(client: Socket) {

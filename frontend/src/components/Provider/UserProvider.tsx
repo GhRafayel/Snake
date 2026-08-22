@@ -1,6 +1,6 @@
 "use client"
 
-import { createContext, useCallback, useContext, useState} from "react"
+import { createContext, useCallback, useContext, useMemo, useState} from "react"
 import { UserType,  UserContextType} from "@/src/types/UserTypes/UserTypes"
 import { TranslationTypes } from "@/src/types/StoreTypes/StoreTypes"
 import { Lib } from "@/src/lib/lib"
@@ -36,8 +36,13 @@ export default function UserProvider ({ children,  initialUser, initialTranslati
         setCntUser({...res})
     },[]);
 
+    const value = useMemo(
+        () => ({ cntUser, LENUAGE, ChangingCallback }),
+        [cntUser, LENUAGE, ChangingCallback]
+    );
+
     return (
-        <UserContext.Provider value={{cntUser, LENUAGE, ChangingCallback}}>
+        <UserContext.Provider value={value}>
             {children}
         </UserContext.Provider>
     )
