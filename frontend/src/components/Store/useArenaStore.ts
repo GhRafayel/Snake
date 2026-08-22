@@ -26,7 +26,7 @@ interface ArenaStoreType {
     resetArena: () => void;
 }
 
-export const ArenaStore = create<ArenaStoreType>((set, get) => ({
+export const useArenaStore = create<ArenaStoreType>((set, get) => ({
     mode: "AI",
     gameState: null,
     gameDir: null,

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { User, Mail, KeyRound, Shield, Lock, Save, X, Trash2, TriangleAlert } from "lucide-react";
-import { AdminStore } from "@/src/components/Store/AdminStore";
+import { useAdminStore } from "@/src/components/Store/useAdminStore";
 import { useAuth } from "@/src/components/Provider/UserProvider";
 import { AdminUserType, AdminUpdateType} from "@/src/types/StoreTypes/StoreTypes";
 import { RoleType } from "@/src/types/UserTypes/UserTypes";
@@ -13,7 +13,7 @@ export default function AdminUserForm({ user, onCancel }: { user: AdminUserType;
 
   const { cntUser, LENUAGE } = useAuth();
   const A_LENG = LENUAGE.Admin.form;
-  const A_STORE = AdminStore();
+  const A_STORE = useAdminStore();
 
   const [form, setForm] = useState<AdminUpdateType>({Username: user.Username, Email: user.Email, role: user.role, Password: ""})
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);

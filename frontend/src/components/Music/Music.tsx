@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { MusicStore } from '@/src/components/Store/MusicStore';
+import { useMusicStore } from '@/src/components/Store/useMusicStore';
 import { MusicNameType } from '@/src/types/UserTypes/UserTypes';
 
 interface MusicProps {
@@ -9,7 +9,7 @@ interface MusicProps {
 }
 
 export default function Music({ musicName }: MusicProps) {
-    const { Musics, hydrate } = MusicStore();
+    const { Musics, hydrate } = useMusicStore();
     const audioRef = useRef<HTMLAudioElement | null>(null);
     const music = Musics[musicName];
 

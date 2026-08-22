@@ -1,5 +1,5 @@
 "use client"
-import { MusicStore } from "@/src/components/Store/MusicStore";
+import { useMusicStore } from "@/src/components/Store/useMusicStore";
 
 let audioCtx: AudioContext | null = null;
 
@@ -14,7 +14,7 @@ function getAudioContext(): AudioContext | null {
 }
 
 export function playEatSound() {
-    const { Musics } = MusicStore.getState();
+    const { Musics } = useMusicStore.getState();
     if (!Musics.game_sfx_on.isMusicOn  || Musics.game_sfx_on.volume <= 0) return;
 
     const ctx = getAudioContext();

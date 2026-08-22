@@ -22,7 +22,7 @@ interface GameCanvasStoreType {
     resetGameCanvas: () => void;
 }
 
-export const GameCanvasStore = create<GameCanvasStoreType>((set) => ({
+export const useGameCanvasStore = create<GameCanvasStoreType>((set) => ({
     prevGame: null,
     currGame: null,
     stateTime: 0,

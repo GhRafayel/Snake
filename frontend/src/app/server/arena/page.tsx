@@ -1,5 +1,5 @@
 import Arena from "@/src/components/Arena/Arena";
-import { ArenaMode } from "@/src/components/Store/ArenaStore";
+import { ArenaMode } from "@/src/components/Store/useArenaStore";
 
 export default async function Page({ searchParams }: {
     searchParams: Promise<{ [key: string]: string | string[] | undefined }>;

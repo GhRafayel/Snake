@@ -8,7 +8,7 @@ interface InviteStoreType {
   clearInvites: () => void;
 }
 
-export const InviteStore = create<InviteStoreType>((set) => ({
+export const useInviteStore = create<InviteStoreType>((set) => ({
   invites: [],
 
   addInvite: (invite) =>

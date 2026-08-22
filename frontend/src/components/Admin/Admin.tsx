@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { Search, ShieldCheck, ChevronRight, TriangleAlert } from "lucide-react";
 import { useAuth } from "@/src/components/Provider/UserProvider";
-import { AdminStore } from "@/src/components/Store/AdminStore";
+import { useAdminStore } from "@/src/components/Store/useAdminStore";
 import AdminUserForm from "./AdminUserForm";
 
 function getInitials(name: string) {
@@ -16,7 +16,7 @@ export default function Admin() {
 
   const { cntUser, LENUAGE } = useAuth();
   const A_LENG = LENUAGE.Admin; 
-  const A_STORE = AdminStore();
+  const A_STORE = useAdminStore();
 
   useEffect(() => {
     if (cntUser?.role === "ADMIN") A_STORE.searchUsers("");

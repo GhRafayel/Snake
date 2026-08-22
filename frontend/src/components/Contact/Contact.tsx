@@ -4,14 +4,14 @@ import { useEffect, useState } from "react";
 import { MessageSquareText, X, Send } from "lucide-react";
 import { useAuth } from "@/src/components/Provider/UserProvider";
 import { Lib } from "@/src/lib/lib";
-import { FriendStore } from "@/src/components/Store/FriendStore";
+import { useFriendStore } from "@/src/components/Store/useFriendStore";
 
 export default function Contact() {
     const [isOpen, setIsOpen] = useState(false);
     const { cntUser, LENUAGE } = useAuth();
     const contactData = LENUAGE.contact;
     const FR_LENG = LENUAGE.Friends;
-    const FR_STORE = FriendStore();
+    const FR_STORE = useFriendStore();
 
     useEffect(() => {
         if (cntUser) FR_STORE.fetchFriends();

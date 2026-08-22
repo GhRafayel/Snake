@@ -2,8 +2,8 @@
 
 import { useEffect }                        from "react";
 import { useAuth }                          from "@/src/components/Provider/UserProvider";
-import { ArenaStore, ArenaMode }            from "@/src/components/Store/ArenaStore";
-import { DifficultyStore }                  from "@/src/components/Store/DifficultyStore";
+import { useArenaStore, ArenaMode }            from "@/src/components/Store/useArenaStore";
+import { useDifficultyStore }                  from "@/src/components/Store/useDifficultyStore";
 import { useSocket }                        from "@/src/components/Socket/Socket";
 import ArenaHeader                          from "./ArenaHeader/ArenaHeader";
 import ArenaControls                        from "./ArenaControls";
@@ -16,9 +16,9 @@ export default function Arena({ initialMode }: { initialMode: ArenaMode }) {
 
     const {cntUser} = useAuth()
     const socket = useSocket()
-    const AR_STORE = ArenaStore();
+    const AR_STORE = useArenaStore();
     const mode = initialMode;
-    const level = DifficultyStore((s) => s.level);
+    const level = useDifficultyStore((s) => s.level);
 
     useEffect(() => {
         AR_STORE.setMode(mode);

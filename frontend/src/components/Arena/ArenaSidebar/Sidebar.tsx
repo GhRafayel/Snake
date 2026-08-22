@@ -1,9 +1,9 @@
 'use client'
 
 import { X }                                from "lucide-react";
-import { ArenaStore }                       from "@/src/components/Store/ArenaStore";
-import { UserStore }                        from "@/src/components/Store/UserStore";
-import { GameCanvasStore }                  from "@/src/components/Store/GameCanvasStore";
+import { useArenaStore }                       from "@/src/components/Store/useArenaStore";
+import { useUserStore }                        from "@/src/components/Store/useUserStore";
+import { useGameCanvasStore }                  from "@/src/components/Store/useGameCanvasStore";
 import { useAuth }                          from "@/src/components/Provider/UserProvider";
 import { getLeaderSnake, getRankedSnakes }  from "../utils/leaderboard";
 
@@ -13,11 +13,11 @@ import OnlinePlayersList                    from "./OnlinePlayersList";
 
 
 export default function Sidebar() {
-    const sidebarOpen = ArenaStore((s) => s.sidebarOpen);
-    const setSidebarOpen = ArenaStore((s) => s.setSidebarOpen);
-    const mode = ArenaStore((s) => s.mode);
-    const gameData = GameCanvasStore((state) => state.currGame);
-    const {onlineUsers} = UserStore();
+    const sidebarOpen = useArenaStore((s) => s.sidebarOpen);
+    const setSidebarOpen = useArenaStore((s) => s.setSidebarOpen);
+    const mode = useArenaStore((s) => s.mode);
+    const gameData = useGameCanvasStore((state) => state.currGame);
+    const {onlineUsers} = useUserStore();
     const {cntUser, LENUAGE} = useAuth();
     const HD_LENG = LENUAGE.Header;
     const snakes = gameData?.snakes ?? [];

@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-    reactCompiler: false,
+    reactCompiler: true,
     allowedDevOrigins: ['192.168.0.220', '192.168.0.201', 'localhost'],
     experimental: {
       turbopackFileSystemCacheForDev: true,

@@ -1,13 +1,13 @@
 import { ChevronDown, CheckCircle, UsersRound, Trophy } from "lucide-react";
 import { useEffect, useState } from "react";
-import { FriendStore } from "../Store/FriendStore";
+import { useFriendStore } from "../Store/useFriendStore";
 import { useAuth } from "../Provider/UserProvider";
 
 export default function ArenaFriends () {
     const {LENUAGE, cntUser} = useAuth()
     const [F_list, setF_list] = useState(true);
     const FR_LENG = LENUAGE.Friends;
-    const FR_STORE = FriendStore();
+    const FR_STORE = useFriendStore();
     const acceptedFriends = FR_STORE.friends.filter((friend) => friend.status === "ACCEPTED");
     useEffect(() => {FR_STORE.fetchFriends()},[]);
 

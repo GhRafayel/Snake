@@ -3,11 +3,11 @@
 import { useEffect, useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { useAuth } from "@/src/components/Provider/UserProvider";
-import { FriendStore } from "@/src/components/Store/FriendStore";
+import { useFriendStore } from "@/src/components/Store/useFriendStore";
 
 export default function Friends() {
 
-  const FR_STORE = FriendStore();
+  const FR_STORE = useFriendStore();
   const [open, setOpen] = useState(false);
   const { cntUser, LENUAGE } = useAuth();
   const FR_LENG = LENUAGE.Friends;

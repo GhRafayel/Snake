@@ -1,13 +1,13 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { InviteStore } from "@/src/components/Store/InviteStore";
-import { ArenaStore } from "@/src/components/Store/ArenaStore";
+import { useInviteStore } from "@/src/components/Store/useInviteStore";
+import { useArenaStore } from "@/src/components/Store/useArenaStore";
 import { useAuth } from "@/src/components/Provider/UserProvider";
 
 export default function RoomInviteToast() {
     const router = useRouter();
-    const invites = InviteStore((s) => s.invites);
+    const invites = useInviteStore((s) => s.invites);
     const { cntUser, LENUAGE } = useAuth();
     const AR_LENG = LENUAGE.Arena;
 
@@ -39,15 +39,15 @@ export default function RoomInviteToast() {
                     <div className="fr-actions mt-3">
                         <button type="button" className="fr-actionBtn fr-actionAccept"
                             onClick={() => {
-                                InviteStore.getState().removeInvite(invite.roomId, invite.from.id);
-                                ArenaStore.getState().setPendingRoomId(invite.roomId);
-                                ArenaStore.getState().setMode("online");
+                                useInviteStore.getState().removeInvite(invite.roomId, invite.from.id);
+                                useArenaStore.getState().setPendingRoomId(invite.roomId);
+                                useArenaStore.getState().setMode("online");
                                 router.push(`/server/arena?mode=online&r=${Date.now()}`);
                             }}>
                             {AR_LENG.saidBar.position.join}
                         </button>
                         <button type="button" className="fr-actionBtn fr-actionReject"
-                            onClick={() => InviteStore.getState().removeInvite(invite.roomId, invite.from.id)}>
+                            onClick={() => useInviteStore.getState().removeInvite(invite.roomId, invite.from.id)}>
                             {AR_LENG.saidBar.position.ignore}
                             
                         </button>

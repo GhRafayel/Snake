@@ -1,12 +1,12 @@
 'use client';
 import { Volume2, Volume1, VolumeX } from 'lucide-react';
-import { MusicStore } from '@/src/components/Store/MusicStore';
+import { useMusicStore } from '@/src/components/Store/useMusicStore';
 import { MusicNameType } from '@/src/types/UserTypes/UserTypes';
 import { useAuth } from '@/src/components/Provider/UserProvider';
 
 export default function VolumeControl({musicName} : {musicName : MusicNameType}) {
 
-  const { Musics, toggleMusic, setVolume, setMusicOn } = MusicStore();
+  const { Musics, toggleMusic, setVolume, setMusicOn } = useMusicStore();
   const muted = !Musics[musicName].isMusicOn || Musics[musicName].volume === 0;
   const Icon = muted ? VolumeX : Musics[musicName].volume < 0.5 ? Volume1 : Volume2;
   const {cntUser} = useAuth();

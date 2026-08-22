@@ -3,10 +3,10 @@
 import { useEffect } from "react";
 import { useAuth } from "./UserProvider";
 import { createSoket} from "@/src/components/Socket/Socket";
-import { InviteStore } from "@/src/components/Store/InviteStore";
+import { useInviteStore } from "@/src/components/Store/useInviteStore";
 import { RoomInviteType } from "@/src/types/GameTypes/GameTypes";
-import { ArenaStore } from "../Store/ArenaStore";
-import { UserStore } from "../Store/UserStore";
+import { useArenaStore } from "../Store/useArenaStore";
+import { useUserStore } from "../Store/useUserStore";
 import { RoomStateType, RoomCountdownType } from "@/src/types/GameTypes/GameTypes";
 import { OnlineUsersType }                  from "@/src/types/UserTypes/UserTypes";
 
@@ -28,22 +28,22 @@ export default function SocketProvider({ children }: { children: React.ReactNode
       };
 
       const handleOnlineUsers = (gameData: OnlineUsersType[]) => {
-          UserStore.setState({ onlineUsers: gameData });
+          useUserStore.setState({ onlineUsers: gameData });
       };
 
       const handleRoomUpdate = (gameData: RoomStateType) => {
-          ArenaStore.getState().setRoomState({ ...gameData });
+          useArenaStore.getState().setRoomState({ ...gameData });
           if (gameData.roomStatus !== "STARTING")
-              ArenaStore.getState().setCountdownSeconds(null);
+              useArenaStore.getState().setCountdownSeconds(null);
       };
 
       const handleRoomCountdown = (gameData: RoomCountdownType) => {
-          ArenaStore.getState().setCountdownSeconds(gameData.seconds);
+          useArenaStore.getState().setCountdownSeconds(gameData.seconds);
       };
 
       const handleRoomInvite = (invite: RoomInviteType) => {
         if (invite.from.id === cntUser.id) return;
-        InviteStore.getState().addInvite(invite);
+        useInviteStore.getState().addInvite(invite);
     };
 
       socket.on("connect", handleConnection );

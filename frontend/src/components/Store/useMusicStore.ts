@@ -24,7 +24,7 @@ function readStoredVolume(name: string): number {
     return Number.isFinite(parsed) ? Math.min(1, Math.max(0, parsed)) : 0.5;
 }
 
-export const MusicStore = create<MusicStoreType>((set) => ({
+export const useMusicStore = create<MusicStoreType>((set) => ({
     Musics: {
         game_sfx_on: {
             isMusicOn: true,

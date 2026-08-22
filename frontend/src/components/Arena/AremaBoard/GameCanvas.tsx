@@ -3,8 +3,8 @@
 import { useEffect, useRef }    from "react";
 import { useSocket }            from '@/src/components/Socket/Socket';
 import { useAuth }              from "@/src/components/Provider/UserProvider";
-import { ArenaStore }           from "@/src/components/Store/ArenaStore";
-import { GameCanvasStore }      from "@/src/components/Store/GameCanvasStore";
+import { useArenaStore }           from "@/src/components/Store/useArenaStore";
+import { useGameCanvasStore }      from "@/src/components/Store/useGameCanvasStore";
 import { GameSocket }           from "../hooks/GameSocket";
 import { KeyboardControls }     from "../hooks/KeyboardControls";
 import { WindowFocusPause }     from "../hooks/WindowFocusPause";
@@ -18,10 +18,10 @@ export default function GameCanvas() {
 
     const socket = useSocket();
     const { cntUser } = useAuth();
-    const setGameState = ArenaStore((s) => s.setGameState);
+    const setGameState = useArenaStore((s) => s.setGameState);
 
     useEffect(() => {
-        GameCanvasStore.getState().resetGameCanvas();
+        useGameCanvasStore.getState().resetGameCanvas();
         setGameState('START');
     }, [setGameState]);
 

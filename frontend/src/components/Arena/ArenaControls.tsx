@@ -1,10 +1,10 @@
 'use client'
-import { ArenaStore }       from "@/src/components/Store/ArenaStore";
+import { useArenaStore }       from "@/src/components/Store/useArenaStore";
 import { useAuth } from "../Provider/UserProvider";
 
 export default function ArenaControls() {
     const {LENUAGE} = useAuth();
-    const AR_STORE = ArenaStore();
+    const AR_STORE = useArenaStore();
     const AR_LENG = LENUAGE.Arena.control;
     
     return (
