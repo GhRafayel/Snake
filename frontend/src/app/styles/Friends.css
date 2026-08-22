@@ -80,7 +80,7 @@
 }
 
 .fr-actionBtn {
-  @apply w-full min-w-0 truncate text-center rounded-full px-2.5 py-1 text-[11px] font-semibold leading-tight transition-colors duration-150 cursor-pointer;
+  @apply w-fit shrink-0 truncate text-center rounded-full px-3 py-1.5 text-[11px] font-semibold leading-tight transition-colors duration-150 cursor-pointer;
 }
 
 .fr-actionAccept {

@@ -30,7 +30,7 @@ export default function ArenaFriends () {
                             return (
                             <div className="flex w-full min-w-0 items-center justify-between gap-3 rounded-xl px-2 py-2.5 transition-all duration-150 border pt-2  border-indigo-500/30 bg-indigo-500/10 hover:bg-indigo-500/20" key={i}>
 
-                                <div className="flex  gap-10 items-center  justify-between ">
+                                <div className="flex  gap-6 items-center  justify-between ">
                                     <span className={`fr-avatar fr-av-${i % 4}`}>
                                         {item.Username.slice(0, 2).toUpperCase()}
                                         <span className={`fr-dot ${item.isOnline ? 'fr-dot-active' : 'fr-dot-away'}`} />

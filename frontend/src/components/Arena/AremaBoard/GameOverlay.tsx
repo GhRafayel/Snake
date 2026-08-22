@@ -29,7 +29,7 @@ export default function GameOverlay() {
         }
         useGameCanvasStore.getState().setInternalGameState('END');
         arena.setGameState('END');
-        router.push(`/server/arena?r=${Date.now()}`);
+        router.push(`/server/arena?mode=${arena.mode}&r=${Date.now()}`);
         ChangingCallback(undefined, "me");
         router.refresh();
     }
