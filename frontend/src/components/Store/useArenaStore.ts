@@ -2,10 +2,10 @@ import { create } from 'zustand';
 import { RoomStateType, GameStateType, DirectionType } from "@/src/types/GameTypes/GameTypes"
 import { useSocket as getSocket } from "@/src/components/Socket/Socket";
 
-export type ArenaMode = "AI" | "online";
+export type ArenaModeType = "AI" | "online";
 
 interface ArenaStoreType {
-    mode: ArenaMode;
+    mode: ArenaModeType;
     gameState: GameStateType;
     gameDir: DirectionType;
     sidebarOpen: boolean;
@@ -14,7 +14,7 @@ interface ArenaStoreType {
     pendingRoomId: string | null;
     rematchRoomId: string | null;
 
-    setMode: (mode: ArenaMode) => void;
+    setMode: (mode: ArenaModeType) => void;
     setGameState: (value: GameStateType | ((current: GameStateType) => GameStateType)) => void;
     setGameDir: (dir: DirectionType) => void;
     setSidebarOpen: (open: boolean) => void;

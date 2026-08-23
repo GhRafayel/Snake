@@ -4,12 +4,12 @@ import { Lib } from "@/src/lib/lib";
 
 import type { Dispatch, SetStateAction } from "react";
 
-type Props = {
+type PropsType = {
     setShowChangePassword: Dispatch<SetStateAction<boolean>>;
     newPassword: string;
 };
 
-export default function ResetCodePage( { setShowChangePassword, newPassword } :  Props) {
+export default function ResetCodePage( { setShowChangePassword, newPassword } :  PropsType) {
   const [code, setCode] = useState("");
   const [error, setError] = useState("");
 
@@ -22,7 +22,11 @@ export default function ResetCodePage( { setShowChangePassword, newPassword } : 
         <form className="pf-form" onSubmit={async(e) => {
             e.preventDefault();
             const res = await Lib.patchRequest("/api/edit?path=/auth/change-password-code", {newPassword, code})
-            res.ok ? setShowChangePassword(true) : setError("Couldn't change password")
+            if (res.ok) {
+              setShowChangePassword(true);
+            } else {
+              setError("Couldn't change password");
+            }
         }} >
           <input type="text" autoFocus value={code} placeholder="Enter 6-digit code" maxLength={6}
                   className="pf-input text-center tracking-[0.5em]"

@@ -54,6 +54,10 @@ up:
 up-d:
 	docker compose up --build -d
 
+## Run only the nginx container (no frontend/backend deps started)
+nginx:
+	docker compose up --build --no-deps nginx
+
 ## Stop all services
 down:
 	docker compose down
@@ -112,4 +116,4 @@ update-frontend:
 	docker compose up -d --force-recreate frontend
 	docker container prune -f
 
-.PHONY: all up up-d build down logs certs migrate prisma-reset studio clean re
+.PHONY: all up up-d build down logs certs migrate prisma-reset studio clean re nginx

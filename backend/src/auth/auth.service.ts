@@ -12,6 +12,7 @@ import { ResetPasswordDto } from 'src/dto/reset-password.dto';
 import { ChangePasswordDto } from 'src/dto/ChangePasswordDto.dto';
 import { MailService } from 'src/mail/mail.service';
 import { codeDto } from 'src/dto/code.dto';
+import { PayloadType } from 'src/types/Auth.interface';
 
 @Injectable()
 export class AuthService {
@@ -22,21 +23,22 @@ export class AuthService {
         private readonly tokenService:      TokenService,
         private readonly sessionService:    SessionService,
         private readonly mailService:       MailService
-    ) { }
+    ) {}
 
     async me(accessToken: string) {
-        const payload = await this.tokenService.verifyAccessToken(accessToken);
-        if (payload)
-        {
-            try {
-                const userData = await this.usersService.findOne(payload.userId);
+        const payload : PayloadType | Error = await this.tokenService.verifyAccessToken(accessToken);
+        if (payload instanceof Error)
+            return payload;
+
+        try {
+            const userData = await this.usersService.findOne(payload.userId);
+            if (userData)
                 return userData
-            }
-            catch {
-                throw new UnauthorizedException('Invalid credentials');
-            }
         }
-        return payload;
+        catch {
+            throw new UnauthorizedException('Invalid credentials');
+        }
+        return payload
     }
 
     async signUp(body: CreateUsersDto) {
@@ -113,12 +115,12 @@ export class AuthService {
             throw new UnauthorizedException('Refresh token missing');
         }
 
-        const tokenHash = await this.tokenService.hashRefreshToken(refreshToken);
+        const tokenHash = this.tokenService.hashRefreshToken(refreshToken);
         const session = await this.sessionService.findSessionByHash(tokenHash);
         if (!session) {
             throw new UnauthorizedException('Invalid or expired session');
         }
-        const newRefreshToken = await this.tokenService.generateRefreshToken();
+        const newRefreshToken = this.tokenService.generateRefreshToken();
         await this.sessionService.rotateSession(session.id, newRefreshToken);
         const accessToken = await this.tokenService.generateAccessToken(session.userId, session.id);
         return { accessToken, refreshToken: newRefreshToken };
@@ -135,7 +137,7 @@ export class AuthService {
     }
     
     async createTokenSession(userId: number) {
-        const refreshToken = await this.tokenService.generateRefreshToken();
+        const refreshToken = this.tokenService.generateRefreshToken();
         const session = await this.sessionService.createSession(userId, refreshToken);
         const accessToken = await this.tokenService.generateAccessToken(userId, session.id);
         return { accessToken, refreshToken };

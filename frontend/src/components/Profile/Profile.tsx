@@ -1,6 +1,7 @@
 'use client';
 import { useAuth } from '@/src/components/Provider/UserProvider';
 import { useState } from 'react';
+import Image from 'next/image';
 
 import Friends from '@/src/components/Friends/Friends';
 import Account from './Account/Account';
@@ -21,7 +22,7 @@ export default function Profile() {
         <div className="pf-main">
 
           <div className="pf-header">
-            <img src={`/avatar/${cntUser?.avatar || 'default.png'}`} alt={cntUser?.Username || 'Avatar'} className="pf-avatarLg object-cover"
+            <Image src={`/avatar/${cntUser?.avatar || 'default.png'}`} alt={cntUser?.Username || 'Avatar'} width={64} height={64} className="pf-avatarLg object-cover"
             />
             <div className="pf-headerInfo">
               <h2 className="pf-headerName">{cntUser?.Username || '—'}</h2>

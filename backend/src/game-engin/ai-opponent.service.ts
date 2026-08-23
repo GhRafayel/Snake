@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
-import { Position, Direction, GameState, Snake} from "src/types/interface";
+import { PositionType, DirectionType, GameStateType, SnakeType} from "src/types/Game.engin.interface";
 
-function cellToDir(cell: Position, head: Position) : Direction{
+function cellToDir(cell: PositionType, head: PositionType) : DirectionType{
 	if (cell.x > head.x)
 		return 'RIGHT';
 	if (cell.x < head.x)
@@ -11,21 +11,21 @@ function cellToDir(cell: Position, head: Position) : Direction{
 	return 'DOWN';
 }
 
-function toString(pos: Position): string{
+function toString(pos: PositionType): string{
 	const cell = `${pos.x},${pos.y}`;
 	return cell;
 }
 
-function toPos(cell: string): Position{
+function toPos(cell: string): PositionType{
 	const parts = cell.split(',');
-	const pos: Position = {
+	const pos: PositionType = {
 		x: Number(parts[0]),
 		y: Number(parts[1]),
 	}
 	return pos;
 }
 
-function validCell(map: string[][], check: Position): boolean{
+function validCell(map: string[][], check: PositionType): boolean{
 	const height = map[0].length;
 	const width = map.length;
 	
@@ -40,8 +40,8 @@ function validCell(map: string[][], check: Position): boolean{
 	return true;
 }
 
-function getNeighbours(cur: Position): Position[]{
-	const neighbours: Position[] = [
+function getNeighbours(cur: PositionType): PositionType[]{
+	const neighbours: PositionType[] = [
 		{x: cur.x - 1,	y: cur.y},
 		{x: cur.x + 1,	y: cur.y},
 		{x: cur.x,		y: cur.y + 1},
@@ -50,7 +50,7 @@ function getNeighbours(cur: Position): Position[]{
 	return neighbours;
 }
 
-function goReverse(parent: Map<string, string | null>, food: string, head: string, map: string[][]): Position{
+function goReverse(parent: Map<string, string | null>, food: string, head: string, map: string[][]): PositionType{
 	let cur: string = food;
 	while (true){
 		const next = parent.get(cur);
@@ -62,20 +62,20 @@ function goReverse(parent: Map<string, string | null>, food: string, head: strin
 	}
 }
 
-function nextRandom(head: Position, map: string[][]) : Position{
+function nextRandom(head: PositionType, map: string[][]) : PositionType{
 	for (const next of getNeighbours(head)){
 		if (validCell(map, next))
 			return next;
 	}
-	const invalid: Position = {x: head.x - 1,	y: head.y};
+	const invalid: PositionType = {x: head.x - 1,	y: head.y};
 	return invalid;
 }
 
-function bfs(head: Position, map: string[][]): Position{
-	const queue: Position[] = [head];
+function bfs(head: PositionType, map: string[][]): PositionType{
+	const queue: PositionType[] = [head];
 	const visited = new Set<string>();
 	const parent = new Map<string, string | null>();
-	let next: Position = {x:0, y:0};
+	let next: PositionType = {x:0, y:0};
 	let foodFound: boolean = false;
 	let start = 0;
 
@@ -101,7 +101,7 @@ function bfs(head: Position, map: string[][]): Position{
 			}
 		}
 	}
-	let nextPos: Position;
+	let nextPos: PositionType;
 	if (foodFound)
 		nextPos = goReverse(parent, toString(next), toString(head), map);
 	else
@@ -109,11 +109,12 @@ function bfs(head: Position, map: string[][]): Position{
 	return nextPos;
 }
 
+
 @Injectable()
 export class AiOpponentService{
 	
-	createMap(game: GameState) : string[][]{
-		let map: string[][] = Array.from({ length: game.gridWidth}, () => Array(game.gridHeight).fill('0'));
+	createMap(game: GameStateType) : string[][]{
+		let map: string[][] = Array.from({ length: game.gridWidth}, () => Array<string>(game.gridHeight).fill('0'));
 		for (const snake of game.snakes){
 			for (const pos of snake.body){
 				map[pos.x][pos.y] = '1';
@@ -126,7 +127,7 @@ export class AiOpponentService{
 		return map;
 	}
 
-	newBotDirection(snake: Snake, map: string[][]): Direction{
+	newBotDirection(snake: SnakeType, map: string[][]): DirectionType{
 		const nextCell = bfs(snake.body[0], map);
 		const dir = cellToDir(nextCell, snake.body[0]);
 		

@@ -2,7 +2,7 @@ import { RefObject, useEffect } from "react";
 import { fitCanvas } from "../utils/canvas";
 import { useGameCanvasStore } from "@/src/components/Store/useGameCanvasStore";
 
-export function CanvasResize(
+export function useCanvasResize(
     canvasRef: RefObject<HTMLCanvasElement | null>,
     containerId: string
 ) {

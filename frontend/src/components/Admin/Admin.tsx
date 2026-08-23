@@ -17,10 +17,11 @@ export default function Admin() {
   const { cntUser, LENUAGE } = useAuth();
   const A_LENG = LENUAGE.Admin; 
   const A_STORE = useAdminStore();
+  const searchUsers = useAdminStore((s) => s.searchUsers);
 
   useEffect(() => {
-    if (cntUser?.role === "ADMIN") A_STORE.searchUsers("");
-  }, [cntUser, A_STORE.searchUsers]);
+    if (cntUser?.role === "ADMIN") searchUsers("");
+  }, [cntUser, searchUsers]);
 
   if (!cntUser || cntUser.role !== "ADMIN") return null;
 

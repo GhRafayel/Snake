@@ -34,8 +34,10 @@ function drawSnake (ctx:CanvasRenderingContext2D , snakes: SnakeType[], prev: Ga
         }
 
         ctx.save();
-        const { headRenderX, headRenderY } = drawSnakeHelper(ctx, snake, prevSnake, alpha, step);
+        const head = drawSnakeHelper(ctx, snake, prevSnake, alpha, step);
         ctx.restore();
+        if (!head) continue;
+        const { headRenderX, headRenderY } = head;
         ctx.save();
         ctx.translate( (headRenderX + CELL / 2), (headRenderY + CELL / 2));
         ctx.scale( SNAKE_SCALE, SNAKE_SCALE );

@@ -15,30 +15,46 @@ export class LoggerService  extends ConsoleLogger {
             console.error('Failed to write log to file:', error);
         }
     }
-    
+
     log (message: any, logContext?: string) {
-        this.writeLogToFile(message, logContext);
-        logContext !== undefined ? super.log(message, logContext) : super.log(message);
+        void this.writeLogToFile(String(message), logContext);
+        if (logContext !== undefined) {
+            super.log(message, logContext);
+        } else {
+            super.log(message);
+        }
     }
 
     error (message: any, trace?: string, errorContext?: string) {
-        this.writeLogToFile(message, errorContext);
+        void this.writeLogToFile(String(message), errorContext);
         const args = [trace, errorContext].filter((arg) => arg !== undefined) as string[];
         super.error(message, ...args);
     }
 
     warn (message: any, warnContext?: string) {
-        this.writeLogToFile(message, warnContext);
-        warnContext !== undefined ? super.warn(message, warnContext) : super.warn(message);
+        void this.writeLogToFile(String(message), warnContext);
+        if (warnContext !== undefined) {
+            super.warn(message, warnContext);
+        } else {
+            super.warn(message);
+        }
     }
 
     debug (message: any, debugContext?: string) {
-        this.writeLogToFile(message, debugContext);
-        debugContext !== undefined ? super.debug(message, debugContext) : super.debug(message);
+        void this.writeLogToFile(String(message), debugContext);
+        if (debugContext !== undefined) {
+            super.debug(message, debugContext);
+        } else {
+            super.debug(message);
+        }
     }
 
     verbose (message: any, verboseContext?: string) {
-        this.writeLogToFile(message, verboseContext);
-        verboseContext !== undefined ? super.verbose(message, verboseContext) : super.verbose(message);
+        void this.writeLogToFile(String(message), verboseContext);
+        if (verboseContext !== undefined) {
+            super.verbose(message, verboseContext);
+        } else {
+            super.verbose(message);
+        }
     }
 }

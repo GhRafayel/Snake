@@ -3,9 +3,9 @@ import { useRouter }  from "next/navigation";
 import { Lib }        from "@/src/lib/lib";
 import { useAuth }    from "@/src/components/Provider/UserProvider";
 
-type Props = { state: { userId: number; Password: string; } };
+type PropsType = { state: { userId: number; Password: string; } };
 
-export default function ResetCodePage( {state} :  Props) {
+export default function ResetCodePage( {state} :  PropsType) {
   const [code, setCode] = useState("");
   const [request, setRequest] = useState("");
   const [loading, setLoading] = useState(false);
@@ -20,9 +20,14 @@ export default function ResetCodePage( {state} :  Props) {
 
           <form className="mt-8 space-y-5" onSubmit={async(e) => {
               e.preventDefault();
-              const res = await Lib.postRequest("/api/edit?path=/auth/resetCode", {...state, code})
               setLoading(true);
-              res.ok ? router.push("/server/login") : setRequest("Couldn't change password")
+              const res = await Lib.postRequest("/api/edit?path=/auth/resetCode", {...state, code})
+              if (res.ok) {
+                router.push("/server/login");
+              } else {
+                setLoading(false);
+                setRequest("Couldn't change password");
+              }
           }} >
             <div>
               <label htmlFor="resetCode" className="block text-sm font-medium mb-2"> Reset Code </label>

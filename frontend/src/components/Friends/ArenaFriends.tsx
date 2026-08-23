@@ -8,8 +8,9 @@ export default function ArenaFriends () {
     const [F_list, setF_list] = useState(true);
     const FR_LENG = LENUAGE.Friends;
     const FR_STORE = useFriendStore();
+    const fetchFriends = useFriendStore((s) => s.fetchFriends);
     const acceptedFriends = FR_STORE.friends.filter((friend) => friend.status === "ACCEPTED");
-    useEffect(() => {FR_STORE.fetchFriends()},[]);
+    useEffect(() => {fetchFriends()},[fetchFriends]);
 
 
     return (

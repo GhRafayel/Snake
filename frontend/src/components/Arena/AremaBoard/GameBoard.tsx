@@ -7,7 +7,7 @@ import { useAuth }          from "@/src/components/Provider/UserProvider";
 import { ArenaBoardType }   from "@/src/types/GameTypes/GameTypes";
 import GameCanvas           from "./GameCanvas";
 
-type RoomStatus = keyof ArenaBoardType;
+type RoomStatusType = keyof ArenaBoardType;
 
 export default function GameBoard() {
     const {cntUser, LENUAGE } = useAuth();
@@ -17,7 +17,7 @@ export default function GameBoard() {
     const gameState = useArenaStore((s) => s.gameState);
     const AR_LENG = LENUAGE.Arena.board;
     const rawStatus = roomState?.roomStatus;
-    const status = roomState ? AR_LENG[roomState.roomStatus as RoomStatus] : AR_LENG.connecting;
+    const status = roomState ? AR_LENG[roomState.roomStatus as RoomStatusType] : AR_LENG.connecting;
     const isGameOver = gameState === "WIN" || gameState === "OVER" || gameState === "END";
     const showCanvas = rawStatus === "PLAYING" || isGameOver;
 

@@ -13,7 +13,7 @@ export class SessionService {
     ) { }
 
     async createSession(userId: number, refreshToken: string) {
-        const refreshTokenHash = await this.tokenService.hashRefreshToken(refreshToken);
+        const refreshTokenHash = this.tokenService.hashRefreshToken(refreshToken);
         const expiresAt = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
         const session = await this.prisma.sessions.create({
             data: {
@@ -42,7 +42,7 @@ export class SessionService {
     }
 
     async rotateSession(sessionId: string, refreshToken: string) {
-        const refreshTokenHash = await this.tokenService.hashRefreshToken(refreshToken);
+        const refreshTokenHash = this.tokenService.hashRefreshToken(refreshToken);
         const expiresAt = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
 
         return this.prisma.sessions.update({

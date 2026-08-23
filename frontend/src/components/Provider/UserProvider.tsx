@@ -2,22 +2,22 @@
 
 import { createContext, useCallback, useContext, useMemo, useState} from "react"
 import { UserType,  UserContextType} from "@/src/types/UserTypes/UserTypes"
-import { TranslationTypes } from "@/src/types/StoreTypes/StoreTypes"
+import { TranslationType } from "@/src/types/StoreTypes/StoreTypes"
 import { Lib } from "@/src/lib/lib"
 
 const UserContext = createContext<UserContextType | null>(null);
-type Props = {
+type PropsType = {
     children: React.ReactNode,
     initialUser: UserType | null,
-    initialTranslations: TranslationTypes,
+    initialTranslations: TranslationType,
 }
 
-export default function UserProvider ({ children,  initialUser, initialTranslations } : Props ) {
+export default function UserProvider ({ children,  initialUser, initialTranslations } : PropsType ) {
 
     const [ cntUser, setCntUser ] = useState<UserType | null>(initialUser);
-    const [ LENUAGE, setLENUAGE] = useState<TranslationTypes>(initialTranslations);
+    const [ LENUAGE, setLENUAGE] = useState<TranslationType>(initialTranslations);
 
-    const ChangingCallback = useCallback( async (body: Object | undefined, endpoint: string) => {
+    const ChangingCallback = useCallback( async (body: object | undefined, endpoint: string) => {
         if (body === undefined)
         {
             try {

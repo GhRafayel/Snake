@@ -4,12 +4,12 @@ import { drawGame } from "@/src/components/Arena/utils/drawGame";
 
 const MAX_EXTRAPOLATION = 1;
 
-interface UseAnimationLoopParams {
+interface UseAnimationLoopParamsType {
     canvasRef: RefObject<HTMLCanvasElement | null>;
     myUserId: string | number | undefined;
 }
 
-export function AnimationLoop({ canvasRef, myUserId }: UseAnimationLoopParams) {
+export function useAnimationLoop({ canvasRef, myUserId }: UseAnimationLoopParamsType) {
     useEffect(() => {
         const ctx = canvasRef.current?.getContext('2d') ?? null;
         if (!ctx) return;

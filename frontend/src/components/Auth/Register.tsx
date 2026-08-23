@@ -28,7 +28,8 @@ return (
 					const form = Object.fromEntries(new FormData(e.currentTarget));
 					if (form.Password != form.ConfirmPassword)
                         return setPassword("Wrong password try again");
-					const {ConfirmPassword, ...data} = form;
+					const data = {...form};
+					delete data.ConfirmPassword;
 					await Lib.postRequest("/api/auth?path=/auth/register", {...data})
 					.then(res => res.ok ? (ChangingCallback(undefined, "me") , router.push("/")) : console.log(res));
 				 }}

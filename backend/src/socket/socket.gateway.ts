@@ -1,37 +1,24 @@
-import { WebSocketGateway, WebSocketServer, OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit, SubscribeMessage, ConnectedSocket, MessageBody } from '@nestjs/websockets';
+import type { JoinRoomPayloadType, RoomInvitePayloadType, ChangeDirectionPayloadType, BotPayloadType, RematchPayloadType } from 'src/types/Socket.interface';
+import type { AppSocketType } from 'src/types/Socket.interface';
+import type { GameStateType } from 'src/types/Game.engin.interface';
+
+import { WebSocketGateway, OnGatewayDisconnect, SubscribeMessage, MessageBody } from '@nestjs/websockets';
+import { OnGatewayConnection, WebSocketServer, OnGatewayInit, ConnectedSocket }  from '@nestjs/websockets';
 import { Inject, forwardRef } from '@nestjs/common';
-import { Server, Socket } from 'socket.io';
+import { Server } from 'socket.io';
+import { Socket as NetSocket } from 'net';
 import { RoomStatus } from '@prisma/client';
 import { GameRoomService } from 'src/gameRoom/gameRoom.service';
 import { RedisService } from 'src/redis/redis.service';
-import { CreateSnake } from 'src/types/interface';
-import { Direction , GameState} from "src/types/interface"
 import { TokenService } from 'src/auth/token/token.service';
 import { UsersService } from 'src/users/users.service';
 import { LoggerService } from 'src/logger/logger.service';
 import { GameEnginService } from 'src/game-engin/game-engin.service';
 
-interface changeDirectionPayload {
-	direction: Direction;
-	roomId: string;
-	userId: number;
-}
-
-interface BOTPayload { level?: number; }
-
-interface JoinRoomPayload { roomId?: string; }
-
-interface RematchPayload { roomId: string; }
-
-interface RoomInvitePayload {
-	roomId: string;
-	toUserId: number;
-}
-
 const MIN_BOT_LEVEL = 1;
 const MAX_BOT_LEVEL = 4;
 
-function clampBotLevel(level: unknown): number {
+export function clampBotLevel(level: unknown): number {
 	const n = Number(level);
 	if (!Number.isFinite(n))
 		return MIN_BOT_LEVEL;
@@ -39,14 +26,14 @@ function clampBotLevel(level: unknown): number {
 }
 
 @WebSocketGateway(2000, {
-  cors: { origin: true, credentials: true },
+  cors: { origin: process.env.FRONTEND_URL, credentials: true },
   perMessageDeflate: false,
 })
 export class SocketGateway implements OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit {
   @WebSocketServer() server!: Server;
 
   afterInit(server: Server) {
-    server.httpServer.on('connection', (socket) => socket.setNoDelay(true));
+    server.httpServer.on('connection', (socket: NetSocket) => socket.setNoDelay(true));
   }
 
   constructor(
@@ -62,7 +49,7 @@ export class SocketGateway implements OnGatewayConnection, OnGatewayDisconnect, 
 
     private roomOpQueues = new Map<string, Promise<unknown>>();
 
-    private runRoomOp<T>(client: Socket, fn: () => Promise<T>): Promise<T> {
+    private runRoomOp<T>(client: AppSocketType, fn: () => Promise<T>): Promise<T> {
       const previous = this.roomOpQueues.get(client.id) ?? Promise.resolve();
       const result = previous.then(fn, fn);
       this.roomOpQueues.set(client.id, result.catch(() => undefined));
@@ -73,8 +60,21 @@ export class SocketGateway implements OnGatewayConnection, OnGatewayDisconnect, 
     private readonly COUNTDOWN_SECONDS = 5;
     private roomCountdowns = new Map<string, ReturnType<typeof setTimeout>>();
     private startedRooms = new Set<string>();
-    // finished roomId -> the new room its former players should rejoin on rematch
     private rematchRooms = new Map<string, string>();
+
+    private CreateSnake (userId: number) {
+      return {
+        userId: userId,
+        body: [],
+        direction: 'LEFT',
+        newDirection: null,
+        newPosition: null,
+        willGrow: false,
+        alive: true,
+        score: 0,
+        color: "",
+      }
+    }
 
     private clearCountdown(roomId: string) {
       const timer = this.roomCountdowns.get(roomId);
@@ -152,7 +152,7 @@ export class SocketGateway implements OnGatewayConnection, OnGatewayDisconnect, 
       this.server.emit('online-users', onlineUsers);
     }
 
-    async getClient(client: Socket) {
+    async getClient(client: AppSocketType) {
       const cookie = client.handshake.headers.cookie ?? "";
       const accessToken = cookie.split(";").map((c) => c.trim())
       .find((c) => c.startsWith("accessToken="))?.slice("accessToken=".length);
@@ -163,6 +163,10 @@ export class SocketGateway implements OnGatewayConnection, OnGatewayDisconnect, 
       }
       try {
         const payload = await this.tokenService.verifyAccessToken(accessToken);
+        if (payload instanceof Error) {
+          client.disconnect();
+          return null;
+        }
         const user = await this.usersService.findOne(payload.userId);
         if (!user) {
           client.disconnect();
@@ -178,7 +182,7 @@ export class SocketGateway implements OnGatewayConnection, OnGatewayDisconnect, 
       }
     }
 
-    async handleConnection(client: Socket) {
+    async handleConnection(client: AppSocketType) {
       const user = await this.getClient(client);
       if (!user) {
         this.logger.warn(`Rejected socket connection ${client.id}: unauthenticated`);
@@ -193,7 +197,7 @@ export class SocketGateway implements OnGatewayConnection, OnGatewayDisconnect, 
         await this.getOnlineUsers(client);
     }
 
-    async handleDisconnect(client: Socket) {
+    async handleDisconnect(client: AppSocketType) {
       try {
         if (!client.data.user) return;
         this.logger.log(`Socket disconnected: user ${client.data.user.id} (${client.id})`);
@@ -207,19 +211,20 @@ export class SocketGateway implements OnGatewayConnection, OnGatewayDisconnect, 
     }
 
     @SubscribeMessage("get-online-users")
-      async getOnlineUsers(client: Socket) {
+      async getOnlineUsers(client: AppSocketType) {
         this.logger.log(`get-online-users requested by ${client.id}`);
         const onlineUsers = await this.redisService.getOnlineUsers();
         this.server.emit("online-users", onlineUsers);
     }
 
     @SubscribeMessage('join-room')
-    handleJoinRoom(@ConnectedSocket() client: Socket, @MessageBody() data?: JoinRoomPayload) {
+    handleJoinRoom(@ConnectedSocket() client: AppSocketType, @MessageBody() data?: JoinRoomPayloadType) {
       return this.runRoomOp(client, async () => {
         this.logger.log(`join-room requested by ${client.id}`);
 
         if (client.data.user === undefined)
           client.data.user = await  this.getClient(client);
+        if (!client.data.user) return;
 
         await this.leaveCurrentRoom(client);
 
@@ -235,7 +240,7 @@ export class SocketGateway implements OnGatewayConnection, OnGatewayDisconnect, 
         client.data.roomId = room.roomId;
 
         await this.redisService.set(`game:${room.roomId}:${client.data.user.id}`,
-        JSON.stringify(CreateSnake(client.data.user.id)))
+        JSON.stringify(this.CreateSnake(client.data.user.id)))
         await client.join(room.roomId);
 
         await this.roomService.addUserToRoom(room.roomId, client.data.user.id, client.id);
@@ -252,7 +257,7 @@ export class SocketGateway implements OnGatewayConnection, OnGatewayDisconnect, 
     }
 
     @SubscribeMessage('rematch')
-    handleRematch(@ConnectedSocket() client: Socket, @MessageBody() data: RematchPayload) {
+    handleRematch(@ConnectedSocket() client: AppSocketType, @MessageBody() data: RematchPayloadType) {
       return this.runRoomOp(client, async () => {
         this.logger.log(`rematch requested by ${client.id}`);
 
@@ -277,7 +282,7 @@ export class SocketGateway implements OnGatewayConnection, OnGatewayDisconnect, 
         client.data.roomId = room.roomId;
 
         await this.redisService.set(`game:${room.roomId}:${client.data.user.id}`,
-        JSON.stringify(CreateSnake(client.data.user.id)))
+        JSON.stringify(this.CreateSnake(client.data.user.id)))
         await client.join(room.roomId);
 
         await this.roomService.addUserToRoom(room.roomId, client.data.user.id, client.id);
@@ -294,7 +299,7 @@ export class SocketGateway implements OnGatewayConnection, OnGatewayDisconnect, 
     }
 
     @SubscribeMessage('room-invite')
-    async handleRoomInvite(@ConnectedSocket() client: Socket, @MessageBody() data: RoomInvitePayload) {
+    async handleRoomInvite(@ConnectedSocket() client: AppSocketType, @MessageBody() data: RoomInvitePayloadType) {
       if (client.data.user === undefined)
         client.data.user = await this.getClient(client);
       if (!client.data.user || !data?.roomId || !data?.toUserId) return;
@@ -310,7 +315,7 @@ export class SocketGateway implements OnGatewayConnection, OnGatewayDisconnect, 
     }
 
     @SubscribeMessage('play-AI')
-    handlePlayAI(@ConnectedSocket() client: Socket, @MessageBody() data?: BOTPayload) {
+    handlePlayAI(@ConnectedSocket() client: AppSocketType, @MessageBody() data?: BotPayloadType) {
       return this.runRoomOp(client, async () => {
         this.logger.log(`play-AI requested by ${client.id}`);
 
@@ -343,23 +348,24 @@ export class SocketGateway implements OnGatewayConnection, OnGatewayDisconnect, 
     }
 
     @SubscribeMessage('leave-room')
-    handleLeaveRoom(@ConnectedSocket() client: Socket) {
+    handleLeaveRoom(@ConnectedSocket() client: AppSocketType) {
       return this.runRoomOp(client, () => this.leaveCurrentRoom(client));
     }
 
-    private async leaveCurrentRoom(client: Socket) {
+    private async leaveCurrentRoom(client: AppSocketType) {
       const roomId = client.data.roomId;
       if (!roomId || !client.data.user) return;
 
       this.logger.log(`User ${client.data.user.id} leaving room ${roomId} (${client.id})`);
 
       if (this.startedRooms.has(roomId))
-        await this.gameEnginService.eliminatePlayer(roomId, client.data.user.id);
+        this.gameEnginService.eliminatePlayer(roomId, client.data.user.id);
 
       try {
         await this.roomService.removeUserFromRoom(roomId, client.data.user.id);
       } catch (err) {
-        this.logger.error(`Failed to remove user ${client.data.user.id} from room ${roomId}: ${err}`);
+        const message = err instanceof Error ? err.message : String(err);
+        this.logger.error(`Failed to remove user ${client.data.user.id} from room ${roomId}: ${message}`);
       } finally {
         await client.leave(roomId);
         await this.redisService.del(`game:${roomId}:${client.data.user.id}`);
@@ -380,7 +386,7 @@ export class SocketGateway implements OnGatewayConnection, OnGatewayDisconnect, 
     }
 
     @SubscribeMessage('change-direction')
-    handleChangeDirection(@MessageBody() data: changeDirectionPayload,){
+    handleChangeDirection(@MessageBody() data: ChangeDirectionPayloadType,){
       const game = this.gameEnginService.getGame(data.roomId);
       if (!game) {
         this.logger.warn(`change-direction failed: room ${data.roomId} not found`);
@@ -396,7 +402,7 @@ export class SocketGateway implements OnGatewayConnection, OnGatewayDisconnect, 
       return {success: true};
     }
 
-    async broadcastGameState(roomId: string, state: GameState) {
+    broadcastGameState(roomId: string, state: GameStateType) {
       this.server.to(roomId).emit('game-state', state);
     }
 }

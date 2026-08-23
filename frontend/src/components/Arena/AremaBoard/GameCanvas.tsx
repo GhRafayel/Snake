@@ -8,8 +8,8 @@ import { useGameCanvasStore }      from "@/src/components/Store/useGameCanvasSto
 import { GameSocket }           from "../hooks/GameSocket";
 import { KeyboardControls }     from "../hooks/KeyboardControls";
 import { WindowFocusPause }     from "../hooks/WindowFocusPause";
-import { CanvasResize }         from "../hooks/CanvasResize";
-import { AnimationLoop }        from "../hooks/AnimationLoop";
+import { useCanvasResize }         from "../hooks/useCanvasResize";
+import { useAnimationLoop }        from "../hooks/useAnimationLoop";
 import GameOverlay              from "./GameOverlay";
 
 export default function GameCanvas() {
@@ -28,8 +28,8 @@ export default function GameCanvas() {
     GameSocket({ socket, myUserId: cntUser?.id });
     KeyboardControls({ socket, myUserId: cntUser?.id });
     WindowFocusPause();
-    CanvasResize(canvasRef, 'canvas-container');
-    AnimationLoop({ canvasRef, myUserId: cntUser?.id });
+    useCanvasResize(canvasRef, 'canvas-container');
+    useAnimationLoop({ canvasRef, myUserId: cntUser?.id });
 
     return (
         <div style={{ position: 'relative' }}>

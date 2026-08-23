@@ -1,6 +1,6 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { createClient, RedisClientType } from 'redis';
-import { OnlineUsersData } from 'src/types/interface';
+import { OnlineUsersDataType } from 'src/types/Redis.interface';
 
 @Injectable()
 export class RedisService implements OnModuleInit {
@@ -18,7 +18,7 @@ export class RedisService implements OnModuleInit {
     console.log('Redis Connected');
   }
 
-  async addOnlineUser(data: OnlineUsersData) : Promise<boolean> {
+  async addOnlineUser(data: OnlineUsersDataType) : Promise<boolean> {
 
     const key = `user:online:${data.id}`;
     const oldSocketId = await this.get(key);
@@ -31,21 +31,21 @@ export class RedisService implements OnModuleInit {
     await this.del(`user:online:${String(userId)}`);
   }
 
-  async refreshOnlineUser(data: OnlineUsersData) {
+  async refreshOnlineUser(data: OnlineUsersDataType) {
     const key = `user:online:${data.id}`;
     const existing = await this.get(key);
     if (!existing) return;
     await this.set(key, JSON.stringify(data));
   }
 
- async getOnlineUsers(): Promise<OnlineUsersData[]> {
+ async getOnlineUsers(): Promise<OnlineUsersDataType[]> {
   const keys = await this.client.keys('user:online:*');
   if (keys.length === 0) return [];
   
   const values = await this.client.mGet(keys);
   return values
     .filter((val): val is string => val !== null)
-    .map((val) => JSON.parse(val) as OnlineUsersData);
+    .map((val) => JSON.parse(val) as OnlineUsersDataType);
 }
 
 

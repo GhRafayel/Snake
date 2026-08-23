@@ -12,8 +12,8 @@ export default  function  Hero() {
         <div className={`  py-20 px-8 pb-30 text-center relative ${cntUser?.theme ?? true ? "bg" : "bg-gray-200 "} `}>
 
             <div className="match-card-descition"> 
-                <span className="block text-neon-green text-sm sm:text-base md:text-xl lg:text-2xl "> 
-                 // <span className={`${cntUser?.theme ?? true ? "text-gray-300" : "text-gray-700"}  text-sm sm:text-base md:text-xl lg:text-2xl`}> {HomePage.title} </span>
+                <span className="block text-neon-green text-sm sm:text-base md:text-xl lg:text-2xl ">
+                    <span className={`${cntUser?.theme ?? true ? "text-gray-300" : "text-gray-700"}  text-sm sm:text-base md:text-xl lg:text-2xl`}> {HomePage.title} </span>
                 </span>
             </div>
             <h1 className={`font-bungee text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl ${cntUser?.theme ?? true ? "text-text-bright" : "text-black"}`}> {HomePage.motoFirst}

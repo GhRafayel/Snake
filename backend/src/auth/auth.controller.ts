@@ -9,6 +9,7 @@ import { ResetPasswordDto } from 'src/dto/reset-password.dto';
 import { ChangePasswordDto } from 'src/dto/ChangePasswordDto.dto';
 import { codeDto } from 'src/dto/code.dto';
 import { LoggerService } from 'src/logger/logger.service';
+
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) { }
@@ -16,36 +17,36 @@ export class AuthController {
 
   @Throttle({ long: { ttl: 60000, limit: 5 } })
   @Post('register')
-  signUp(@Body() dto: CreateUsersDto) {
+  async signUp(@Body() dto: CreateUsersDto) {
     this.logger.log(`Register attempt for ${dto.Email}`);
-    return this.authService.signUp(dto);
+    return await this.authService.signUp(dto);
   }
 
   @Throttle({ long: { ttl: 60000, limit: 5 } })
   @Post('login')
-  signIn(@Body() dto: LoginUsersDto ) {
+  async signIn(@Body() dto: LoginUsersDto ) {
     this.logger.log(`Login attempt for ${dto.Email}`);
-    return this.authService.signIn(dto);
+    return await this.authService.signIn(dto);
   }
 
   @Post('refresh')
-  refresh(@Body('refreshToken') refreshToken: string ) {
+  async refresh(@Body('refreshToken') refreshToken: string ) {
     this.logger.log('Token refresh requested');
-    return this.authService.refresh(refreshToken);
+    return await this.authService.refresh(refreshToken);
   }
 
   @Throttle({ long: { ttl: 60000, limit: 5 } })
   @Post("reset")
-  reset (@Body() body : ResetPasswordDto) {
+  async reset (@Body() body : ResetPasswordDto) {
     this.logger.log(`Password reset requested for ${body.Email}`);
-    return this.authService.reset(body);
+    return await this.authService.reset(body);
   }
 
   @Throttle({ long: { ttl: 60000, limit: 5 } })
   @Post("resetCode")
-  resetCode (@Body() body : codeDto) {
+  async resetCode (@Body() body : codeDto) {
     this.logger.log('Password reset code submitted');
-    return this.authService.resetCode(body);
+    return await this.authService.resetCode(body);
   }
 
   @Delete('logout')
@@ -60,7 +61,7 @@ export class AuthController {
   @Authorization()
   async changePassword( @Authorized('userId') userId: number, @Body() body: ChangePasswordDto ) {
     this.logger.log(`Change password for user ${userId}`);
-    return this.authService.changePassword(userId, body);
+    return await this.authService.changePassword(userId, body);
   }
 
   @Patch("change-password-code")
@@ -82,7 +83,7 @@ export class AuthController {
   @Authorization()
   async deleteUser (@Authorized('userId') userId: number) {
     this.logger.warn(`Delete account for user ${userId}`);
-    const res = this.authService.deleteUser(userId);
+    const res = await this.authService.deleteUser(userId);
     return { success: true, res };
   }
 }

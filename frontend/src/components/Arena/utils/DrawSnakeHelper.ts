@@ -41,8 +41,8 @@ export function drawSnakeHeadEyes( ctx: CanvasRenderingContext2D, renderX: numbe
 }
 
 export function drawSnakeHelperIndex0(ctx:CanvasRenderingContext2D, renderX: number, renderY: number, baseColor: string) {
-    let headRenderX = renderX;
-    let headRenderY = renderY;
+    const headRenderX = renderX;
+    const headRenderY = renderY;
 
     const gradient = ctx.createLinearGradient( renderX, renderY, renderX + CELL, renderY + CELL );
     gradient.addColorStop( 1, baseColor );
@@ -98,7 +98,7 @@ export function drawSnakeHelper(ctx : CanvasRenderingContext2D, snake: SnakeType
 
     const baseColor = snake?.color || "#12ea94";
     const totalSegments = snake.body.length;
-    let   position : any;
+    let   position : { headRenderX: number; headRenderY: number } | undefined;
 
      for ( let index = 0; index < totalSegments; index++ ) {
 

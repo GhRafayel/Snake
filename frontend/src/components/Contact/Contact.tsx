@@ -12,10 +12,11 @@ export default function Contact() {
     const contactData = LENUAGE.contact;
     const FR_LENG = LENUAGE.Friends;
     const FR_STORE = useFriendStore();
+    const fetchFriends = useFriendStore((s) => s.fetchFriends);
 
     useEffect(() => {
-        if (cntUser) FR_STORE.fetchFriends();
-    }, [cntUser?.id, FR_STORE.fetchFriends]);
+        if (cntUser?.id) fetchFriends();
+    }, [cntUser?.id, fetchFriends]);
 
     const pendingInvites = FR_STORE.friends.filter(
         (friend) => friend.status === "PENDING" && !!cntUser && friend.senderId !== cntUser.id

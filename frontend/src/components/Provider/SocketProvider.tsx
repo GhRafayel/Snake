@@ -1,12 +1,12 @@
 "use client";
 
-import { useEffect } from "react";
-import { useAuth } from "./UserProvider";
-import { createSoket} from "@/src/components/Socket/Socket";
-import { useInviteStore } from "@/src/components/Store/useInviteStore";
-import { RoomInviteType } from "@/src/types/GameTypes/GameTypes";
-import { useArenaStore } from "../Store/useArenaStore";
-import { useUserStore } from "../Store/useUserStore";
+import { useEffect }                        from "react";
+import { useAuth }                          from "./UserProvider";
+import { useSocket as getSocket }           from "@/src/components/Socket/Socket";
+import { useInviteStore }                   from "@/src/components/Store/useInviteStore";
+import { RoomInviteType }                   from "@/src/types/GameTypes/GameTypes";
+import { useArenaStore }                    from "../Store/useArenaStore";
+import { useUserStore }                     from "../Store/useUserStore";
 import { RoomStateType, RoomCountdownType } from "@/src/types/GameTypes/GameTypes";
 import { OnlineUsersType }                  from "@/src/types/UserTypes/UserTypes";
 
@@ -14,17 +14,22 @@ export default function SocketProvider({ children }: { children: React.ReactNode
     const { cntUser } = useAuth();
 
     useEffect(() => {
-      if (!cntUser) return;
+      if (!cntUser?.id) return;
+      const userId = cntUser.id;
 
-      const socket = createSoket();
+      const socket = getSocket();
       if (!socket) return;
 
       const handleConnection = () => {
         console.log("✅ Socket connected!", socket.id)
       };
       
-      const handleDisconnect = () => {
-        console.log("❌ Socket disconnected")
+      const handleDisconnect = (reason: string) => {
+        console.log("❌ Socket disconnected:", reason)
+      };
+
+      const handleConnectError = (err: Error) => {
+        console.log("⚠️ Socket connect_error:", err.message)
       };
 
       const handleOnlineUsers = (gameData: OnlineUsersType[]) => {
@@ -42,12 +47,13 @@ export default function SocketProvider({ children }: { children: React.ReactNode
       };
 
       const handleRoomInvite = (invite: RoomInviteType) => {
-        if (invite.from.id === cntUser.id) return;
+        if (invite.from.id === userId) return;
         useInviteStore.getState().addInvite(invite);
     };
 
       socket.on("connect", handleConnection );
       socket.on("disconnect", handleDisconnect);
+      socket.on("connect_error", handleConnectError);
       socket.on("online-users", handleOnlineUsers);
       socket.on("room-update", handleRoomUpdate);
       socket.on("room-countdown", handleRoomCountdown);
@@ -58,6 +64,7 @@ export default function SocketProvider({ children }: { children: React.ReactNode
       return () => {
         socket.off("connect");
         socket.off("disconnect");
+        socket.off("connect_error", handleConnectError);
         socket.off("online-users", handleOnlineUsers);
         socket.off("room-update", handleRoomUpdate);
         socket.off("room-countdown", handleRoomCountdown);

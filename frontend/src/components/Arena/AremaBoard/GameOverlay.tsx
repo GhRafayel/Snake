@@ -18,7 +18,7 @@ export default function GameOverlay() {
 
     useEffect(() => {
         if (showOver || showWin) ChangingCallback(undefined,"me");
-    }, [showOver, showWin]);
+    }, [showOver, showWin, ChangingCallback]);
 
     if (!showOver && !showWin) return null;
 

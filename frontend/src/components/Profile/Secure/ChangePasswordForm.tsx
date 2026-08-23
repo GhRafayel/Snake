@@ -4,11 +4,11 @@ import { KeyRound } from 'lucide-react';
 import { Lib } from '@/src/lib/lib';
 import ResetCodePage from './ResetCodePage';
 import { useAuth } from '../../Provider/UserProvider';
-interface ChangePasswordFormProps {
+interface ChangePasswordFormPropsType {
   setShowChangePassword: Dispatch<SetStateAction<boolean>>;
 }
 
-export default function ChangePasswordForm({ setShowChangePassword }: ChangePasswordFormProps) {
+export default function ChangePasswordForm({ setShowChangePassword }: ChangePasswordFormPropsType) {
   
   const profil = useAuth().LENUAGE.Profile.settings.secure;
   const [code , setCode] = useState(false);

@@ -7,9 +7,9 @@ import { CardsType } from "@/src/types/StoreTypes/StoreTypes";
 import { useArenaStore } from "@/src/components/Store/useArenaStore";
 import { useAuth } from "@/src/components/Provider/UserProvider";
 
-type Props = {  card: CardsType; }
+type PropsType = {  card: CardsType; }
 
-export default function Cards({ card } : Props) {
+export default function Cards({ card } : PropsType) {
 
     const [state, setState] = useState(false);
     const router = useRouter();

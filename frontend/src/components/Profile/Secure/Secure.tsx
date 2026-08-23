@@ -4,12 +4,12 @@ import { KeyRound } from 'lucide-react';
 import ChangePasswordForm from './ChangePasswordForm';
 import { useAuth } from '../../Provider/UserProvider';
 
-interface ChangePasswordSectionProps {
+interface ChangePasswordSectionPropsType {
   showChangePassword: boolean;
   setShowChangePassword: Dispatch<SetStateAction<boolean>>;
 }
 
-export default function Secure({ showChangePassword, setShowChangePassword }: ChangePasswordSectionProps) {
+export default function Secure({ showChangePassword, setShowChangePassword }: ChangePasswordSectionPropsType) {
   const PF_LENG = useAuth().LENUAGE.Profile;
 
   return (

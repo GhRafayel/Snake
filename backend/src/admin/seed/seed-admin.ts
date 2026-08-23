@@ -3,17 +3,11 @@ import { PrismaClient, Role } from '@prisma/client';
 import { PrismaPg } from '@prisma/adapter-pg';
 import { Pool } from 'pg';
 import * as bcrypt from 'bcrypt';
+import { AdminSeedType } from 'src/types/Admin.interface';
 
-interface AdminSeed {
-  index: number;
-  username: string;
-  email: string;
-  password: string;
-  language?: string;
-}
 
-function loadAdminsFromEnv(): AdminSeed[] {
-  const admins: AdminSeed[] = [];
+function loadAdminsFromEnv(): AdminSeedType[] {
+  const admins: AdminSeedType[] = [];
   let index = 1;
 
   while (true) {

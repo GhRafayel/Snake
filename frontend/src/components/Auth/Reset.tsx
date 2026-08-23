@@ -28,7 +28,8 @@ export default function Reset() {
 						const form = Object.fromEntries(new FormData(e.currentTarget));
 						if (form.Password != form.ConfirmPassword)
 							return alert("Passwords do not match");
-						const {ConfirmPassword, ...data} = form;
+						const data = {...form};
+						delete data.ConfirmPassword;
 						const res = await Lib.postRequest("/api/edit?path=/auth/reset", {...data}).then(strim => strim.json());
 						
 						if (!res.userId) return  setText("something was wrong");
