@@ -7,7 +7,9 @@ datasource db {
 model Users {
   id                Int               @id @default(autoincrement())
   Email             String            @unique
-  Password          String
+  Password          String?
+  provider          String?
+  providerId        String?
   Username          String
   role              Role              @default(PLAYER)
   language          String            @default("en")
@@ -28,6 +30,8 @@ model Users {
   receivedRequests  FriendsRequest    [] @relation("ReceivedRequests")
   gameParticipants	GameParticipants  []
 	gamesWon			    GameResults       [] @relation("Winner")
+
+  @@unique([provider, providerId])
 }
 
 model Translation {

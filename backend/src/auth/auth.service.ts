@@ -7,12 +7,12 @@ import { TokenService } from './token/token.service';
 import { SessionService } from './session/session.service';
 import { LoginUsersDto } from 'src/dto/login-users.dto';
 import { DatabaseService } from 'src/database/database.service';
-import  * as bcrypt from "bcrypt"
 import { ResetPasswordDto } from 'src/dto/reset-password.dto';
 import { ChangePasswordDto } from 'src/dto/ChangePasswordDto.dto';
 import { MailService } from 'src/mail/mail.service';
 import { codeDto } from 'src/dto/code.dto';
-import { PayloadType } from 'src/types/Auth.interface';
+import { PayloadType, OAuthProfileType } from 'src/types/Auth.interface';
+import  * as bcrypt from "bcrypt"
 
 @Injectable()
 export class AuthService {
@@ -62,7 +62,7 @@ export class AuthService {
     async signIn(body: LoginUsersDto) {
         
         const user = await this.dbService.users.findUnique( { where: { Email: body.Email } } );
-        if (!user) {
+        if (!user || !user.Password) {
             throw new UnauthorizedException('Invalid credentials');
         }
         const isMatch = await bcrypt.compare(body.Password, user.Password);
@@ -71,6 +71,27 @@ export class AuthService {
         }
         const accessToken = await this.createTokenSession(user.id);
         return {...accessToken};
+    }
+
+    async oauthLogin(profile: OAuthProfileType) {
+        let user = await this.usersService.findByProvider(profile.provider, profile.providerId);
+
+        if (!user) {
+            const existing = await this.dbService.users.findUnique({ where: { Email: profile.email } });
+            user = existing
+                ? await this.dbService.users.update({
+                    where: { id: existing.id },
+                    data: { provider: profile.provider, providerId: profile.providerId },
+                })
+                : await this.usersService.createOAuthUser({
+                    Email: profile.email,
+                    Username: profile.username,
+                    provider: profile.provider,
+                    providerId: profile.providerId,
+                });
+        }
+
+        return await this.createTokenSession(user.id);
     }
 
     async sendCode (userId: number, Email: string )
@@ -148,7 +169,7 @@ export class AuthService {
             where: { id: userId }
         });
 
-        if (!user)  throw new UnauthorizedException();
+        if (!user || !user.Password)  throw new UnauthorizedException();
         const isValidPassword = await bcrypt.compare(
             body.OldPassword,
             user.Password
