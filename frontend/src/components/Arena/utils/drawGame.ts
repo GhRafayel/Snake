@@ -80,7 +80,7 @@ export function drawGame({ ctx, curr, prev, alpha, step, screen, myUserId }: Dra
     drawSnake(ctx, snakes, prev, alpha, step);
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
-    ctx.font = `${CELL + 8}px serif`;
+    ctx.font = `${CELL + 8}px "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", serif`;
     helperForEach( food, ctx, WORLD_WIDTH, WORLD_HEIGHT, (CELL + 8) / 2);
     ctx.restore();
 }
