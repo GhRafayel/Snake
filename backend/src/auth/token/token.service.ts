@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { createHash, randomBytes } from 'crypto';
+import { PayloadType } from 'src/types/Auth.interface';
 
 @Injectable()
 export class TokenService {
@@ -24,34 +25,34 @@ export class TokenService {
         return accessToken
     }
 
-    async verifyAccessToken(token: string) {
+    async verifyAccessToken(token: string): Promise<PayloadType | Error> {
         try {
-            const payload = await this.jwt.verifyAsync(token, {
+            const payload = await this.jwt.verifyAsync<PayloadType>(token, {
                 secret: this.config.getOrThrow<string>('JWT_ACCESS_SECRET'),
             });
             return payload;
-        } catch (error) {
-            throw new Error('Invalid access token');
+        } catch {
+            return new Error('Invalid access token');
         }
     }
 
-    async verifyRefreshToken(token: string) {
+    async verifyRefreshToken(token: string): Promise<PayloadType | Error> {
         try {
-            const payload = await this.jwt.verifyAsync(token, {
+            const payload = await this.jwt.verifyAsync<PayloadType>(token, {
                 secret: this.config.getOrThrow('JWT_REFRESH_SECRET'),
             });
             return payload;
-        } catch (error) {
-            throw new Error('Invalid refresh token');
+        } catch {
+            return new Error('Invalid refresh token');
         }
     }
 
 
-    async generateRefreshToken(): Promise<string> {
+    generateRefreshToken(): string {
         return randomBytes(64).toString('base64url')
     }
 
-    async hashRefreshToken(token: string): Promise<string> {
+    hashRefreshToken(token: string): string {
         return createHash('sha256').update(token).digest('hex')
     }
 }

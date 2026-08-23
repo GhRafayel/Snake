@@ -1,13 +1,15 @@
 import { NestFactory } from '@nestjs/core';
+import helmet from 'helmet';
 import { AppModule } from './app.module';
 import { LoggerService } from './logger/logger.service';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { bufferLogs: true });
   app.useLogger(app.get(LoggerService));
+  app.use(helmet());
   app.setGlobalPrefix('api');
   app.enableCors({
-    origin: process.env.FRONTEND_URL,
+    origin: process.env.FRONTEND_URL?.split(',').map((s) => s.trim()),
     credentials: false,
   });
   const port = Number(process.env.PORT) || 4000;

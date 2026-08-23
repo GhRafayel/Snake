@@ -4,12 +4,12 @@ import { useRouter } from "next/navigation";
 import { Loader } from "lucide-react";
 import { useState } from "react";
 import { CardsType } from "@/src/types/StoreTypes/StoreTypes";
-import { ArenaStore } from "@/src/components/Store/ArenaStore";
+import { useArenaStore } from "@/src/components/Store/useArenaStore";
 import { useAuth } from "@/src/components/Provider/UserProvider";
 
-type Props = {  card: CardsType; }
+type PropsType = {  card: CardsType; }
 
-export default function Cards({ card } : Props) {
+export default function Cards({ card } : PropsType) {
 
     const [state, setState] = useState(false);
     const router = useRouter();
@@ -35,7 +35,7 @@ export default function Cards({ card } : Props) {
                     onClick={async () => {
                         setState(true);
                         await new Promise((r) => setTimeout(r, 2000));
-                        ArenaStore.getState().setMode(card.mode);
+                        useArenaStore.getState().setMode(card.mode);
                         router.push(`/server/arena?mode=${card.mode}&r=${Date.now()}`);
                     }}
                     className={`match-card-button ${cntUser?.theme ?? true ? "border-border-subtle  hover:text-blue-200" : ""}`}>

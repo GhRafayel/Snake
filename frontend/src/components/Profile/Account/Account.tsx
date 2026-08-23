@@ -6,13 +6,13 @@ import { useAuth } from '@/src/components/Provider/UserProvider';
 import { useRouter } from "next/navigation";
 import UsernameEditor from './UsernameEditor';
 
-type WindowState = { request: boolean, prefsOpen: boolean, secureOpen: boolean, accountOpen: boolean };
-type props = {
-    setWindow: React.Dispatch<React.SetStateAction<WindowState>>;
-    window: WindowState;
+type WindowStateType = { request: boolean, prefsOpen: boolean, secureOpen: boolean, accountOpen: boolean };
+type propsType = {
+    setWindow: React.Dispatch<React.SetStateAction<WindowStateType>>;
+    window: WindowStateType;
 }
 
-export default function Account ({ setWindow, window } : props) {
+export default function Account ({ setWindow, window } : propsType) {
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
     const {LENUAGE} = useAuth();
     const profil = LENUAGE.Profile;

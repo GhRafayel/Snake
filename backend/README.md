@@ -1,131 +1,52 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Backend — Snake (ft_transcendence)
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+NestJS + Prisma (PostgreSQL) API and WebSocket gateway for the Snake multiplayer game.
+See the [project root README](../README.md) for the full subject write-up (description, modules, team, etc.).
+This file only covers running/developing the backend service itself.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Requirements
+- Node.js 20
+- A `.env` file at the **project root** (see [`../.env.example`](../.env.example))
 
-## Description
+Normally you don't run this service standalone — use `make up` from the project root,
+which starts it together with nginx, the frontend and Redis via Docker Compose.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-## Project setup
-
+## Running standalone (without Docker)
 ```bash
-$ npm install
+npm install
+npx prisma generate
+npx prisma db push        # sync the schema to your DATABASE_URL
+npm run start:dev         # watch mode, http://localhost:4000
 ```
 
-## Compile and run the project
+## Scripts
+| Command | Description |
+|---|---|
+| `npm run start:dev` | Start in watch mode |
+| `npm run build` / `npm run start:prod` | Production build and start |
+| `npm run seed:admin` | Create the admin accounts defined by `ADMIN_*` env vars |
+| `npm run generate` | Regenerate the Prisma client after a schema change |
+| `npm run test` / `test:e2e` / `test:cov` | Unit / e2e / coverage tests |
+| `npm run lint` | Lint and auto-fix |
 
-```bash
-# development
-$ npm run start
+## Structure
+- `src/auth` — signup/login, JWT access+refresh, sessions, password reset
+- `src/users`, `src/friends` — profiles, friend requests
+- `src/gameRoom`, `src/game-engin` — rooms and the real-time Snake game engine (incl. AI opponent)
+- `src/socket` — the WebSocket gateway used for live gameplay
+- `src/admin` — role-gated user management (search/view/edit/delete) and DB seeding
+- `src/redis`, `src/database`, `src/logger`, `src/mail` — infra services
+- `prisma/schema.prisma` — database schema (see root README for the model overview)
 
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
-
-## Run tests
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
-
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
-
-## Resources
-
-Check out a few resources that may come in handy when working with NestJS:
-
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
-
-
-
-### 
-
-1. User login
-
-2. Frontend stores token
-
-3. User clicks "Create Room"
-
-4. Backend creates room
-
-5. Backend creates RoomUser row
-
-6. Frontend redirects to /room/:id
-
-7. Socket connects
-
-8. Other users open invite link
-
-9. Backend checks maxUsers
-
-10. Users join room
-
-11. Socket joins room
-
-12. When 4 users joined:
-      game starts
-
-13. Players send realtime moves
-
-14. Backend broadcasts updates
+## Game flow (room lifecycle)
+1. User logs in, frontend stores the access token.
+2. User clicks "Create Room" → backend creates a `GameRoom`.
+3. Backend creates the owner's `RoomUser` row.
+4. Frontend redirects to `/room/:id`.
+5. The client's socket connects and joins the room.
+6. Other users open the invite link and join the same way.
+7. Backend enforces `maxUsers` per room.
+8. Once enough players have joined, the game starts (`RoomStatus` moves to `PLAYING`).
+9. Players send real-time moves over the socket.
+10. Backend runs the game loop and broadcasts state updates to every client in the room.
+11. On completion, a `GameResults` row (with per-player `GameParticipants`) is persisted.

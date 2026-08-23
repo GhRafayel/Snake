@@ -11,7 +11,8 @@ certs:
 	openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
 		-keyout nginx/certs/key.pem \
 		-out nginx/certs/cert.pem \
-		-subj "/C=US/ST=Dev/L=Dev/O=Dev/CN=localhost"
+		-subj "/C=US/ST=Dev/L=Dev/O=Dev/CN=localhost" \
+		-addext "subjectAltName=DNS:localhost,IP:127.0.0.1,IP:192.168.64.17"
 
 ## Install NVM and Node.js if not already installed
 setup:
@@ -53,6 +54,10 @@ up:
 ## Build and start all services (background)
 up-d:
 	docker compose up --build -d
+
+## Run only the nginx container (no frontend/backend deps started)
+nginx:
+	docker compose up --build --no-deps nginx
 
 ## Stop all services
 down:
@@ -112,4 +117,4 @@ update-frontend:
 	docker compose up -d --force-recreate frontend
 	docker container prune -f
 
-.PHONY: all up up-d build down logs certs migrate prisma-reset studio clean re
+.PHONY: all up up-d build down logs certs migrate prisma-reset studio clean re nginx

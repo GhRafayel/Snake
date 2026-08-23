@@ -23,3 +23,6 @@ TestResults.xml
 #env files
 .env
 .qodo
+
+#TLS certs/keys (local dev material, must not be committed)
+nginx/certs/*.pem

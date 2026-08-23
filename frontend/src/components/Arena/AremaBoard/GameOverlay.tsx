@@ -2,14 +2,14 @@
 
 import { useEffect }        from "react";
 import { useRouter }        from "next/navigation";
-import { ArenaStore }       from "@/src/components/Store/ArenaStore";
-import { GameCanvasStore }  from "@/src/components/Store/GameCanvasStore";
+import { useArenaStore }       from "@/src/components/Store/useArenaStore";
+import { useGameCanvasStore }  from "@/src/components/Store/useGameCanvasStore";
 import { useAuth }          from "@/src/components/Provider/UserProvider";
 
 export default function GameOverlay() {
 
     const {LENUAGE, ChangingCallback} = useAuth()
-    const gameState = ArenaStore((s) => s.gameState);
+    const gameState = useArenaStore((s) => s.gameState);
     const router = useRouter();
     const AR_LENG = LENUAGE.Arena.overlay;
 
@@ -18,18 +18,18 @@ export default function GameOverlay() {
 
     useEffect(() => {
         if (showOver || showWin) ChangingCallback(undefined,"me");
-    }, [showOver, showWin]);
+    }, [showOver, showWin, ChangingCallback]);
 
     if (!showOver && !showWin) return null;
 
     function handleRestart() {
-        const arena = ArenaStore.getState();
+        const arena = useArenaStore.getState();
         if (arena.mode === 'online' && arena.roomState?.roomId) {
             arena.setRematchRoomId(arena.roomState.roomId);
         }
-        GameCanvasStore.getState().setInternalGameState('END');
+        useGameCanvasStore.getState().setInternalGameState('END');
         arena.setGameState('END');
-        router.push(`/server/arena?r=${Date.now()}`);
+        router.push(`/server/arena?mode=${arena.mode}&r=${Date.now()}`);
         ChangingCallback(undefined, "me");
         router.refresh();
     }

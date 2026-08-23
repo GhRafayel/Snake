@@ -140,6 +140,7 @@ export const LanguageSeed: Record<string, unknown> = {
 			send: 'Senden',
 			title: 'Eine Nachricht an die Verwaltung senden',
 			des: 'Schreiben Sie hier Ihre Nachricht...',
+			invites: 'Ausstehende Einladungen',
 		},
 		Friends: {
 			social: 'Soziales',
@@ -286,6 +287,7 @@ export const LanguageSeed: Record<string, unknown> = {
 			send: 'Send',
 			title: 'Send a message to administration',
 			des: 'Write your message here...',
+			invites: 'Pending Invites',
 		},
 		Friends: {
 			social: 'Social',
@@ -438,6 +440,7 @@ export const LanguageSeed: Record<string, unknown> = {
 			send: 'Invia',
 			title: "Invia un messaggio all'amministrazione",
 			des: 'Scrivi qui il tuo messaggio...',
+			invites: 'Inviti in sospeso',
 		},
 		Friends: {
 			social: 'Social',
@@ -590,6 +593,7 @@ export const LanguageSeed: Record<string, unknown> = {
 			send: 'Отправить',
 			title: 'Отправить сообщение администрации',
 			des: 'Напишите ваше сообщение здесь...',
+			invites: 'Ожидающие приглашения',
 		},
 		Friends: {
 			social: 'Социальное',

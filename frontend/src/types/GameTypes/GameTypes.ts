@@ -52,13 +52,6 @@ export interface GameType {
 	moveIntervalMs: number;
 }
 
-export interface FitCanvasPropsType {
-	canvas: HTMLCanvasElement | null;
-	ctx: CanvasRenderingContext2D | null;
-	cssWidth: number;
-	cssHeight: number;
-}
-
 export interface RoomInviteType {
   roomId: string;
   from: {

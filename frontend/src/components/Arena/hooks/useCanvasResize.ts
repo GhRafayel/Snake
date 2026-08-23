@@ -1,8 +1,8 @@
 import { RefObject, useEffect } from "react";
 import { fitCanvas } from "../utils/canvas";
-import { GameCanvasStore } from "@/src/components/Store/GameCanvasStore";
+import { useGameCanvasStore } from "@/src/components/Store/useGameCanvasStore";
 
-export function CanvasResize(
+export function useCanvasResize(
     canvasRef: RefObject<HTMLCanvasElement | null>,
     containerId: string
 ) {
@@ -17,7 +17,7 @@ export function CanvasResize(
                 const cssWidth = Math.max(0, Math.floor(entry.contentRect.width));
                 const cssHeight = Math.max(0, Math.floor(entry.contentRect.height));
                 const size = Math.min(cssWidth, cssHeight);
-                GameCanvasStore.getState().setScreen({ width: size, height: size });
+                useGameCanvasStore.getState().setScreen({ width: size, height: size });
                 fitCanvas({ canvas, ctx, cssWidth: size, cssHeight: size });
             }
         });

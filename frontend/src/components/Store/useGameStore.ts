@@ -28,7 +28,7 @@ interface GameStoreStateType {
   resetGame: () => void;
 }
 
-export const GameStore = create<GameStoreStateType>((set) => ({
+export const useGameStore = create<GameStoreStateType>((set) => ({
   gameState: null,
   gameDir: null,
   currGame: null,

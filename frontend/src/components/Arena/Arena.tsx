@@ -2,8 +2,8 @@
 
 import { useEffect }                        from "react";
 import { useAuth }                          from "@/src/components/Provider/UserProvider";
-import { ArenaStore, ArenaMode }            from "@/src/components/Store/ArenaStore";
-import { DifficultyStore }                  from "@/src/components/Store/DifficultyStore";
+import { useArenaStore, ArenaModeType }            from "@/src/components/Store/useArenaStore";
+import { useDifficultyStore }                  from "@/src/components/Store/useDifficultyStore";
 import { useSocket }                        from "@/src/components/Socket/Socket";
 import ArenaHeader                          from "./ArenaHeader/ArenaHeader";
 import ArenaControls                        from "./ArenaControls";
@@ -12,31 +12,32 @@ import Sidebar                              from "./ArenaSidebar/Sidebar";
 import LevelSelector                        from "./LevelSelector";
 
 
-export default function Arena({ initialMode }: { initialMode: ArenaMode }) {
+export default function Arena({ initialMode }: { initialMode: ArenaModeType }) {
 
     const {cntUser} = useAuth()
     const socket = useSocket()
-    const AR_STORE = ArenaStore();
+    const AR_STORE = useArenaStore();
     const mode = initialMode;
-    const level = DifficultyStore((s) => s.level);
+    const level = useDifficultyStore((s) => s.level);
 
     useEffect(() => {
-        AR_STORE.setMode(mode);
-        AR_STORE.resetArena();
+        const arena = useArenaStore.getState();
+        arena.setMode(mode);
+        arena.resetArena();
         if (!socket) return;
 
         socket.emit("get-online-users");
         if (mode === "AI")
             socket.emit("play-AI", { level });
         else {
-            const rematchRoomId = AR_STORE.rematchRoomId;
+            const rematchRoomId = arena.rematchRoomId;
             if (rematchRoomId) {
                 socket.emit("rematch", { roomId: rematchRoomId });
-                AR_STORE.setRematchRoomId(null);
+                arena.setRematchRoomId(null);
             } else {
-                const pendingRoomId = AR_STORE.pendingRoomId;
+                const pendingRoomId = arena.pendingRoomId;
                 socket.emit("join-room", pendingRoomId ? { roomId: pendingRoomId } : undefined);
-                if (pendingRoomId) AR_STORE.setPendingRoomId(null);
+                if (pendingRoomId) arena.setPendingRoomId(null);
             }
         }
 
@@ -44,7 +45,7 @@ export default function Arena({ initialMode }: { initialMode: ArenaMode }) {
             if (!socket) return;
             socket.emit("leave-room");
         };
-    }, [AR_STORE.setRoomState, mode, level]);
+    }, [mode, level, socket]);
 
     return (
         <div className={`relative min-h-screen w-full ${cntUser?.theme ?? true ?  "bg text-gray-200 " : "bg-gray-200 text-black"} p-2`}>

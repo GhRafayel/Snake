@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { FriendType } from "@/src/types/FriendTypes/FriendTypes";
-import { ArenaStore } from "./ArenaStore";
+import { useArenaStore } from "./useArenaStore";
 
 import { Lib } from "@/src/lib/lib";
 
@@ -16,7 +16,7 @@ interface FriendStoreType {
   handleInvite: (friendId: number) => void;
 }
 
-export const FriendStore = create<FriendStoreType>((set) => ( {
+export const useFriendStore = create<FriendStoreType>((set) => ( {
     friends: [],
     invited: [],
 
@@ -79,7 +79,7 @@ export const FriendStore = create<FriendStoreType>((set) => ( {
     },
     
     handleInvite: (friendId: number) => {
-        ArenaStore.getState().inviteFriend(friendId);
+        useArenaStore.getState().inviteFriend(friendId);
         set((state) => ( {
           invited: [...state.invited, friendId]
         }));

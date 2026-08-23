@@ -1,36 +1,34 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Frontend — Snake (ft_transcendence)
 
-## Getting Started
+Next.js (React 19 + TypeScript) client for the Snake multiplayer game.
+See the [project root README](../README.md) for the full subject write-up (description, modules, team, etc.).
+This file only covers running/developing the frontend service itself.
 
-First, run the development server:
+## Requirements
+- Node.js 20
+- A `.env` file at the **project root** (see [`../.env.example`](../.env.example))
 
+Normally you don't run this service standalone — use `make up` from the project root,
+which starts it together with nginx, the backend and Redis via Docker Compose.
+
+## Running standalone (without Docker)
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev   # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Scripts
+| Command | Description |
+|---|---|
+| `npm run dev` | Start the dev server (hot reload) |
+| `npm run build` / `npm run start` | Production build and start |
+| `npm run lint` | Lint the codebase |
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Structure
+- `src/app` — Next.js App Router pages (`server/arena`, `server/profile`, `server/admin`, `server/(auth)/login|register|reset`)
+- `src/components/Arena` — the Snake game board, canvas rendering, animation loop and game HUD
+- `src/components/Auth` — login/register/reset forms
+- `src/components/Friends`, `src/components/Profile` — friends list, profile & account settings, avatar and language preferences
+- `src/components/Admin` — admin user-management UI
+- `src/components/Socket` — WebSocket client wiring for real-time gameplay
+- `src/lib` — shared client-side utilities and generated translation strings

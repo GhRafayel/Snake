@@ -3,12 +3,12 @@ import { create } from 'zustand';
 export const MIN_BOT_LEVEL = 1;
 export const MAX_BOT_LEVEL = 3;
 
-interface DifficultyStore {
+interface DifficultyStoreType {
     level: number;
     setLevel: (level: number) => void;
 }
 
-export const DifficultyStore = create<DifficultyStore>((set) => ({
+export const useDifficultyStore = create<DifficultyStoreType>((set) => ({
     level: MIN_BOT_LEVEL,
 
     setLevel: (level) =>

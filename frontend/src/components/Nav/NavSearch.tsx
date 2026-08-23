@@ -4,7 +4,7 @@ import { useAuth } from "@/src/components/Provider/UserProvider"
 import { UserSearchType } from "@/src/types/UserTypes/UserTypes";
 import { useState, useEffect, useRef } from "react";
 import { Lib } from "@/src/lib/lib"
-import { FriendStore } from "@/src/components/Store/FriendStore";
+import { useFriendStore } from "@/src/components/Store/useFriendStore";
 import { useRouter } from "next/navigation";
 
 export default function NavSearch ( ) {
@@ -14,7 +14,7 @@ export default function NavSearch ( ) {
     const Header = LENUAGE.Header;
     const {ChangingCallback, cntUser} = useAuth();
     const [filtered, setFiltered] = useState<UserSearchType[]>([]);
-    const friendStore = FriendStore((set) => set.fetchFriends);
+    const friendStore = useFriendStore((set) => set.fetchFriends);
     const router = useRouter();
     const clearTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
     const isHoveringRef = useRef(false);
@@ -30,7 +30,7 @@ export default function NavSearch ( ) {
     };
 
      useEffect(() => {
-        if (inputValue === "") { setFiltered([]); return }
+        if (inputValue === "") return;
 
         const timer = setTimeout(async () => {
             const users: UserSearchType[] = await fetch( "/api/edit?path=/users/search/" + inputValue).then((r) => r.json());
@@ -59,8 +59,12 @@ export default function NavSearch ( ) {
                 <path d="m21 21-4.3-4.3" />
               </svg>
 
-              <input onChange={(e) => setInputValue(e.currentTarget.value)}
-                value={inputValue} type="text" 
+              <input onChange={(e) => {
+                  const value = e.currentTarget.value;
+                  setInputValue(value);
+                  if (value === "") setFiltered([]);
+                }}
+                value={inputValue} type="text"
                 placeholder={Header.plaseholder}
                 className={`nav-search-input ${cntUser?.theme ?? true ? " text-zinc-200  placeholder-zinc-400 " : "placeholder-zinc-800 "}`}
               />

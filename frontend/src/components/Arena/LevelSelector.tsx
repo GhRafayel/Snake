@@ -1,6 +1,6 @@
 'use client'
 
-import { DifficultyStore, MIN_BOT_LEVEL, MAX_BOT_LEVEL }    from "@/src/components/Store/DifficultyStore";
+import { useDifficultyStore, MIN_BOT_LEVEL, MAX_BOT_LEVEL }    from "@/src/components/Store/useDifficultyStore";
 import { useAuth }                                          from "../Provider/UserProvider";
 
 const LEVELS = Array.from({ length: MAX_BOT_LEVEL - MIN_BOT_LEVEL + 1 }, (_, i) => MIN_BOT_LEVEL + i);
@@ -8,8 +8,8 @@ const LEVELS = Array.from({ length: MAX_BOT_LEVEL - MIN_BOT_LEVEL + 1 }, (_, i) 
 export default function LevelSelector() {
 
     const {cntUser, LENUAGE} = useAuth()
-    const level = DifficultyStore((s) => s.level);
-    const setLevel = DifficultyStore((s) => s.setLevel);
+    const level = useDifficultyStore((s) => s.level);
+    const setLevel = useDifficultyStore((s) => s.setLevel);
     const AR_LENG = LENUAGE.Arena.header;
 
     return (

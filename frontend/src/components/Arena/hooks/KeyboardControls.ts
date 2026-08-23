@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Socket } from "socket.io-client";
-import { ArenaStore } from "@/src/components/Store/ArenaStore";
-import { GameCanvasStore } from "@/src/components/Store/GameCanvasStore";
+import { useArenaStore } from "@/src/components/Store/useArenaStore";
+import { useGameCanvasStore } from "@/src/components/Store/useGameCanvasStore";
 
 interface KeyboardControlsParamsType {
     socket: Socket | null;
@@ -9,17 +9,17 @@ interface KeyboardControlsParamsType {
 }
 
 export function KeyboardControls({ socket, myUserId }: KeyboardControlsParamsType) {
-    const setGameState = ArenaStore((s) => s.setGameState);
-    const setGameDir = ArenaStore((s) => s.setGameDir);
+    const setGameState = useArenaStore((s) => s.setGameState);
+    const setGameDir = useArenaStore((s) => s.setGameDir);
 
     useEffect(() => {
         const isEnded = () => {
-            const state = GameCanvasStore.getState().internalGameState;
+            const state = useGameCanvasStore.getState().internalGameState;
             return state === 'OVER' || state === 'WIN' || state === 'END';
         };
 
         const advanceSnake = (dir: 'UP' | 'DOWN' | 'LEFT' | 'RIGHT') => {
-            const room = GameCanvasStore.getState().currGame?.roomId;
+            const room = useGameCanvasStore.getState().currGame?.roomId ?? useArenaStore.getState().roomState?.roomId;
             if (!room || !socket) return;
             socket.emit('change-direction', { direction: dir, roomId: room, userId: myUserId });
         };
@@ -30,8 +30,8 @@ export function KeyboardControls({ socket, myUserId }: KeyboardControlsParamsTyp
 
             if (isEnded()) return;
 
-            if (ArenaStore.getState().gameState === 'PAUSE') {
-                GameCanvasStore.getState().setInternalGameState('START');
+            if (useArenaStore.getState().gameState === 'PAUSE') {
+                useGameCanvasStore.getState().setInternalGameState('START');
                 setGameState('START');
             }
 
@@ -49,7 +49,7 @@ export function KeyboardControls({ socket, myUserId }: KeyboardControlsParamsTyp
                 advanceSnake('RIGHT');
             } else if (e.key === 'Escape') {
                 setGameDir(null);
-                GameCanvasStore.getState().setInternalGameState('END');
+                useGameCanvasStore.getState().setInternalGameState('END');
                 setGameState('END');
             }
         };

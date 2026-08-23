@@ -2,11 +2,11 @@
 import { useAuth } from "@/src/components/Provider/UserProvider";
 import { OnlineUsersType } from "@/src/types/UserTypes/UserTypes";
 
-type Props = {
+type PropsType = {
   obj?: OnlineUsersType;
 };
 
-export default function OnlineUser({ obj }: Props) {
+export default function OnlineUser({ obj }: PropsType) {
   const { cntUser, LENUAGE } = useAuth();
   const History = LENUAGE.History;
   if (!obj) return null;

@@ -1,21 +1,21 @@
 import { useEffect } from "react";
-import { ArenaStore } from "@/src/components/Store/ArenaStore";
-import { GameCanvasStore } from "@/src/components/Store/GameCanvasStore";
+import { useArenaStore } from "@/src/components/Store/useArenaStore";
+import { useGameCanvasStore } from "@/src/components/Store/useGameCanvasStore";
 
 export function WindowFocusPause() {
-    const setGameState = ArenaStore((s) => s.setGameState);
+    const setGameState = useArenaStore((s) => s.setGameState);
 
     useEffect(() => {
         const handleWindowBlur = () => {
-            if (ArenaStore.getState().gameState === 'START') {
-                GameCanvasStore.getState().setInternalGameState('PAUSE');
+            if (useArenaStore.getState().gameState === 'START') {
+                useGameCanvasStore.getState().setInternalGameState('PAUSE');
                 setGameState('PAUSE');
             }
         };
 
         const handleWindowFocus = () => {
-            if (ArenaStore.getState().gameState === 'PAUSE') {
-                GameCanvasStore.getState().setInternalGameState('START');
+            if (useArenaStore.getState().gameState === 'PAUSE') {
+                useGameCanvasStore.getState().setInternalGameState('START');
                 setGameState('START');
             }
         };

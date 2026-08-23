@@ -1,12 +1,12 @@
 'use client'
 
 import { Users }        from "lucide-react";
-import { ArenaStore }   from "@/src/components/Store/ArenaStore";
-import { UserStore }    from "@/src/components/Store/UserStore";
+import { useArenaStore }   from "@/src/components/Store/useArenaStore";
+import { useUserStore }    from "@/src/components/Store/useUserStore";
 
 export default function MobileFab() {
-    const setSidebarOpen = ArenaStore((s) => s.setSidebarOpen);
-    const onlineUsers = UserStore((state) => state.onlineUsers);
+    const setSidebarOpen = useArenaStore((s) => s.setSidebarOpen);
+    const onlineUsers = useUserStore((state) => state.onlineUsers);
 
     return (
         <button className="relative flex h-12 w-12 items-center justify-center rounded-full bg-indigo-600 text-white shadow-lg shadow-indigo-600/30 transition-transform hover:scale-110 active:scale-95 lg:hidden" aria-label="Open players sidebar" 

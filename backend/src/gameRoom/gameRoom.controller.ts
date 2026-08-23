@@ -1,5 +1,5 @@
 import { Controller, Body, Post, Get, Delete, Param, Query, ParseIntPipe} from '@nestjs/common';
-import { CreatePrivateGameRoom } from '../dto/crate-private-gameRoom.dto';
+import { CreatePrivateGameRoom } from '../dto/create-private-gameRoom.dto';
 import { GameRoomService } from './gameRoom.service';
 import { LoggerService } from 'src/logger/logger.service';
 

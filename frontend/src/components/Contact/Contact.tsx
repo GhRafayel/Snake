@@ -1,14 +1,26 @@
 "use client"
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MessageSquareText, X, Send } from "lucide-react";
 import { useAuth } from "@/src/components/Provider/UserProvider";
 import { Lib } from "@/src/lib/lib";
+import { useFriendStore } from "@/src/components/Store/useFriendStore";
 
 export default function Contact() {
     const [isOpen, setIsOpen] = useState(false);
     const { cntUser, LENUAGE } = useAuth();
     const contactData = LENUAGE.contact;
+    const FR_LENG = LENUAGE.Friends;
+    const FR_STORE = useFriendStore();
+    const fetchFriends = useFriendStore((s) => s.fetchFriends);
+
+    useEffect(() => {
+        if (cntUser?.id) fetchFriends();
+    }, [cntUser?.id, fetchFriends]);
+
+    const pendingInvites = FR_STORE.friends.filter(
+        (friend) => friend.status === "PENDING" && !!cntUser && friend.senderId !== cntUser.id
+    );
 
     return (
         <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-4 pointer-events-none">
@@ -44,12 +56,44 @@ export default function Contact() {
                     </button>
                 </div>
 
-                <form className="flex flex-col gap-4 px-5 py-5" 
+                {pendingInvites.length > 0 && (
+                    <div className={`px-5 pt-4 border-b ${cntUser?.theme ?? true ? "border-neon-green/10" : "border-gray-200"}`}>
+                        <p className={`text-xs font-semibold uppercase tracking-wide mb-1 ${cntUser?.theme ?? true ? "text-text-muted" : "text-gray-500"}`}>
+                            {(contactData.invites ?? "Pending Invites")} ({pendingInvites.length})
+                        </p>
+                        <div className="fr-list no-scrollbar pb-3">
+                            {pendingInvites.map((item, i) => (
+                                <div className="fr-row" key={item.requestId}>
+                                    <span className={`fr-avatar fr-av-${i % 4}`}>
+                                        {item.Username.slice(0, 2).toUpperCase()}
+                                    </span>
+                                    <div className="fr-info">
+                                        <span className="fr-name">{item.Username}</span>
+                                        <div className="fr-actions">
+                                            <button type="button" className="fr-actionBtn fr-actionAccept" onClick={async () => await FR_STORE.acceptFriend(item.requestId)}>
+                                                {FR_LENG.accept}
+                                            </button>
+                                            <button type="button" className="fr-actionBtn fr-actionReject" onClick={async () => await FR_STORE.rejectFriend(item.requestId)}>
+                                                {FR_LENG.reject}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
+
+                <form className="flex flex-col gap-4 px-5 py-5"
                     onSubmit={async (e) => {
                     e.preventDefault();
                     const message = new FormData(e.currentTarget).get("message") as string;
-                    const res = await Lib.postRequest(`/api/edit?path=/users/contact`, {message});
-                    if (res.ok)   setIsOpen(false);               
+                    try {
+                        const res = await Lib.postRequest(`/api/edit?path=/users/contact`, {message});
+                        if (res.ok) setIsOpen(false);
+                    } catch (err) {
+                        console.error("Failed to send contact message", err);
+                    }
                 }}>
                     <div className="flex gap-4">
                         <span className={`w-px shrink-0 rounded-full ${cntUser?.theme ?? true ? "bg-linear-to-b from-neon-green/60 via-neon-green/20 to-transparent" : "bg-linear-to-b from-green-500/60 via-green-500/20 to-transparent"}`} />
@@ -101,6 +145,12 @@ export default function Contact() {
 
                 {!isOpen && (
                     <span className={`absolute inset-0 rounded-full animate-ping ${cntUser?.theme ?? true ? "bg-neon-green/40" : "bg-green-500/40"}`} />
+                )}
+
+                {pendingInvites.length > 0 && (
+                    <span className={`absolute -top-1 -right-1 flex h-5 min-w-5 items-center justify-center rounded-full border-2 px-1 text-[10px] font-bold bg-red-500 text-white ${cntUser?.theme ?? true ? "border-bg-void" : "border-white"}`}>
+                        {pendingInvites.length > 9 ? "9+" : pendingInvites.length}
+                    </span>
                 )}
             </button>
         </div>

@@ -1,10 +1,11 @@
 "use client"
 import { useState } from "react";
+import Image from "next/image";
 import { FormType } from "@/src/types/UserTypes/UserTypes";
 
-type Props = { item: FormType}
+type PropsType = { item: FormType}
 
-export default function FormInputs ({item} :  Props) {
+export default function FormInputs ({item} :  PropsType) {
 
     const	[formData, setFormData] = useState<FormType>(item);
    
@@ -20,7 +21,7 @@ export default function FormInputs ({item} :  Props) {
                     />
                 </label>
                 <div className="formInputDiv">
-                    <img src={`${formData.src}`} alt="icon" id={formData.id} className="w-8  min-w-8 cursor-pointer"
+                    <Image src={formData.src} alt="icon" id={formData.id} width={32} height={32} className="w-8  min-w-8 cursor-pointer"
                         onClick={() => {
                             if (formData.name === "Password" || formData.name === "ConfirmPassword")
                             {

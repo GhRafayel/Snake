@@ -1,6 +1,6 @@
 import { Injectable, BadRequestException, Inject, forwardRef} from '@nestjs/common';
 import { DatabaseService } from 'src/database/database.service';
-import { GameState, Direction, Snake, Position, Food, Player, PlayerType } from "src/types/interface"
+import { GameStateType, DirectionType, SnakeType, PositionType, FoodType, PlayerType, PlayerRoleType } from "src/types/Game.engin.interface"
 import { AiOpponentService } from './ai-opponent.service';
 import { RoomStatus } from "@prisma/client";
 import { SocketGateway } from 'src/socket/socket.gateway';
@@ -28,7 +28,7 @@ function pickFoodKind(): number {
 	return Math.floor(Math.random() * FOOD_KINDS.length);
 }
 
-function isOppositeDir(next: Direction | null, cur: Direction) : boolean{
+function isOppositeDir(next: DirectionType | null, cur: DirectionType) : boolean{
 	if (next === null)
 		return true;
 	if (next === 'DOWN' && cur === 'UP')
@@ -42,13 +42,13 @@ function isOppositeDir(next: Direction | null, cur: Direction) : boolean{
 	return false;
 }
 
-function comparePosition(a: Position, b: Position): boolean{
+function comparePosition(a: PositionType, b: PositionType): boolean{
 	return (a.x === b.x && a.y === b.y);
 }
 
-function spawnFood(state: GameState){
+function spawnFood(state: GameStateType){
 	let ok : boolean = false;
-	let pos : Position = {x: 0, y: 0};
+	let pos : PositionType = {x: 0, y: 0};
 	while (!ok){
 		pos = {
  			x : Math.floor(Math.random() * state.gridWidth),
@@ -69,13 +69,19 @@ function spawnFood(state: GameState){
 					ok = false;
 					break;
 				}
+			if (!ok)
+				break;
+			if (snake.alive && snake.newPosition !== null && comparePosition(snake.newPosition, pos)){
+				ok = false;
+				break;
+			}
 		}
 	}
 	const kindIndex = pickFoodKind();
 	state.food.push({position: pos, eaten: false, kindIndex, value: kindIndex + 1});
 }
 
-function newHeadPosition(state: GameState){
+function newHeadPosition(state: GameStateType){
 	for (const snake of state.snakes){
 		if (!snake.alive)
 			continue;
@@ -93,7 +99,7 @@ function newHeadPosition(state: GameState){
 	}
 }
 
-function checkFood(state: GameState){
+function checkFood(state: GameStateType){
 	for (const snake of state.snakes){
 		if (snake.alive === false)
 			continue;
@@ -109,7 +115,7 @@ function checkFood(state: GameState){
 	}
 }
 
-function checkCollision(state: GameState){
+function checkCollision(state: GameStateType){
 	for (const snake of state.snakes){
 		if (snake.alive === false)
 			continue;
@@ -146,7 +152,7 @@ function checkCollision(state: GameState){
 	}
 }
 
-function updateFoodScore(state: GameState){
+function updateFoodScore(state: GameStateType){
 	for (let i = 0; i < state.food.length; i++){
 		if (state.food[i].eaten){
 			state.food.splice(i, 1);
@@ -163,7 +169,7 @@ function updateFoodScore(state: GameState){
 	}
 }
 
-function moveSnake(state: GameState){
+function moveSnake(state: GameStateType){
 	for (const snake of state.snakes){
 		if (!snake.alive)
 			continue;
@@ -180,10 +186,10 @@ function moveSnake(state: GameState){
 	}
 }
 
-function createSnake(user: Player, index: number, color: string) : Snake{
-	let pos: Position = {x: 2, y: 1};
-	const body : Position[]  = [];
-	let dir : Direction = 'RIGHT';
+function createSnake(user: PlayerType, index: number, color: string) : SnakeType{
+	let pos: PositionType = {x: 2, y: 1};
+	const body : PositionType[]  = [];
+	let dir : DirectionType = 'RIGHT';
 	if (index === 2)
 		pos = {x: 2, y: GRID_HEIGHT - 2}
 	if (index === 1)
@@ -210,11 +216,11 @@ function createSnake(user: Player, index: number, color: string) : Snake{
 		body.push({x: pos.x, y: pos.y + 1});
 		body.push({x: pos.x - 1, y: pos.y + 1});
 	}
-	let player: PlayerType = 'PLAYER';
+	let player: PlayerRoleType = 'PLAYER';
 	if (user.isBot)
 		player = 'BOT';
 	
-	const snakes : Snake = {
+	const snakes : SnakeType = {
 		userId: user.id,
 		body: body,
 		direction: dir,
@@ -256,8 +262,8 @@ function distinctShade(base: string, used: Set<string>): string {
 	return base;
 }
 
-function assignColors(users: Player[]): string[] {
-	const colors: (string | null)[] = new Array(users.length).fill(null);
+function assignColors(users: PlayerType[]): string[] {
+	const colors: (string | null)[] = new Array<string | null>(users.length).fill(null);
 	const used = new Set<string>();
 
 	users.forEach((user, i) => {
@@ -287,8 +293,8 @@ function assignColors(users: Player[]): string[] {
 	return colors as string[];
 }
 
-function initGame(id: string, users: Player[]) : GameState{
-	const snakes : Snake[] = [];
+function initGame(id: string, users: PlayerType[]) : GameStateType{
+	const snakes : SnakeType[] = [];
 	let flag = false;
 	const colors = assignColors(users);
 	for (let i = 0; i < users.length; i++){
@@ -296,8 +302,8 @@ function initGame(id: string, users: Player[]) : GameState{
 		if (users[i].isBot)
 			flag = true;
 	}
-	const foods : Food[] = [];
-	const game : GameState = {
+	const foods : FoodType[] = [];
+	const game : GameStateType = {
 		roomId: id,
 		snakes: snakes,
 		food: foods,
@@ -314,7 +320,7 @@ function initGame(id: string, users: Player[]) : GameState{
 	return game;
 }
 
-function gameOver(game : GameState) : GameState{
+function gameOver(game : GameStateType) : GameStateType{
 	let alive : number = 0;
 	let winners : number[] = [];
 	if (game.botPresent){
@@ -348,8 +354,8 @@ function gameOver(game : GameState) : GameState{
 @Injectable()
 export class GameEnginService {
 
-	private readonly games = new Map<string, GameState>();
-	private readonly pendingDirections = new Map<string, Map<number, Direction>>();
+	private readonly games = new Map<string, GameStateType>();
+	private readonly pendingDirections = new Map<string, Map<number, DirectionType>>();
 	private readonly logger = new LoggerService(GameEnginService.name);
 	private readonly tickIntervals = new Map<string, ReturnType<typeof setInterval>>();
 	private readonly moveAccumulators = new Map<string, number>();
@@ -361,11 +367,11 @@ export class GameEnginService {
         @Inject(forwardRef(() => SocketGateway)) private readonly socketGateway: SocketGateway,
 	) { };
 
-	getGame(roomId: string): GameState | undefined {
+	getGame(roomId: string): GameStateType | undefined {
 		return this.games.get(roomId);
 	}
 
-	queueDirection(roomId: string, userId: number, direction: Direction){
+	queueDirection(roomId: string, userId: number, direction: DirectionType){
 		let room = this.pendingDirections.get(roomId);
 		if (!room){
 			room = new Map();
@@ -374,7 +380,7 @@ export class GameEnginService {
 		room.set(userId, direction);
 	}
 
-	private popDirection(roomId: string, userId: number): Direction | undefined {
+	private popDirection(roomId: string, userId: number): DirectionType | undefined {
 		const room = this.pendingDirections.get(roomId);
 		const direction = room?.get(userId);
 		if (direction !== undefined)
@@ -382,7 +388,7 @@ export class GameEnginService {
 		return direction;
 	}
 
-	async storeResults(game: GameState){
+	async storeResults(game: GameStateType){
 		try {
 			await this.prismaService.gameResults.create({
 				data: {
@@ -434,7 +440,8 @@ export class GameEnginService {
 				game.snakes.filter(s => s.player !== 'BOT').map(s => s.userId)
 			);
 		} catch (err) {
-			this.logger.error(`storeResults failed for room ${game.roomId}: ${err}`);
+			const message = err instanceof Error ? err.message : String(err);
+			this.logger.error(`storeResults failed for room ${game.roomId}: ${message}`);
 		} finally {
 			this.games.delete(game.roomId);
 			this.pendingDirections.delete(game.roomId);
@@ -445,7 +452,7 @@ export class GameEnginService {
 
 	// Wrapped in a function so TS doesn't narrow `game.status` at call sites -
 	// stepGame() mutates it via a separate call the compiler can't see through.
-	private isFinished(game: GameState): boolean {
+	private isFinished(game: GameStateType): boolean {
 		return game.status === 'finished';
 	}
 
@@ -459,7 +466,7 @@ export class GameEnginService {
 		this.lastTickAt.delete(roomId);
 	}
 
-	async eliminatePlayer(roomId: string, userId: number){
+	eliminatePlayer(roomId: string, userId: number){
 		const game = this.games.get(roomId);
 		if (!game || game.status === 'finished')
 			return;
@@ -491,7 +498,7 @@ export class GameEnginService {
 			isBot: roomUser.user.isBot,
 			color: roomUser.user.color,
 		}));
-		const game : GameState = initGame(roomId, users);
+		const game : GameStateType = initGame(roomId, users);
 		game.status = 'running';
 		this.games.set(roomId, game);
 		this.socketGateway.broadcastGameState(roomId, game);
@@ -505,7 +512,7 @@ export class GameEnginService {
 		}, TICK_MS));
 	}
 
-	private stepGame(game: GameState){
+	private stepGame(game: GameStateType){
 		for (const snake of game.snakes){
 			if (snake.alive && snake.player === 'PLAYER'){
 				const pending = this.popDirection(game.roomId, snake.userId);

@@ -7,11 +7,12 @@ import { TokenService } from './token/token.service';
 import { SessionService } from './session/session.service';
 import { LoginUsersDto } from 'src/dto/login-users.dto';
 import { DatabaseService } from 'src/database/database.service';
-import  * as bcrypt from "bcrypt"
 import { ResetPasswordDto } from 'src/dto/reset-password.dto';
 import { ChangePasswordDto } from 'src/dto/ChangePasswordDto.dto';
 import { MailService } from 'src/mail/mail.service';
 import { codeDto } from 'src/dto/code.dto';
+import { PayloadType, OAuthProfileType } from 'src/types/Auth.interface';
+import  * as bcrypt from "bcrypt"
 
 @Injectable()
 export class AuthService {
@@ -22,21 +23,22 @@ export class AuthService {
         private readonly tokenService:      TokenService,
         private readonly sessionService:    SessionService,
         private readonly mailService:       MailService
-    ) { }
+    ) {}
 
     async me(accessToken: string) {
-        const payload = await this.tokenService.verifyAccessToken(accessToken);
-        if (payload)
-        {
-            try {
-                const userData = await this.usersService.findOne(payload.userId);
+        const payload : PayloadType | Error = await this.tokenService.verifyAccessToken(accessToken);
+        if (payload instanceof Error)
+            return payload;
+
+        try {
+            const userData = await this.usersService.findOne(payload.userId);
+            if (userData)
                 return userData
-            }
-            catch {
-                throw new UnauthorizedException('Invalid credentials');
-            }
         }
-        return payload;
+        catch {
+            throw new UnauthorizedException('Invalid credentials');
+        }
+        return payload
     }
 
     async signUp(body: CreateUsersDto) {
@@ -60,7 +62,7 @@ export class AuthService {
     async signIn(body: LoginUsersDto) {
         
         const user = await this.dbService.users.findUnique( { where: { Email: body.Email } } );
-        if (!user) {
+        if (!user || !user.Password) {
             throw new UnauthorizedException('Invalid credentials');
         }
         const isMatch = await bcrypt.compare(body.Password, user.Password);
@@ -69,6 +71,27 @@ export class AuthService {
         }
         const accessToken = await this.createTokenSession(user.id);
         return {...accessToken};
+    }
+
+    async oauthLogin(profile: OAuthProfileType) {
+        let user = await this.usersService.findByProvider(profile.provider, profile.providerId);
+
+        if (!user) {
+            const existing = await this.dbService.users.findUnique({ where: { Email: profile.email } });
+            user = existing
+                ? await this.dbService.users.update({
+                    where: { id: existing.id },
+                    data: { provider: profile.provider, providerId: profile.providerId },
+                })
+                : await this.usersService.createOAuthUser({
+                    Email: profile.email,
+                    Username: profile.username,
+                    provider: profile.provider,
+                    providerId: profile.providerId,
+                });
+        }
+
+        return await this.createTokenSession(user.id);
     }
 
     async sendCode (userId: number, Email: string )
@@ -113,12 +136,12 @@ export class AuthService {
             throw new UnauthorizedException('Refresh token missing');
         }
 
-        const tokenHash = await this.tokenService.hashRefreshToken(refreshToken);
+        const tokenHash = this.tokenService.hashRefreshToken(refreshToken);
         const session = await this.sessionService.findSessionByHash(tokenHash);
         if (!session) {
             throw new UnauthorizedException('Invalid or expired session');
         }
-        const newRefreshToken = await this.tokenService.generateRefreshToken();
+        const newRefreshToken = this.tokenService.generateRefreshToken();
         await this.sessionService.rotateSession(session.id, newRefreshToken);
         const accessToken = await this.tokenService.generateAccessToken(session.userId, session.id);
         return { accessToken, refreshToken: newRefreshToken };
@@ -135,7 +158,7 @@ export class AuthService {
     }
     
     async createTokenSession(userId: number) {
-        const refreshToken = await this.tokenService.generateRefreshToken();
+        const refreshToken = this.tokenService.generateRefreshToken();
         const session = await this.sessionService.createSession(userId, refreshToken);
         const accessToken = await this.tokenService.generateAccessToken(userId, session.id);
         return { accessToken, refreshToken };
@@ -146,7 +169,7 @@ export class AuthService {
             where: { id: userId }
         });
 
-        if (!user)  throw new UnauthorizedException();
+        if (!user || !user.Password)  throw new UnauthorizedException();
         const isValidPassword = await bcrypt.compare(
             body.OldPassword,
             user.Password

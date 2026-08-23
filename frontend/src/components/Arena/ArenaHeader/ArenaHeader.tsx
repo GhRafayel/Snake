@@ -2,7 +2,7 @@
 import { Trophy, Copy, Check}   from "lucide-react";
 import { Clock, Users }         from "lucide-react";
 import { useState }             from "react";
-import { ArenaStore }           from "@/src/components/Store/ArenaStore";
+import { useArenaStore }           from "@/src/components/Store/useArenaStore";
 import { useAuth }              from "@/src/components/Provider/UserProvider";
 import MobileFab                from "./MobileFab";
 import Timer                    from "./Timer";
@@ -10,7 +10,7 @@ import Timer                    from "./Timer";
 export default function ArenaHeader() {
 
     const {cntUser, LENUAGE} = useAuth();
-    const roomState = ArenaStore((s) => s.roomState);
+    const roomState = useArenaStore((s) => s.roomState);
     const AR_LENG = LENUAGE.Arena.header;
     const [copied, setCopied] = useState(false);
     

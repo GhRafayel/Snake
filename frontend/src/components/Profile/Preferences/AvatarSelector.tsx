@@ -1,5 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import { useAuth } from '@/src/components/Provider/UserProvider';
 
 export default function AvatarSelector() {
@@ -19,7 +20,7 @@ export default function AvatarSelector() {
         <button key={avatar} type="button" aria-label={avatar}
           className={`pf-avatarOption ${cntUser?.avatar === avatar ? 'pf-avatarOptionActive' : ''}`}
           onClick={async () => ChangingCallback({avatar}, "change-avatar") }>
-          <img src={`/avatar/${avatar}`} alt={avatar} className="pf-avatarOptionImg" />
+          <Image src={`/avatar/${avatar}`} alt={avatar} width={44} height={44} className="pf-avatarOptionImg" />
         </button>
       ))}
     </div>

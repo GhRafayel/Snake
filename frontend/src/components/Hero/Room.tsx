@@ -10,8 +10,8 @@ export default function Room({choice} : {choice: string} ) {
        <div className="py-10 px-8 pb-15 text-center flex flex-col items-center ">
 
             <div className="match-card-descition "> 
-                <span className="block text-neon-green text-sm sm:text-base md:text-xl lg:text-2xl "> 
-                 // <span  className={`${cntUser?.theme ?? true ? "text-gray-300" : "text-gray-700"}  text-sm sm:text-base md:text-xl lg:text-2xl`}>{ choice} </span>
+                <span className="block text-neon-green text-sm sm:text-base md:text-xl lg:text-2xl ">
+                    <span  className={`${cntUser?.theme ?? true ? "text-gray-300" : "text-gray-700"}  text-sm sm:text-base md:text-xl lg:text-2xl`}>{ choice} </span>
                 </span>
             </div>
 

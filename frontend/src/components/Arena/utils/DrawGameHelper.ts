@@ -130,6 +130,7 @@ export function helperForEach( food: FoodType[], ctx: CanvasRenderingContext2D, 
         ctx.save();
         ctx.shadowColor = "rgba(255, 255, 255, 0.35)";
         ctx.shadowBlur = 7;
+        ctx.fillStyle = "#ffffff";
         ctx.fillText( kind.emoji, cx, cy + bob );
         ctx.restore();
     });

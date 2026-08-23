@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { RoomStatus, RoomType } from '@prisma/client';
 import { DatabaseService } from 'src/database/database.service';
-import { CreatePrivateGameRoom } from '../dto/crate-private-gameRoom.dto';
+import { CreatePrivateGameRoom } from '../dto/create-private-gameRoom.dto';
 @Injectable()
 export class GameRoomService {
   constructor(private readonly db: DatabaseService) {}

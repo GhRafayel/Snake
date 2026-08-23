@@ -30,7 +30,7 @@ export interface AdminStoreType {
   deleteUser: (id: number) => Promise<boolean>;
 }
 
-export const AdminStore = create<AdminStoreType>((set) => ({
+export const useAdminStore = create<AdminStoreType>((set) => ({
   query: '',
   results: [],
   listLoading: false,

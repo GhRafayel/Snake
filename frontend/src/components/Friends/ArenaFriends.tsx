@@ -1,15 +1,16 @@
 import { ChevronDown, CheckCircle, UsersRound, Trophy } from "lucide-react";
 import { useEffect, useState } from "react";
-import { FriendStore } from "../Store/FriendStore";
+import { useFriendStore } from "../Store/useFriendStore";
 import { useAuth } from "../Provider/UserProvider";
 
 export default function ArenaFriends () {
     const {LENUAGE, cntUser} = useAuth()
     const [F_list, setF_list] = useState(true);
     const FR_LENG = LENUAGE.Friends;
-    const FR_STORE = FriendStore();
+    const FR_STORE = useFriendStore();
+    const fetchFriends = useFriendStore((s) => s.fetchFriends);
     const acceptedFriends = FR_STORE.friends.filter((friend) => friend.status === "ACCEPTED");
-    useEffect(() => {FR_STORE.fetchFriends()},[]);
+    useEffect(() => {fetchFriends()},[fetchFriends]);
 
 
     return (
@@ -30,7 +31,7 @@ export default function ArenaFriends () {
                             return (
                             <div className="flex w-full min-w-0 items-center justify-between gap-3 rounded-xl px-2 py-2.5 transition-all duration-150 border pt-2  border-indigo-500/30 bg-indigo-500/10 hover:bg-indigo-500/20" key={i}>
 
-                                <div className="flex  gap-10 items-center  justify-between ">
+                                <div className="flex  gap-6 items-center  justify-between ">
                                     <span className={`fr-avatar fr-av-${i % 4}`}>
                                         {item.Username.slice(0, 2).toUpperCase()}
                                         <span className={`fr-dot ${item.isOnline ? 'fr-dot-active' : 'fr-dot-away'}`} />

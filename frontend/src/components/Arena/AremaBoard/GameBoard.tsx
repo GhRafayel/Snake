@@ -2,29 +2,29 @@
 
 import { useEffect }        from "react";
 import { Loader }           from "lucide-react";
-import { ArenaStore }       from "@/src/components/Store/ArenaStore";
+import { useArenaStore }       from "@/src/components/Store/useArenaStore";
 import { useAuth }          from "@/src/components/Provider/UserProvider";
 import { ArenaBoardType }   from "@/src/types/GameTypes/GameTypes";
 import GameCanvas           from "./GameCanvas";
 
-type RoomStatus = keyof ArenaBoardType;
+type RoomStatusType = keyof ArenaBoardType;
 
 export default function GameBoard() {
     const {cntUser, LENUAGE } = useAuth();
 
-    const roomState = ArenaStore((s) => s.roomState);
-    const countdownSeconds = ArenaStore((s) => s.countdownSeconds);
-    const gameState = ArenaStore((s) => s.gameState);
+    const roomState = useArenaStore((s) => s.roomState);
+    const countdownSeconds = useArenaStore((s) => s.countdownSeconds);
+    const gameState = useArenaStore((s) => s.gameState);
     const AR_LENG = LENUAGE.Arena.board;
     const rawStatus = roomState?.roomStatus;
-    const status = roomState ? AR_LENG[roomState.roomStatus as RoomStatus] : AR_LENG.connecting;
+    const status = roomState ? AR_LENG[roomState.roomStatus as RoomStatusType] : AR_LENG.connecting;
     const isGameOver = gameState === "WIN" || gameState === "OVER" || gameState === "END";
     const showCanvas = rawStatus === "PLAYING" || isGameOver;
 
     useEffect(() => {
         if (rawStatus !== "STARTING") return;
         const id = setInterval(() => {
-            ArenaStore.getState().setCountdownSeconds((prev) => (prev !== null && prev > 0 ? prev - 1 : prev));
+            useArenaStore.getState().setCountdownSeconds((prev) => (prev !== null && prev > 0 ? prev - 1 : prev));
         }, 1000);
         return () => clearInterval(id);
     }, [rawStatus]);

@@ -78,8 +78,7 @@ body {
 
 @layer components {
   .bg {
-    @apply relative bg-center bg-no-repeat bg-cover;
-    background-image: url("/backgroundSnake.png");
+    @apply relative bg-center bg-no-repeat bg-cover bg-[url('/backgroundSnake.png')];
   }
 }
 
@@ -91,36 +90,31 @@ body {
     rounded-2xl
     shadow-[0_4px_30px_rgba(0,0,0,0.1)]
     border border-white/40
-  }
-
-  .glass:hover {
-    @apply backdrop-blur-[7.5px]
+    backdrop-blur-[7.5px]
   }
 }
 
 @layer components {
   .btn {
-    @apply 
+    @apply
       inline-flex
       items-center
       justify-center
       bg-neon-green
       gap-2
-      px-6 
+      px-6
       py-3
       rounded-lg
       text-[0.9375rem]
       font-semibold
+      font-[inherit]
       tracking-[0.01em]
       cursor-pointer
       border border-transparent
       transition-all duration-150
       no-underline
-      whitespace-nowrap;
-      font-family: inherit;
+      whitespace-nowrap
+      hover:bg-blue-600
+      hover:underline-offset-1;
   }
-  .btn:hover {
-    @apply bg-blue-600 underline-offset-1
-  }
-
 }

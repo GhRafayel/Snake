@@ -1,5 +1,5 @@
 import { UserType } from "../types/UserTypes/UserTypes";
-import { TranslationTypes } from "../types/StoreTypes/StoreTypes";
+import { TranslationType } from "../types/StoreTypes/StoreTypes";
 
 export const Lib = {
     
@@ -19,7 +19,7 @@ export const Lib = {
        }
     },
 
-    patchRequest: async (url: string, body: Object) => {
+    patchRequest: async (url: string, body: object) => {
         try {
             return  await fetch(url, {
                 method: "PATCH",
@@ -32,7 +32,7 @@ export const Lib = {
         } catch { throw new Error() }
     },
 
-    putRequest: async (url: string, body: Object) => {
+    putRequest: async (url: string, body: object) => {
         try {
             return  await fetch(url, {
                 method: "PUT",
@@ -61,7 +61,7 @@ export const Lib = {
         }
         catch {return null }
     },
-    getLanguage: async (key : string | null) : Promise<TranslationTypes> => {
+    getLanguage: async (key : string | null) : Promise<TranslationType> => {
         if (key === null) return language;
         try {
                 const res = await fetch(`${process.env.INTERNAL_API_URL}/users/language/${key}`);
@@ -108,7 +108,7 @@ export const Lib = {
     ],
 }
 
-export const language : TranslationTypes = {
+export const language : TranslationType = {
         "Header": {
             "a":"Arena",
             "f":"Friends",
@@ -266,6 +266,7 @@ export const language : TranslationTypes = {
             send: "Send",
             title: "Send a message to administration",
             des: "Write your message here...",
+            invites: "Pending Invites",
         },
         Friends: {
             social: "Social",

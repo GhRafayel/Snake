@@ -8,7 +8,7 @@ interface UserStoreType {
   updateUser: ( id: number, data: Partial<OnlineUsersType>) => void;
 }
 
-export const UserStore = create<UserStoreType>((set) => ({
+export const useUserStore = create<UserStoreType>((set) => ({
     onlineUsers: [],
 
     setOnlineUsers: (onlineUsers) => set({ onlineUsers }),

@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { Socket } from "socket.io-client";
 import { GameType } from "@/src/types/GameTypes/GameTypes";
-import { GameCanvasStore } from "@/src/components/Store/GameCanvasStore";
-import { ArenaStore } from "@/src/components/Store/ArenaStore";
+import { useGameCanvasStore } from "@/src/components/Store/useGameCanvasStore";
+import { useArenaStore } from "@/src/components/Store/useArenaStore";
 import { playEatSound } from "@/src/components/Arena/utils/sound";
 
 interface UseGameSocketParamsType {
@@ -11,13 +11,13 @@ interface UseGameSocketParamsType {
 }
 
 export function GameSocket({ socket, myUserId }: UseGameSocketParamsType) {
-    const setArenaGameState = ArenaStore((s) => s.setGameState);
+    const setArenaGameState = useArenaStore((s) => s.setGameState);
 
     useEffect(() => {
         if (!socket) return;
 
         const handleGameState = (data: GameType) => {
-            const store = GameCanvasStore.getState();
+            const store = useGameCanvasStore.getState();
             const previousSnakes = store.currGame?.snakes;
             store.setGames(data);
             store.setStateTime(performance.now());

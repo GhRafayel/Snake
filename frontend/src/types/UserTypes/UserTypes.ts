@@ -1,4 +1,4 @@
-import { LanguageType, TranslationTypes } from "../StoreTypes/StoreTypes";
+import { LanguageType, TranslationType } from "../StoreTypes/StoreTypes";
 
 export type RoleType = "ADMIN" | "PLAYER" | "BOT";
 
@@ -15,8 +15,8 @@ export interface UserSearchType {
 
 export type UserContextType = {
     cntUser: UserType | null;
-    LENUAGE: TranslationTypes;
-    ChangingCallback: (value: Object | undefined, endpoint: string) => Promise<void>;
+    LENUAGE: TranslationType;
+    ChangingCallback: (value: object | undefined, endpoint: string) => Promise<void>;
 }
 
 export type UserType = {
@@ -53,21 +53,13 @@ export interface MusicType {
     src : string;
 }
 
-export interface CardsType  {
-	title: string;
-	description: string;
-	button: string;
-	wait: string;
-	mode: "AI" | "online";
-}
-
 export interface FormType {
 	id: string,
 	type: string,
 	name: string,
 	src : string,
 	value: string,
-	bol: Boolean,
+	bol: boolean,
 }
 
 

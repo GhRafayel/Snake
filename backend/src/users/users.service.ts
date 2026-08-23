@@ -43,9 +43,29 @@ export class UsersService {
 	}
 
 	async create(body: CreateUsersDto) {
-		
+
 		const res = await this.databaseService.users.create({ data: body});
 		await this.databaseService.userStats.create({ data: { Email: body.Email } });
+		return res;
+	}
+
+	async findByProvider(provider: string, providerId: string) {
+		return await this.databaseService.users.findUnique({
+			where: { provider_providerId: { provider, providerId } },
+		});
+	}
+
+	async createOAuthUser(data: { Email: string; Username: string; provider: string; providerId: string }) {
+		const res = await this.databaseService.users.create({
+			data: {
+				Email: data.Email,
+				Username: data.Username,
+				provider: data.provider,
+				providerId: data.providerId,
+				role: Role.PLAYER,
+			},
+		});
+		await this.databaseService.userStats.create({ data: { Email: data.Email } });
 		return res;
 	}
 

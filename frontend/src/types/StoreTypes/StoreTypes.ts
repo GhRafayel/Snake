@@ -24,17 +24,17 @@ export interface AdminUpdateType {
   role?: RoleType;
 }
 
-export type Mode = "AI" | "online";
+export type ModeType = "AI" | "online";
 
 export interface CardsType  {
 	title: string;
 	description: string;
 	button: string;
 	wait: string;
-	mode: Mode;
+	mode: ModeType;
 }
 
-export interface TranslationTypes {
+export interface TranslationType {
   
 		Header: {
 			a: string;
@@ -161,10 +161,11 @@ export interface TranslationTypes {
 			},
 		},
 		contact: {
-			contact:  string; 
-			send:  string; 
-			title:  string; 
-			des:  string; 
+			contact:  string;
+			send:  string;
+			title:  string;
+			des:  string;
+			invites: string;
 		},
 		Friends: {
 			social:  string; 

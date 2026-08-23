@@ -3,18 +3,19 @@
 import { useEffect, useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { useAuth } from "@/src/components/Provider/UserProvider";
-import { FriendStore } from "@/src/components/Store/FriendStore";
+import { useFriendStore } from "@/src/components/Store/useFriendStore";
 
 export default function Friends() {
 
-  const FR_STORE = FriendStore();
+  const FR_STORE = useFriendStore();
+  const fetchFriends = useFriendStore((s) => s.fetchFriends);
   const [open, setOpen] = useState(false);
   const { cntUser, LENUAGE } = useAuth();
   const FR_LENG = LENUAGE.Friends;
-  
-  useEffect(() => { 
-    FR_STORE.fetchFriends(); 
-  }, [FR_STORE.fetchFriends]);
+
+  useEffect(() => {
+    fetchFriends();
+  }, [fetchFriends]);
 
   return (
     <section className="pf-card">

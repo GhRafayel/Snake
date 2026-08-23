@@ -1,7 +1,7 @@
 'use client'
 
 import { Users }                from "lucide-react";
-import {  UserStore }           from "@/src/components/Store/UserStore";
+import {  useUserStore }           from "@/src/components/Store/useUserStore";
 import { useAuth }              from "@/src/components/Provider/UserProvider";
 import { OnlineUsersType }      from "@/src/types/UserTypes/UserTypes";
 import OnlineUser               from "@/src/components/Arena/ArenaSidebar/OnlineUser";
@@ -10,7 +10,7 @@ export default function OnlinePlayersList() {
 
     const {cntUser, LENUAGE} = useAuth();
     const onlineUserList = LENUAGE.Arena.saidBar; 
-    const {onlineUsers} = UserStore();
+    const {onlineUsers} = useUserStore();
 
     return (
         <div className="flex flex-col min-h-0 ">
