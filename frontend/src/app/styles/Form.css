@@ -27,19 +27,17 @@
 
 .formBtnSubmit,
 .formBtnLog {
-    @apply
-    border
-    border-blue-300
+    @apply  
     rounded-2xl
     cursor-pointer
     text-center
     text-lg
     font-bold
-    hover:bg-blue-400
-    transition-all
+    bg-green-500
     duration-600
-    hover:text-blue-100
-    hover:border-gray-800
+    hover:bg-green-700
+    hover:text-gray-300 
+    /* hover:bg-gray-100 */
     p-3;
 }
 
@@ -49,4 +47,44 @@
 
 .formBtnLog {
     @apply py-1 ml-1;
+}
+
+.formBtnGoogle {
+    @apply
+    flex
+    items-center
+    justify-center
+    gap-2
+    rounded-2xl
+    cursor-pointer
+    text-lg
+    font-bold
+    transition-all
+    duration-600
+    p-3
+    bg-white
+    text-gray-700
+    border
+    border-gray-300
+    hover:bg-gray-100;
+}
+
+.formBtnGithub {
+    @apply
+    flex
+    items-center
+    justify-center
+    gap-2
+    rounded-2xl
+    cursor-pointer
+    text-lg
+    font-bold
+    transition-all
+    duration-600
+    p-3
+    bg-[#181717]
+    text-white
+    border
+    border-[#181717]
+    hover:bg-[#2b2b2b];
 }

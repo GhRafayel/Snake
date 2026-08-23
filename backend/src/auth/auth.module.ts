@@ -9,6 +9,8 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { getJwtConfig } from './common/configs/jwt.config';
 import { JwtStrategy } from './common/strategies/jwt.strategy';
+import { GoogleStrategy } from './common/strategies/google.strategy';
+import { GithubStrategy } from './common/strategies/github.strategy';
 import { RedisModule } from 'src/redis/redis.module';
 import { UsersModule } from 'src/users/users.module';
 import { MailModule } from 'src/mail/mail.modul';
@@ -24,7 +26,7 @@ import { MailModule } from 'src/mail/mail.modul';
     RedisModule,
     MailModule
   ],
-  providers: [AuthService, JwtStrategy],
+  providers: [AuthService, JwtStrategy, GoogleStrategy, GithubStrategy],
   controllers: [AuthController],
   exports: [AuthService],
 })

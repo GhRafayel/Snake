@@ -11,7 +11,8 @@ certs:
 	openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
 		-keyout nginx/certs/key.pem \
 		-out nginx/certs/cert.pem \
-		-subj "/C=US/ST=Dev/L=Dev/O=Dev/CN=localhost"
+		-subj "/C=US/ST=Dev/L=Dev/O=Dev/CN=localhost" \
+		-addext "subjectAltName=DNS:localhost,IP:127.0.0.1,IP:192.168.64.17"
 
 ## Install NVM and Node.js if not already installed
 setup:

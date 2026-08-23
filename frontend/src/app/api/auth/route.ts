@@ -4,6 +4,28 @@ import { AuthType } from "@/src/types/UserTypes/UserTypes";
 import { getAccessTokenFromCookie } from "@/src/app/api/edit/route"
 
 const serverUrl = process.env.INTERNAL_API_URL
+
+export function setAuthCookies(accessToken: string, refreshToken: string) {
+    const response = NextResponse.json({ success: true });
+    response.cookies.set("accessToken", accessToken, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
+        maxAge: 60 * 15,
+        path: "/",
+    });
+
+    response.cookies.set("refreshToken", refreshToken, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
+        maxAge: 60 * 60 * 24 * 7,
+        path: "/",
+    });
+
+    return response;
+}
+
 export async function POST ( req : NextRequest) {
 
     const path = req.nextUrl.searchParams.get("path") ?? "";
@@ -14,24 +36,7 @@ export async function POST ( req : NextRequest) {
     if (res.accessToken === undefined || res.refreshToken === undefined)
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-    const response = NextResponse.json({success: true});
-    response.cookies.set("accessToken", res.accessToken, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "strict",
-        maxAge: 60 * 15,
-        path: "/",
-    });
-
-    response.cookies.set("refreshToken", res.refreshToken, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "strict",
-        maxAge: 60 * 60 * 24 * 7,
-        path: "/",
-    });
-   
-    return response;
+    return setAuthCookies(res.accessToken, res.refreshToken);
 }
 
 export async function DELETE (request: NextRequest) {

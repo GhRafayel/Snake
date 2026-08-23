@@ -19,7 +19,7 @@ export function KeyboardControls({ socket, myUserId }: KeyboardControlsParamsTyp
         };
 
         const advanceSnake = (dir: 'UP' | 'DOWN' | 'LEFT' | 'RIGHT') => {
-            const room = useGameCanvasStore.getState().currGame?.roomId;
+            const room = useGameCanvasStore.getState().currGame?.roomId ?? useArenaStore.getState().roomState?.roomId;
             if (!room || !socket) return;
             socket.emit('change-direction', { direction: dir, roomId: room, userId: myUserId });
         };
