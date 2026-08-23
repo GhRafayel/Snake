@@ -26,7 +26,7 @@ export function clampBotLevel(level: unknown): number {
 }
 
 @WebSocketGateway(2000, {
-  cors: { origin: process.env.FRONTEND_URL, credentials: true },
+  cors: { origin: process.env.FRONTEND_URL?.split(',').map((s) => s.trim()), credentials: true },
   perMessageDeflate: false,
 })
 export class SocketGateway implements OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit {

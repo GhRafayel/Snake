@@ -9,7 +9,7 @@ async function bootstrap() {
   app.use(helmet());
   app.setGlobalPrefix('api');
   app.enableCors({
-    origin: process.env.FRONTEND_URL,
+    origin: process.env.FRONTEND_URL?.split(',').map((s) => s.trim()),
     credentials: false,
   });
   const port = Number(process.env.PORT) || 4000;

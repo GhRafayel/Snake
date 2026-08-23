@@ -44,14 +44,14 @@ return (
                             Login
 						</button>
 					</div>
-					{/* <div className="p-4 text-lg font-bold flex justify-between">
+					<div className="p-4 text-lg font-bold flex justify-between">
 						<p>
 							Don&apos;t have an account ? /
 							<button  className="formBtnLog" type="button"  onClick={() => router.push("/server/register") } >
 								Sign Up
 							</button>
 						</p>
-					</div> */}
+					</div>
 				</div>
 
 			</form>

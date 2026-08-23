@@ -17,15 +17,11 @@ services:
   frontend:
     build:
       context: ./frontend
-      target: dev
+      target: prod
     container_name: frontend
     env_file: ./.env
     environment:
-      WATCHPACK_POLLING: "true"
       PORT: 3000
-    volumes:
-      - ./frontend/src:/app/src
-      - ./frontend/public:/app/public
     networks:
       - app_network
     depends_on:

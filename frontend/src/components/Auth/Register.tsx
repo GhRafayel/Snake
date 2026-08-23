@@ -43,11 +43,11 @@ return (
                             </div>
                         )
                     }
-					{/* <div>
+					<div>
 						<button className="formBtnSubmit" type="submit" >
 							Sign Up
 						</button>
-					</div> */}
+					</div>
 					<div className="p-4 text-lg font-bold flex justify-between">
 						<p> 
 							Already have an account ? /
