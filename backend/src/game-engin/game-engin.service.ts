@@ -69,6 +69,12 @@ function spawnFood(state: GameStateType){
 					ok = false;
 					break;
 				}
+			if (!ok)
+				break;
+			if (snake.alive && snake.newPosition !== null && comparePosition(snake.newPosition, pos)){
+				ok = false;
+				break;
+			}
 		}
 	}
 	const kindIndex = pickFoodKind();
