@@ -10,7 +10,7 @@ import Preferences from './Preferences/Preferences';
 import ProfilHeader from './ProfilHeaders';
 
 export default function Profile() {
-  
+
   const { cntUser, LENUAGE } = useAuth();
   const profil = LENUAGE.Profile;
   const [showChangePassword, setShowChangePassword] = useState(true);

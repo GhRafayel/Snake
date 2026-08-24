@@ -146,6 +146,8 @@ Run `npx prisma studio` (or `make studio`) for a live, browsable view of the sch
 | Admin panel | Role-gated search/view/edit/delete users | \<name\> |
 | Multi-language UI | EN/RU/DE/IT translations with a language switcher | \<name\> |
 | HTTPS / TLS | nginx reverse proxy terminating TLS for the whole app | \<name\> |
+| OAuth login | Sign in with Google or GitHub | \<name\> |
+| Privacy Policy / Terms of Service | Standalone, publicly accessible pages linked from the site footer | \<name\> |
 
 ## Modules
 
@@ -167,14 +169,16 @@ Run `npx prisma studio` (or `make studio`) for a live, browsable view of the sch
 | User Management | Standard user management (profile update, avatar, friends, profile page) | Major | 2 |
 | User Management | Game statistics and match history | Minor | 1 |
 | User Management | Advanced permissions system (roles, admin CRUD on users) | Major | 2 |
+| User Management | Remote authentication with OAuth 2.0 (Google, GitHub) | Minor | 1 |
 | Accessibility and Internationalization | Support for 3+ languages with a language switcher | Minor | 1 |
 
-**Total claimed: 19 points** (required minimum: 14 points), leaving margin in case a module is not fully validated during evaluation.
+**Total claimed: 20 points** (required minimum: 14 points), leaving margin in case a module is not fully validated during evaluation.
 
 Justification highlights:
 - **Multiplayer game (3+ players)**: `GameRoom.maxUsers` allows more than two players per room and the room/game logic supports N participants, not just 1v1 — see `backend/src/game-engin/` and `backend/src/gameRoom/`.
 - **Advanced permissions system**: `Role` enum (`PLAYER`/`ADMIN`/`BOT`) plus a dedicated `AdminGuard` and `AdminController` exposing search/view/edit/delete on users (`backend/src/admin/`).
 - **AI Opponent**: implemented in `backend/src/game-engin/ai-opponent.service.ts`; simulates a snake player rather than perfect/scripted play. <!-- TODO: add a short note on how the AI decides moves, for the oral defense. -->
+- **OAuth 2.0**: Google and GitHub sign-in via Passport strategies (`backend/src/auth/common/strategies/google.strategy.ts`, `github.strategy.ts`), wired to the frontend through `/server/oauth-callback` and the `/api/oauth-session` route that turns the callback into the same httpOnly cookies a normal login sets.
 - <!-- TODO (team): fill in a one-line justification for every remaining module in the table above, per member who implemented it. -->
 
 ## Individual Contributions

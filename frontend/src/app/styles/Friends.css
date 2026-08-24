@@ -76,11 +76,11 @@
 }
 
 .fr-actions {
-  @apply flex w-full items-center gap-2 pt-0.5 cursor-pointer;
+  @apply flex w-full items-center gap-2 pt-0.5 cursor-grab;
 }
 
 .fr-actionBtn {
-  @apply w-fit shrink-0 truncate text-center rounded-full px-3 py-1.5 text-[11px] font-semibold leading-tight transition-colors duration-150 cursor-pointer;
+  @apply w-fit shrink-0 truncate text-center rounded-full px-3 py-1.5 text-[11px] font-semibold leading-tight transition-colors duration-150 cursor-grab;
 }
 
 .fr-actionAccept {

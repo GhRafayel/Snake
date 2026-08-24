@@ -1,0 +1,15 @@
+.ft-footer-dark {
+  @apply bg-black border-t border-border-subtle text-white;
+}
+
+.ft-footer-light {
+  @apply bg-gray-100 border-t border-black/10 text-black;
+}
+
+.ft-link {
+  @apply mx-3 text-xs text-text-muted no-underline transition-colors hover:text-neon-green;
+}
+
+.ft-link-light {
+  @apply mx-3 text-xs text-black/60 no-underline transition-colors hover:text-green-600;
+}

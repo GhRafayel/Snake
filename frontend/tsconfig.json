@@ -36,7 +36,7 @@
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    // "**/*.tsx",
+    "**/*.tsx",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts"
 , "../useArenaStore.ts", "src/types/StoreTypes"  ],

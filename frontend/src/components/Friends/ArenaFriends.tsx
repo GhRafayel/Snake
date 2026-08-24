@@ -16,7 +16,7 @@ export default function ArenaFriends () {
     return (
         <section className={`flex flex-col gap-6 p-5 sm:p-6 `}>
 
-                <header className={`fr-header flex cursor-pointer items-center justify-between ` }onClick={() => setF_list(!F_list)} >
+                <header className={`fr-header flex cursor-grab items-center justify-between ` }onClick={() => setF_list(!F_list)} >
                     <div>
                         <h3 className={`text-lg font-semibold tracking-tight ${cntUser?.theme ?? true ? "text-gray-300" : "text-gray-700"}`}>{FR_LENG.friends}</h3>
                     </div>
@@ -37,7 +37,7 @@ export default function ArenaFriends () {
                                         <span className={`fr-dot ${item.isOnline ? 'fr-dot-active' : 'fr-dot-away'}`} />
                                     </span>
                                     <button className="flex items-center gap-2 px-4 py-2 rounded-lg" onClick={() => FR_STORE.handleInvite(item.id)}>
-                                        {isInvited ? <CheckCircle size={30} className="text-green-500 cursor-pointer" /> : <UsersRound size={30} className="text-green-500 cursor-pointer"/>}
+                                        {isInvited ? <CheckCircle size={30} className="text-green-500 cursor-grab" /> : <UsersRound size={30} className="text-green-500 cursor-grab"/>}
                                     </button>
                                 </div>
 

@@ -17,6 +17,8 @@ export default function ArenaControls() {
                 <span className={`kbd ${AR_STORE.gameDir === 'RIGHT' ? "text-(--color-warning-text)" : ""}`}>→</span>
                 <span className={`kbd ${AR_STORE.gameState === 'PAUSE' ? "text-(--color-accent-text)" : ""}`}>{AR_LENG.pause}</span>
             </div>
+            
         </div>
     );
 }
+

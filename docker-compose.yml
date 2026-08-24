@@ -17,11 +17,15 @@ services:
   frontend:
     build:
       context: ./frontend
-      target: prod
+      target: dev
     container_name: frontend
     env_file: ./.env
     environment:
       PORT: 3000
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+      - /app/.next
     networks:
       - app_network
     depends_on:

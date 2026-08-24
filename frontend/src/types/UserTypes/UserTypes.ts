@@ -27,6 +27,7 @@ export type UserType = {
     color: string | null;
     avatar: string;
     theme: boolean;
+    termsAcceptedAt: string | null;
     history: {
         gamesLost: number;
         gamesWon: number;

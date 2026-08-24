@@ -37,7 +37,6 @@ export default function UsernameEditor() {
               const Username = value.trim();
               const res = await Lib.patchRequest('/api/edit?path=/users/change-username', { Username });
               if (res.ok && cntUser) {
-                //setCntUser({ ...cntUser, Username });
                 setEditing(false);
               } else {
                 setError(true);

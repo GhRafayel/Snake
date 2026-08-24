@@ -12,7 +12,7 @@ export default function FormInputs ({item} :  PropsType) {
     return (	
             <div className="formInputDiv">
 
-                <label htmlFor={formData.id} className="cursor-pointer w-full">
+                <label htmlFor={formData.id} className="cursor-grab w-full">
                     <input  required placeholder={formData.bol ? formData.name : ""} autoComplete="true"
                         type={formData.type} name={formData.name} id={formData.id} value={formData.value} className="formInputs"
                         onFocus={ () =>  { setFormData({...formData, bol: false} ) }}
@@ -21,7 +21,7 @@ export default function FormInputs ({item} :  PropsType) {
                     />
                 </label>
                 <div className="formInputDiv">
-                    <Image src={formData.src} alt="icon" id={formData.id} width={32} height={32} className="w-8  min-w-8 cursor-pointer"
+                    <Image src={formData.src} alt="icon" id={formData.id} width={32} height={32} className="w-8  min-w-8 cursor-grab"
                         onClick={() => {
                             if (formData.name === "Password" || formData.name === "ConfirmPassword")
                             {
