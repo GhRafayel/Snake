@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import OAuthCallbackClient from "./OAuthCallbackClient";
+import OAuthCallbackClient from "@/src/components/Auth/OAuthCallbackClient";
 
 export default function Page() {
 	return (
