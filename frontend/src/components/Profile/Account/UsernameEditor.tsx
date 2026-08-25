@@ -1,12 +1,11 @@
 'use client';
 import { useState } from 'react';
 import { User } from 'lucide-react';
-import { Lib } from '@/src/lib/lib';
 import { useAuth } from '@/src/components/Provider/UserProvider';
 
 export default function UsernameEditor() {
- 
-  const { cntUser, LENUAGE } = useAuth();
+
+  const { cntUser, LENUAGE, ChangingCallback } = useAuth();
    const profil = LENUAGE.Profile;
   const [editing, setEditing] = useState(false);
   const [value, setValue] = useState(cntUser?.Username ?? '');
@@ -35,10 +34,10 @@ export default function UsernameEditor() {
           <form className="pf-form" onSubmit={async (e) => {
               e.preventDefault();
               const Username = value.trim();
-              const res = await Lib.patchRequest('/api/edit?path=/users/change-username', { Username });
-              if (res.ok && cntUser) {
+              try {
+                await ChangingCallback({ Username }, 'change-username');
                 setEditing(false);
-              } else {
+              } catch {
                 setError(true);
               }
             }}

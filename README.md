@@ -29,7 +29,7 @@ Key features:
 ### Prerequisites
 - [Docker](https://docs.docker.com/get-docker/) and Docker Compose
 - `make` (all common operations are wrapped in the [Makefile](Makefile))
-- Node.js 20 (only needed if you want to run frontend/backend outside of Docker)
+- Node.js 22 (only needed if you want to run frontend/backend outside of Docker)
 
 ### Environment setup
 1. Copy the example environment file and fill in real values:

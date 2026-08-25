@@ -108,10 +108,10 @@ export class UsersService {
 			},
 			select: { id: true, Username: true },
 		});
-		users.filter((item) =>
+		const liest = users.filter((item) =>
               item.Username.toLowerCase().includes(name.toLowerCase())
         )
-		return users;
+		return liest;
 	}
 
 	async searchUsers(query: string) {
