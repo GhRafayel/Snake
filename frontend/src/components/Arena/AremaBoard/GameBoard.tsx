@@ -6,7 +6,6 @@ import { useArenaStore }    from "@/src/components/Store/useArenaStore";
 import { useAuth }          from "@/src/components/Provider/UserProvider";
 import { ArenaBoardType }   from "@/src/types/GameTypes/GameTypes";
 import GameCanvas           from "./GameCanvas";
-import ArenaControls        from "../ArenaControls";
 
 type RoomStatusType = keyof ArenaBoardType;
 

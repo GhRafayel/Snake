@@ -25,7 +25,7 @@ export default async function RootLayout( { children } : Readonly< { children: R
  
   
   return (
-    <html lang="en" style={{ colorScheme: theme ?  "dark" : "light" }} className={`no-scrollbar ${geistMono.variable} h-full antialiased`} >
+    <html lang="en" style={{ colorScheme: theme ?  "dark" : "light" }} className={`no-scrollbar ${geistMono.variable} h-full antialiased`} suppressHydrationWarning >
       <body className={`no-scrollbar min-h-full flex flex-col min-w-100 ${theme ?? true ?  "bg-black text-white" : "bg-gray-200 text-gray-700"}`}>
           <UserProvider initialUser={user} initialTranslations={language}>
             <LegalModal />

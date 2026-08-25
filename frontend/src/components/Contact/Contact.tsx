@@ -75,7 +75,7 @@ export default function Contact() {
                     </div>
                 )}
 
-                <form className="contact-form" onSubmit={async (e) => { e.preventDefault();
+                <form className="contact-form" suppressHydrationWarning onSubmit={async (e) => { e.preventDefault();
                         const message = new FormData(e.currentTarget).get("message") as string;
                         try {
                             const res = await Lib.postRequest(`/api/edit?path=/users/contact`, {message});
@@ -87,7 +87,7 @@ export default function Contact() {
                     <div className="contact-input-row">
                         <span className={`contact-divider ${cntUser?.theme ?? true ? "contact-divider-dark" : "contact-divider-light"}`} />
                         <textarea  className={`contact-textarea ${cntUser?.theme ?? true ? "contact-textarea-dark" : "contact-textarea-light"}`}
-                                   name="message" rows={6} placeholder={contactData.des}
+                                   name="message" rows={6} placeholder={contactData.des} suppressHydrationWarning
                         />
                     </div>
 
