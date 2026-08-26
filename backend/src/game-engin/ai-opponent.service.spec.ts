@@ -126,8 +126,6 @@ describe('AiOpponentService', () => {
     });
 
     it('falls back to a random valid neighbour when no food is reachable', () => {
-      // Head at (2,2); block the LEFT neighbour so the fallback (which tries
-      // left, right, down, up in that order) must skip to RIGHT.
       const snake = makeSnake({ body: [{ x: 2, y: 2 }] });
       const game = makeGame({
         gridWidth: 5,
@@ -143,8 +141,6 @@ describe('AiOpponentService', () => {
     });
 
     it('avoids walking off the grid when a boundary neighbour is invalid', () => {
-      // Head at the top-left corner; LEFT (x=-1) is off-grid so the fallback
-      // must pick RIGHT instead.
       const snake = makeSnake({ body: [{ x: 0, y: 0 }] });
       const game = makeGame({
         gridWidth: 3,
@@ -160,12 +156,7 @@ describe('AiOpponentService', () => {
     });
 
     it('documents current behaviour when the bot is fully boxed in: it still returns a direction, even though that cell is blocked', () => {
-      // Head at (1,1) on a 3x3 grid with all four neighbours blocked.
-      // nextRandom() has no valid neighbour to offer and falls back to
-      // returning {x: head.x - 1, y: head.y} unconditionally, which
-      // cellToDir() reports as 'LEFT' even though that cell is occupied.
-      // This isn't being treated as a bug to fix - a fully trapped bot has
-      // no non-lethal move available anyway - but it's worth pinning down.
+     
       const snake = makeSnake({ userId: 1, body: [{ x: 1, y: 1 }] });
       const blockers = makeSnake({
         userId: 2,

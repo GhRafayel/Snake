@@ -3,8 +3,6 @@ jest.mock('pg', () => ({
 }));
 
 jest.mock('@prisma/adapter-pg', () => ({
-  // Shape matches what PrismaClient's internal driver-adapter compatibility
-  // check expects (provider/adapterName), without doing any real I/O.
   PrismaPg: jest.fn().mockImplementation(() => ({
     provider: 'postgres',
     adapterName: '@prisma/adapter-pg',
@@ -15,13 +13,6 @@ import { Pool } from 'pg';
 import { PrismaPg } from '@prisma/adapter-pg';
 import { DatabaseService } from './database.service';
 
-// DatabaseService is a very thin wrapper around the generated PrismaClient:
-// the constructor just wires up a pg Pool + PrismaPg adapter, and
-// onModuleInit/onModuleDestroy do nothing but call the inherited
-// $connect()/$disconnect(). There is no custom business logic to exercise
-// beyond "the adapter is constructed correctly" and "the lifecycle hooks
-// delegate to the Prisma client" — so this spec is intentionally a smoke
-// test and never touches a real database.
 describe('DatabaseService', () => {
   const originalDatabaseUrl = process.env.DATABASE_URL;
 
@@ -40,7 +31,6 @@ describe('DatabaseService', () => {
   });
 
   it('constructs a pg Pool using DATABASE_URL and wraps it in a PrismaPg adapter', () => {
-    // eslint-disable-next-line no-new
     new DatabaseService();
 
     expect(Pool).toHaveBeenCalledWith({

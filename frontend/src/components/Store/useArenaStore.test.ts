@@ -116,8 +116,6 @@ describe("useArenaStore", () => {
         expect(state.sidebarOpen).toBe(false);
         expect(state.roomState).toBeUndefined();
         expect(state.countdownSeconds).toBeNull();
-        // resetArena's returned object does not include mode/pendingRoomId/rematchRoomId,
-        // so they are left untouched.
         expect(state.mode).toBe("online");
         expect(state.pendingRoomId).toBe("pending");
         expect(state.rematchRoomId).toBe("rematch");

@@ -275,9 +275,4 @@ describe('GameRoomService', () => {
     });
   });
 
-  // NOTE: GameRoomService itself has no "room is full" or "already in this room"
-  // guard logic - addUserToRoom() is a plain upsert keyed on [roomId, userId] with
-  // no capacity check against maxUsers. If those guards exist at all, they live
-  // in the caller (socket gateway) rather than here, so there is nothing to test
-  // for those specific branches at the service layer.
 });

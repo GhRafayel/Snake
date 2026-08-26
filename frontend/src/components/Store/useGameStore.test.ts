@@ -104,7 +104,6 @@ describe("useGameStore", () => {
         expect(state.alpha).toBe(0);
         expect(state.step).toBe(false);
         expect(state.stateTime).toBe(0);
-        // resetGame's returned object omits `screen`, so it should remain untouched.
         expect(state.screen).toEqual({ width: 800, height: 600 });
     });
 });

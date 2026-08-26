@@ -2,9 +2,6 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { GameRoomController } from './gameRoom.controller';
 import { GameRoomService } from './gameRoom.service';
 
-// The controller instantiates its own `new LoggerService(...)` rather than
-// injecting it, and LoggerService writes to disk on every log call. Auto-mock
-// the module so specs don't touch the real filesystem or console.
 jest.mock('src/logger/logger.service');
 
 describe('GameRoomController', () => {

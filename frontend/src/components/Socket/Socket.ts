@@ -2,9 +2,7 @@ import { io, Socket} from "socket.io-client";
 
 let socket : Socket | null =  null;
 
-// TODO(temp): local dev fallback for when nginx isn't running in front of
-// `next dev` (port 3000) — connects straight to the backend gateway on 2000
-// instead of going through the nginx proxy. Delete once nginx is required.
+
 function isLocalWithoutNginx(): boolean {
   return window.location.port === "3000";
 }

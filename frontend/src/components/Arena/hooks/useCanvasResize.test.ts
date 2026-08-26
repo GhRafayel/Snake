@@ -93,7 +93,6 @@ describe("useCanvasResize", () => {
 
         observer.callback([{ contentRect: { width: 500.7, height: 300.2 } }]);
 
-        // size = min(floor(500.7), floor(300.2)) = min(500, 300) = 300
         expect(useGameCanvasStore.getState().screen).toEqual({ width: 300, height: 300 });
         expect(fitCanvas).toHaveBeenCalledWith({
             canvas,

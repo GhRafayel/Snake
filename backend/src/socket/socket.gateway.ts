@@ -45,7 +45,6 @@ export class SocketGateway implements OnGatewayConnection, OnGatewayDisconnect, 
   ) {}
       private readonly logger = new LoggerService(SocketGateway.name);
 
-    // redis updata command (        redis-cli FLUSHALL        )
 
     private roomOpQueues = new Map<string, Promise<unknown>>();
 

@@ -8,9 +8,6 @@ import { OAuthProfileType } from 'src/types/Auth.interface';
 export class GithubStrategy extends PassportStrategy(Strategy, 'github') {
   constructor(readonly configService: ConfigService) {
     super({
-      // Defaulted (not getOrThrow) so the app still boots when OAuth
-      // credentials aren't configured yet -- only /auth/github itself
-      // fails until GITHUB_CLIENT_ID/SECRET are set in .env.
       clientID:
         configService.get<string>('GITHUB_CLIENT_ID') || 'not-configured',
       clientSecret:
