@@ -10,7 +10,7 @@ type propsType = {
 export default function ProfilHeader ({title, name, setWindow, value} : propsType) {
     
     return (
-        <header className={`flex cursor-pointer items-center justify-between ${value ? 'mb-3' : ''}`}
+        <header className={`flex cursor-grab items-center justify-between ${value ? 'mb-3' : ''}`}
                 onClick={() => setWindow(prev => ( { ...prev, [name]: !value } ))}
         >
         <h3 className="pf-title">{title}</h3>

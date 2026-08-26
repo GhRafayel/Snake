@@ -8,9 +8,6 @@ import { OAuthProfileType } from 'src/types/Auth.interface';
 export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
   constructor(readonly configService: ConfigService) {
     super({
-      // Defaulted (not getOrThrow) so the app still boots when OAuth
-      // credentials aren't configured yet -- only /auth/google itself
-      // fails until GOOGLE_CLIENT_ID/SECRET are set in .env.
       clientID:
         configService.get<string>('GOOGLE_CLIENT_ID') || 'not-configured',
       clientSecret:

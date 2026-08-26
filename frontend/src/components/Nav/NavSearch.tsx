@@ -69,7 +69,7 @@ export default function NavSearch ( ) {
                 className={`nav-search-input ${cntUser?.theme ?? true ? " text-zinc-200  placeholder-zinc-400 " : "placeholder-zinc-800 "}`}
               />
 
-              <button className="cursor-pointer" onClick={() => { 
+              <button className="cursor-grab" onClick={() => { 
                 ChangingCallback({theme: !cntUser?.theme}, "change-theme");
                 router.refresh();
               }}> 
@@ -89,7 +89,7 @@ export default function NavSearch ( ) {
                   >
                     <div>
                       {filtered.map((item: { Username: string, id: number } ) => (
-                        <div key={item.id} className="px-4 py-2 cursor-pointer flex items-center justify-between gap-2 max-sm:px-1" >
+                        <div key={item.id} className="px-4 py-2 cursor-grab flex items-center justify-between gap-2 max-sm:px-1" >
                           <div className="truncate min-w-0">{item.Username}</div>
                           <div>
                             <button id={String(item.id)} onClick={async (e) => {
@@ -97,7 +97,7 @@ export default function NavSearch ( ) {
                                 .then( strim => strim.json());
                                 friendStore();
                             }}
-                              type="button" className="border border-gray-500 text-gray-800 rounded-lg px-2 py-1 text-xs bg-neon-green cursor-pointer whitespace-nowrap shrink-0">{Header.invite}</button>
+                              type="button" className="border border-gray-500 text-gray-800 rounded-lg px-2 py-1 text-xs bg-neon-green cursor-grab whitespace-nowrap shrink-0">{Header.invite}</button>
                           </div>
                         </div>
                       ))}

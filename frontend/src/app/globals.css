@@ -8,7 +8,11 @@
 @import "./styles/Arena.css";
 @import "./styles/Friends.css";
 @import "./styles/Admin.css";
+@import "./styles/Contact.css";
+@import "./styles/Legal.css";
+@import "./styles/Footer.css";
 @import "tailwindcss";
+
 
 :root {
   --background: #ffffff;
@@ -55,6 +59,8 @@
 .no-scrollbar {
   -ms-overflow-style: none;
 }
+
+
 
 @theme inline {
   --color-text-bright: var(--text-bright);
@@ -109,7 +115,7 @@ body {
       font-semibold
       font-[inherit]
       tracking-[0.01em]
-      cursor-pointer
+      cursor-grab
       border border-transparent
       transition-all duration-150
       no-underline

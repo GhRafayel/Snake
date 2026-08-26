@@ -46,7 +46,7 @@ export default function ArenaHeader() {
 
                 {roomState?.roomId && (
                     <button type="button" onClick={handleCopyRoomId} aria-label={AR_LENG.copy} title={copied ? AR_LENG.copied : AR_LENG.copy}
-                        className={`ml-1 flex shrink-0 items-center justify-center rounded-full p-1 transition-colors cursor-pointer ${cntUser?.theme ?? true ? "text-gray-400 hover:bg-white/10 hover:text-white" : "text-gray-500 hover:bg-black/10 hover:text-gray-900"}`}
+                        className={`ml-1 flex shrink-0 items-center justify-center rounded-full p-1 transition-colors cursor-grab ${cntUser?.theme ?? true ? "text-gray-400 hover:bg-white/10 hover:text-white" : "text-gray-500 hover:bg-black/10 hover:text-gray-900"}`}
                     >
                         {copied ? (
                             <Check className="h-3 w-3 text-green-500" />

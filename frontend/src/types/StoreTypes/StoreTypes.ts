@@ -168,14 +168,41 @@ export interface TranslationType {
 			invites: string;
 		},
 		Friends: {
-			social:  string; 
-			friends:  string; 
-			pending:  string; 
-			accept:  string; 
-			reject:  string; 
-			delete:  string; 
-			empty:  string; 
-			cancel: string; 
+			social:  string;
+			friends:  string;
+			pending:  string;
+			accept:  string;
+			reject:  string;
+			delete:  string;
+			empty:  string;
+			cancel: string;
+		},
+		Footer: {
+			rights: string;
+			privacy: string;
+			terms: string;
+		},
+		Legal: {
+			privacyPolicy: LegalDocType;
+			termsOfService: LegalDocType;
 		},
 };
+
+export interface LegalListItemType {
+	label?: string;
+	text: string;
+}
+
+export interface LegalSectionType {
+	heading: string;
+	text?: string;
+	items?: LegalListItemType[];
+}
+
+export interface LegalDocType {
+	title: string;
+	updated: string;
+	intro: string;
+	sections: LegalSectionType[];
+}
 

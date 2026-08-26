@@ -20,6 +20,7 @@ model Users {
   score             Int               @default(0)
   resetCode         String?
   codeExpire        DateTime?
+  termsAcceptedAt   DateTime?
   createdAt         DateTime          @default(now())
   updatedAt         DateTime          @updatedAt
   gameRooms         GameRoom          []

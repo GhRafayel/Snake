@@ -11,7 +11,7 @@ import { WindowFocusPause }     from "../hooks/WindowFocusPause";
 import { useCanvasResize }         from "../hooks/useCanvasResize";
 import { useAnimationLoop }        from "../hooks/useAnimationLoop";
 import GameOverlay              from "./GameOverlay";
-
+import ArenaControls from "../ArenaControls";
 export default function GameCanvas() {
 
     const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -34,7 +34,10 @@ export default function GameCanvas() {
     return (
         <div style={{ position: 'relative' }}>
             <canvas ref={canvasRef} className="rounded-xl border border-white/5 bg-[#1e2224]" />
+            
+
             <GameOverlay />
+            <ArenaControls />
         </div>
     );
 }

@@ -74,6 +74,13 @@ export class UsersController {
     return await this.userService.theme(userId, theme);
   }
 
+  @Patch("accept-terms")
+  @Authorization()
+  async acceptTerms(@Authorized("userId") userId: number) {
+    this.logger.log(`User ${userId} accepted the Privacy Policy and Terms of Service`);
+    return await this.userService.acceptTerms(userId);
+  }
+
   @Patch("change-username")
   @Authorization()
   async changeUsername(@Authorized("userId") userId: number, @Body() body: { Username: string }) {

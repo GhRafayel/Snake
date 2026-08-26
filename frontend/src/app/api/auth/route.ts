@@ -5,8 +5,7 @@ import { getAccessTokenFromCookie } from "@/src/app/api/edit/route"
 
 const serverUrl = process.env.INTERNAL_API_URL
 
-export function setAuthCookies(accessToken: string, refreshToken: string) {
-    const response = NextResponse.json({ success: true });
+export function setAuthCookies(accessToken: string, refreshToken: string, response: NextResponse = NextResponse.json({ success: true })) {
     response.cookies.set("accessToken", accessToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
@@ -24,6 +23,16 @@ export function setAuthCookies(accessToken: string, refreshToken: string) {
     });
 
     return response;
+}
+
+export async function GET(req: NextRequest) {
+    const accessToken = req.nextUrl.searchParams.get("accessToken");
+    const refreshToken = req.nextUrl.searchParams.get("refreshToken");
+
+    if (!accessToken || !refreshToken)
+        return NextResponse.redirect(new URL("/server/login", req.url));
+
+    return setAuthCookies(accessToken, refreshToken, NextResponse.redirect(new URL("/", req.url)));
 }
 
 export async function POST ( req : NextRequest) {
