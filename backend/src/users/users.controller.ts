@@ -1,7 +1,6 @@
-import { Controller, Post, Get, Body, Patch, Param, Delete, ParseIntPipe, ValidationPipe, UseGuards } from '@nestjs/common';
+import { Controller, Post, Get, Body, Patch, Param, UseGuards } from '@nestjs/common';
 import { SkipThrottle } from '@nestjs/throttler';
 import { UsersService } from './users.service';
-import { UpdateUserDto } from '../dto/updata-users.dto';
 import { LoggerService } from 'src/logger/logger.service';
 import { Authorized } from 'src/auth/common/decorators/authorized.decorator';
 import { Authorization } from 'src/auth/common/decorators/authorization.decorator';
@@ -38,12 +37,6 @@ export class UsersController {
   @Get("language/:key")
   async getLanguage(@Param('key') key: string) {
     return await this.userService.getLanguage(key);
-  }
-
-  @Get(':id')
-  async findOne( @Param('id', ParseIntPipe) id: number) {
-    this.logger.log(`Fetch user ${id}`);
-    return await this.userService.findOne(id);
   }
 
   @Post("contact")
@@ -95,15 +88,4 @@ export class UsersController {
     return await this.userService.changeAvatar(userId, body);
   }
 
-  @Patch(':id')
-  async update( @Param('id', ParseIntPipe) id: number, @Body(ValidationPipe) updatedUser: UpdateUserDto ) {
-    this.logger.log(`Update user ${id}`);
-    return await this.userService.update(id, updatedUser);
-  }
-
-  @Delete(':id')
-  async remove(@Param('id', ParseIntPipe) id: number) {
-    this.logger.warn(`Delete user ${id}`);
-    return await this.userService.remove(id);
-  }
 }

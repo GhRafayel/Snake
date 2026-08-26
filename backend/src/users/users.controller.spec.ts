@@ -84,13 +84,6 @@ describe('UsersController', () => {
     expect(result).toEqual({ hi: 'hello' });
   });
 
-  it('findOne delegates to the service with the parsed id param', async () => {
-    service.findOne.mockResolvedValueOnce({ id: 5 });
-    const result = await controller.findOne(5);
-    expect(service.findOne).toHaveBeenCalledWith(5);
-    expect(result).toEqual({ id: 5 });
-  });
-
   it('contact delegates to the service with the authenticated user id and the message body', async () => {
     service.contact.mockResolvedValueOnce({ email: 'bob@test.com' });
     const result = await controller.contact(1, 'hello there');
@@ -138,20 +131,6 @@ describe('UsersController', () => {
     const result = await controller.changeAvatar(1, { avatar: 'a.png' });
     expect(service.changeAvatar).toHaveBeenCalledWith(1, { avatar: 'a.png' });
     expect(result).toEqual({ id: 1, avatar: 'a.png' });
-  });
-
-  it('update delegates to the service with the parsed id param and validated dto', async () => {
-    service.update.mockResolvedValueOnce({ id: 5, Username: 'updated' });
-    const result = await controller.update(5, { Username: 'updated' } as any);
-    expect(service.update).toHaveBeenCalledWith(5, { Username: 'updated' });
-    expect(result).toEqual({ id: 5, Username: 'updated' });
-  });
-
-  it('remove delegates to the service with the parsed id param', async () => {
-    service.remove.mockResolvedValueOnce({ id: 5 });
-    const result = await controller.remove(5);
-    expect(service.remove).toHaveBeenCalledWith(5);
-    expect(result).toEqual({ id: 5 });
   });
 
   it('propagates errors thrown by the service', async () => {
