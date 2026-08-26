@@ -6,7 +6,7 @@ export class ResetPasswordDto {
     "Email": string;
 
     @IsNotEmpty() @IsString() 
-    // @MinLength(8) @MaxLength(128)
+    @MinLength(8) @MaxLength(128)
     "Password": string;
 }
 

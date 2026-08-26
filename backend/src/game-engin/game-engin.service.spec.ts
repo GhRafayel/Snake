@@ -7,9 +7,6 @@ import { DatabaseService } from 'src/database/database.service';
 import { SocketGateway } from 'src/socket/socket.gateway';
 import { GameStateType, SnakeType } from 'src/types/Game.engin.interface';
 
-// GameEnginService builds its own `new LoggerService(...)` instead of
-// injecting it, and LoggerService writes to disk on every log call.
-// Auto-mock the module so specs don't touch the real filesystem.
 jest.mock('src/logger/logger.service');
 
 function makeSnake(overrides: Partial<SnakeType> = {}): SnakeType {
@@ -59,9 +56,6 @@ describe('GameEnginService', () => {
     onGameFinished: jest.Mock;
   };
 
-  // Drives tick() deterministically without relying on real timers: each
-  // call advances the mocked Date.now() by exactly `moveIntervalMs`, which
-  // makes tick()'s accumulator cross the threshold for exactly one stepGame().
   let now: number;
 
   beforeEach(async () => {
@@ -238,9 +232,7 @@ describe('GameEnginService', () => {
     });
 
     it('kills a snake that runs into its own body', async () => {
-      // Head at (3,3) with newDirection null -> isOppositeDir(null, 'UP')
-      // is true, so the snake keeps moving UP into (3,2), which is body[3]
-      // (not the tail), a self-collision.
+   
       const looped = makeSnake({
         userId: 1,
         body: [{ x: 3, y: 3 }, { x: 2, y: 3 }, { x: 2, y: 2 }, { x: 3, y: 2 }, { x: 4, y: 2 }, { x: 4, y: 3 }],
@@ -309,7 +301,6 @@ describe('GameEnginService', () => {
       expect(snake.body[0]).toEqual({ x: 6, y: 5 });
       expect(snake.willGrow).toBe(false);
       expect(snake.pendingKindIndex).toBeNull();
-      // the eaten food is replaced by a freshly spawned one
       expect(game.food.length).toBe(1);
       expect(game.food[0].eaten).toBe(false);
     });
@@ -361,7 +352,6 @@ describe('GameEnginService', () => {
       expect(game.status).toBe('finished');
       expect(game.winnerId).toBe(99);
       expect(bot.alive).toBe(true);
-      // finished games drop BOT snakes from the roster entirely
       expect(game.snakes).toEqual([player]);
       expect(player.alive).toBe(false);
       expect(storeResultsSpy).toHaveBeenCalledWith(game);

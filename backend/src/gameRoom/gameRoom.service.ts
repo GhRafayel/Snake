@@ -74,7 +74,6 @@ export class GameRoomService {
    async findOne(id: string) {
     return this.db.gameRoom.findUnique({
       where: { id },
-      //include: { users: true },
     });
   }
 

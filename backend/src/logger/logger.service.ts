@@ -2,8 +2,6 @@ import { ConsoleLogger, Injectable } from '@nestjs/common';
 import { promises as fsPromises } from 'fs';
 import * as path from 'path';
 
-// Writes to both app.log and the terminal (via ConsoleLogger). In production,
-// the terminal/console output should be disabled and only file logging kept.
 @Injectable()
 export class LoggerService  extends ConsoleLogger {
     async writeLogToFile(message: string, logContext?: string) {

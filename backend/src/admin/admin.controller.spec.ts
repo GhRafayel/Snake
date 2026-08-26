@@ -22,11 +22,6 @@ describe('AdminController', () => {
       controllers: [AdminController],
       providers: [{ provide: AdminService, useValue: adminService }],
     })
-      // AdminController is decorated with @UseGuards(JwtAuthGuard, AdminGuard). Nest's
-      // DependenciesScanner auto-registers guard classes referenced this way as real
-      // providers of the module (needing their own dependencies, e.g. DatabaseService),
-      // so overrideGuard is required to swap them for no-op stand-ins in this unit test,
-      // which never exercises the HTTP guard pipeline.
       .overrideGuard(JwtAuthGuard)
       .useValue({ canActivate: jest.fn(() => true) })
       .overrideGuard(AdminGuard)

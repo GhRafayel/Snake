@@ -173,8 +173,8 @@ describe('UsersService', () => {
   describe('getOrCreateBots', () => {
     it('reuses an existing bot and creates a new one when missing', async () => {
       db.users.findFirst
-        .mockResolvedValueOnce(null) // bot1 - not found
-        .mockResolvedValueOnce({ id: 10, Username: 'AI 2', isBot: true }); // bot2 - found
+        .mockResolvedValueOnce(null) 
+        .mockResolvedValueOnce({ id: 10, Username: 'AI 2', isBot: true }); 
       db.users.create.mockResolvedValueOnce({ id: 9, Username: 'AI 1', isBot: true });
 
       const bots = await service.getOrCreateBots(2);
@@ -301,17 +301,19 @@ describe('UsersService', () => {
   });
 
   describe('findAll', () => {
+    const select = { id: true, Username: true, Email: true, role: true };
+
     it('filters by role when provided', async () => {
       db.users.findMany.mockResolvedValueOnce([{ id: 1, role: Role.ADMIN }]);
       const result = await service.findAll('ADMIN');
-      expect(db.users.findMany).toHaveBeenCalledWith({ where: { role: 'ADMIN' } });
+      expect(db.users.findMany).toHaveBeenCalledWith({ where: { role: 'ADMIN' }, select });
       expect(result).toEqual([{ id: 1, role: Role.ADMIN }]);
     });
 
     it('returns all users when no role filter is given', async () => {
       db.users.findMany.mockResolvedValueOnce([{ id: 1 }, { id: 2 }]);
       const result = await service.findAll();
-      expect(db.users.findMany).toHaveBeenCalledWith();
+      expect(db.users.findMany).toHaveBeenCalledWith({ select });
       expect(result).toEqual([{ id: 1 }, { id: 2 }]);
     });
   });

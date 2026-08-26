@@ -450,8 +450,6 @@ export class GameEnginService {
 		}
 	}
 
-	// Wrapped in a function so TS doesn't narrow `game.status` at call sites -
-	// stepGame() mutates it via a separate call the compiler can't see through.
 	private isFinished(game: GameStateType): boolean {
 		return game.status === 'finished';
 	}

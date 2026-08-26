@@ -1,4 +1,4 @@
-import { Controller, Query, Post, Get, Body, Patch, Param, Delete, ParseIntPipe, ValidationPipe, Ip, UseGuards } from '@nestjs/common';
+import { Controller, Post, Get, Body, Patch, Param, Delete, ParseIntPipe, ValidationPipe, UseGuards } from '@nestjs/common';
 import { SkipThrottle } from '@nestjs/throttler';
 import { UsersService } from './users.service';
 import { UpdateUserDto } from '../dto/updata-users.dto';
@@ -38,13 +38,6 @@ export class UsersController {
   @Get("language/:key")
   async getLanguage(@Param('key') key: string) {
     return await this.userService.getLanguage(key);
-  }
-
-// this route for testing users will be delete
-  @Get()
-  async findAll(@Ip() ip: string, @Query('role') role?: 'ADMIN' | 'PLAYER') {
-    this.logger.log(`IP ${ip} requested user list with role filter: ${role}`);
-    return await this.userService.findAll(role);
   }
 
   @Get(':id')

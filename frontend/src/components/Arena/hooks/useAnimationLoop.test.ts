@@ -87,7 +87,6 @@ describe("useAnimationLoop", () => {
 
         renderHook(() => useAnimationLoop({ canvasRef: { current: canvas }, myUserId: 1 }));
 
-        // elapsed = (1000 + 0.05*1000 - 1000)/1000 = 0.05s, alpha = 0.05 / 0.15 = 0.333...
         runNextFrame(1050);
         expect(useGameCanvasStore.getState().alpha).toBeCloseTo(0.3333, 3);
     });

@@ -44,10 +44,6 @@ describe('UsersController', () => {
       controllers: [UsersController],
       providers: [{ provide: UsersService, useValue: service }],
     })
-      // AdminGuard is referenced via @UseGuards on one route and normally
-      // depends on DatabaseService. We never go through the HTTP pipeline in
-      // these tests (methods are invoked directly), but Nest still needs the
-      // guard resolvable to compile the module, so it is swapped out here.
       .overrideGuard(AdminGuard)
       .useValue({ canActivate: jest.fn().mockReturnValue(true) })
       .compile();
@@ -86,13 +82,6 @@ describe('UsersController', () => {
     const result = await controller.getLanguage('en');
     expect(service.getLanguage).toHaveBeenCalledWith('en');
     expect(result).toEqual({ hi: 'hello' });
-  });
-
-  it('findAll delegates to the service with the role query param', async () => {
-    service.findAll.mockResolvedValueOnce([{ id: 1 }]);
-    const result = await controller.findAll('127.0.0.1', 'ADMIN');
-    expect(service.findAll).toHaveBeenCalledWith('ADMIN');
-    expect(result).toEqual([{ id: 1 }]);
   });
 
   it('findOne delegates to the service with the parsed id param', async () => {

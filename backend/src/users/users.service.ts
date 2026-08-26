@@ -150,13 +150,14 @@ export class UsersService {
 	}
 
 	async findAll(Role?: 'ADMIN' | 'PLAYER') {
-		if (Role)
-		{
-			return this.databaseService.users.findMany( {
-				where: { role: Role }
+		const select = { id: true, Username: true, Email: true, role: true };
+		if (Role) {
+			return this.databaseService.users.findMany({
+				where: { role: Role },
+				select,
 			});
 		}
-		return await this.databaseService.users.findMany();
+		return await this.databaseService.users.findMany({ select });
 	}
 
 	async findOne(id: number) {
