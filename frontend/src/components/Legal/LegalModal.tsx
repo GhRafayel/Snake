@@ -65,7 +65,7 @@ export default function LegalModal() {
                         {submitting ? "Saving..." : "Accept & Continue"}
                     </button>
                     <button type="button" className="legal-modalAcceptBtn cursor-grab" onClick={handleRegect}>
-                        "Rigect"
+                        "Reject"
                     </button>
                 </div>
             </div>
