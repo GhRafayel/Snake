@@ -17,6 +17,8 @@ CMD ["npm", "run", "dev"]
 
 # Build stage — produces standalone output
 FROM base AS build
+ARG NEXT_PUBLIC_SOCKET_URL
+ENV NEXT_PUBLIC_SOCKET_URL=$NEXT_PUBLIC_SOCKET_URL
 COPY . .
 RUN npm run build
 
