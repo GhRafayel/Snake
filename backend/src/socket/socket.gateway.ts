@@ -153,8 +153,9 @@ export class SocketGateway implements OnGatewayConnection, OnGatewayDisconnect, 
 
     async getClient(client: AppSocketType) {
       const cookie = client.handshake.headers.cookie ?? "";
-      const accessToken = cookie.split(";").map((c) => c.trim())
+      const cookieToken = cookie.split(";").map((c) => c.trim())
       .find((c) => c.startsWith("accessToken="))?.slice("accessToken=".length);
+      const accessToken = (client.handshake.auth?.token as string | undefined) ?? cookieToken;
 
       if (!accessToken) {
         client.disconnect();

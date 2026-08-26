@@ -22,6 +22,12 @@ function ensureSocket(): Socket | null {
         withCredentials: true,
         autoConnect: false,
         transports: ['websocket'],
+        auth: (cb) => {
+          fetch("/api/socket-token")
+            .then((res) => res.json())
+            .then((data) => cb({ token: data.accessToken }))
+            .catch(() => cb({ token: null }));
+        },
     })
   return socket;
 }
