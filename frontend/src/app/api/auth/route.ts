@@ -29,10 +29,12 @@ export async function GET(req: NextRequest) {
     const accessToken = req.nextUrl.searchParams.get("accessToken");
     const refreshToken = req.nextUrl.searchParams.get("refreshToken");
 
-    if (!accessToken || !refreshToken)
-        return NextResponse.redirect(new URL("/server/login", req.url));
+    const baseUrl = process.env.FRONTEND_URL ?? req.url;
 
-    return setAuthCookies(accessToken, refreshToken, NextResponse.redirect(new URL("/", req.url)));
+    if (!accessToken || !refreshToken)
+        return NextResponse.redirect(new URL("/server/login", baseUrl));
+
+    return setAuthCookies(accessToken, refreshToken, NextResponse.redirect(new URL("/", baseUrl)));
 }
 
 export async function POST ( req : NextRequest) {
