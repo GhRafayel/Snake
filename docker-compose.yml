@@ -48,9 +48,6 @@ services:
       - "2000:2000"
     command: >
       sh -c "npx prisma db push && npm run start:dev"
-    depends_on:
-      redis:
-        condition: service_started
     restart: unless-stopped
   postgres:
     image: postgres:16-alpine
@@ -73,6 +70,7 @@ services:
 
   redis:
     image: redis:7-alpine
+    profiles: ["local-db"]
     restart: always
     command: redis-server --save 60 1 --loglevel warning
     volumes:

@@ -19,7 +19,6 @@ RUN npx prisma generate
 
 # Development stage
 FROM base AS dev
-RUN npm install -g @nestjs/cli prisma
 COPY . .
 CMD ["npm", "run", "start:dev"]
 
