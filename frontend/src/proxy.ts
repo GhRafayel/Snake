@@ -7,7 +7,8 @@ export async function proxy(request: NextRequest) {
     const pathname = request.nextUrl.pathname;
     console.log("Proxy middleware called for URL:", pathname);
    
-    if (pathname === "/server/login" || pathname === "/server/register" || pathname === "/server/reset")
+    if (pathname === "/server/login" || pathname === "/server/register" || pathname === "/server/reset"
+        || pathname === "/server/privacy" || pathname === "/server/terms")
        return NextResponse.next();
 
     const accessToken = request.cookies.get("accessToken");

@@ -8,16 +8,15 @@ function isLocalWithoutNginx(): boolean {
 }
 
 function localSocketUrl(): string {
-  return `${window.location.protocol}//${window.location.hostname}:2000`;
+  return `${window.location.protocol}//${window.location.hostname}:4000`;
 }
 
 function ensureSocket(): Socket | null {
   if (socket) return socket;
   if (typeof window === "undefined") return null;
 
-  const url = isLocalWithoutNginx()
-    ? localSocketUrl()
-    : `${window.location.protocol}//${window.location.host}`;
+  const url = process.env.NEXT_PUBLIC_SOCKET_URL
+    || (isLocalWithoutNginx() ? localSocketUrl() : `${window.location.protocol}//${window.location.host}`);
 
   socket = io(url, {
         withCredentials: true,
