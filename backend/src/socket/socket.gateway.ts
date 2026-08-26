@@ -25,7 +25,7 @@ export function clampBotLevel(level: unknown): number {
 	return Math.min(MAX_BOT_LEVEL, Math.max(MIN_BOT_LEVEL, Math.floor(n)));
 }
 
-@WebSocketGateway(2000, {
+@WebSocketGateway({
   cors: { origin: process.env.FRONTEND_URL?.split(',').map((s) => s.trim()), credentials: true },
   perMessageDeflate: false,
 })
