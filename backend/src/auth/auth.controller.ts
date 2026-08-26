@@ -116,7 +116,7 @@ export class AuthController {
   }
 
   private redirectWithTokens(res: Response, accessToken: string, refreshToken: string) {
-    const redirectUrl = new URL('/server/oauth-callback', process.env.FRONTEND_URL);
+    const redirectUrl = new URL('/api/auth', process.env.FRONTEND_URL);
     redirectUrl.searchParams.set('accessToken', accessToken);
     redirectUrl.searchParams.set('refreshToken', refreshToken);
     res.redirect(redirectUrl.toString());

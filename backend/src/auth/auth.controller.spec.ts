@@ -174,7 +174,7 @@ describe('AuthController', () => {
             expect(authService.oauthLogin).toHaveBeenCalledWith(req.user);
             expect(res.redirect).toHaveBeenCalledTimes(1);
             const redirectedUrl = (res.redirect as jest.Mock).mock.calls[0][0] as string;
-            expect(redirectedUrl).toContain('https://frontend.example.com/server/oauth-callback');
+            expect(redirectedUrl).toContain('https://frontend.example.com/api/auth');
             expect(redirectedUrl).toContain('accessToken=a');
             expect(redirectedUrl).toContain('refreshToken=r');
         });
@@ -193,7 +193,7 @@ describe('AuthController', () => {
             expect(authService.oauthLogin).toHaveBeenCalledWith(req.user);
             expect(res.redirect).toHaveBeenCalledTimes(1);
             const redirectedUrl = (res.redirect as jest.Mock).mock.calls[0][0] as string;
-            expect(redirectedUrl).toContain('https://frontend.example.com/server/oauth-callback');
+            expect(redirectedUrl).toContain('https://frontend.example.com/api/auth');
             expect(redirectedUrl).toContain('accessToken=a3');
             expect(redirectedUrl).toContain('refreshToken=r3');
         });
