@@ -21,7 +21,7 @@ export default function Friends() {
     <section className="pf-card">
       <div className="pf-cardBody">
 
-        <header className="fr-header flex cursor-pointer items-center justify-between" onClick={() => setOpen(!open)} >
+        <header className="fr-header flex cursor-grab items-center justify-between" onClick={() => setOpen(!open)} >
             <div>
               <p className="pf-eyebrow">{FR_LENG.social}</p>
               <h3 className="pf-title">{FR_LENG.friends}</h3>

@@ -108,10 +108,10 @@ export class UsersService {
 			},
 			select: { id: true, Username: true },
 		});
-		users.filter((item) =>
+		const liest = users.filter((item) =>
               item.Username.toLowerCase().includes(name.toLowerCase())
         )
-		return users;
+		return liest;
 	}
 
 	async searchUsers(query: string) {
@@ -171,6 +171,7 @@ export class UsersService {
 					color: true,
 					avatar: true,
 					theme: true,
+					termsAcceptedAt: true,
 					history: {
 						select: {
 							gamesLost: true,
@@ -231,6 +232,30 @@ export class UsersService {
 			data: {theme}
 		})
 		return res;
+	}
+
+	async acceptTerms(userId: number) {
+		return await this.databaseService.users.update({
+			where: { id: userId },
+			data: { termsAcceptedAt: new Date() },
+			select: {
+				id: true,
+				Username: true,
+				role: true,
+				language: true,
+				color: true,
+				avatar: true,
+				theme: true,
+				termsAcceptedAt: true,
+				history: {
+					select: {
+						gamesLost: true,
+						gamesWon: true,
+						totalScore: true,
+					}
+				}
+			},
+		});
 	}
 
 	async remove(id: number) {

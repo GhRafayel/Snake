@@ -52,7 +52,7 @@
     text-2xl
     text-text-bright
     tracking-wider
-    cursor-pointer
+    cursor-grab
     select-none
     flex
     items-center
@@ -115,7 +115,7 @@
     text-sm
     tracking-wide
     rounded-md
-    cursor-pointer
+    cursor-grab
     transition-all
     duration-150
     ease-in-out

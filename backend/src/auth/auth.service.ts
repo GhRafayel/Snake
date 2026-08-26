@@ -99,7 +99,7 @@ export class AuthService {
         const code = Math.floor(100000 + Math.random() * 900000).toString();
         await this.usersService.update(userId, {
             resetCode : code,
-            codeExpire: new Date(Date.now() + 5 * 60 * 100),
+            codeExpire: new Date(Date.now() + 5 * 60 * 1000),
         });
         await this.mailService.sendResetCode(Email, code);
         return {userId: userId}

@@ -2,11 +2,10 @@
 
 import { useEffect }                        from "react";
 import { useAuth }                          from "@/src/components/Provider/UserProvider";
-import { useArenaStore, ArenaModeType }            from "@/src/components/Store/useArenaStore";
-import { useDifficultyStore }                  from "@/src/components/Store/useDifficultyStore";
+import { useArenaStore, ArenaModeType }     from "@/src/components/Store/useArenaStore";
+import { useDifficultyStore }               from "@/src/components/Store/useDifficultyStore";
 import { useSocket }                        from "@/src/components/Socket/Socket";
 import ArenaHeader                          from "./ArenaHeader/ArenaHeader";
-import ArenaControls                        from "./ArenaControls";
 import GameBoard                            from "./AremaBoard/GameBoard";
 import Sidebar                              from "./ArenaSidebar/Sidebar";
 import LevelSelector                        from "./LevelSelector";
@@ -56,7 +55,6 @@ export default function Arena({ initialMode }: { initialMode: ArenaModeType }) {
                     <ArenaHeader />
                     {mode === "AI" && <LevelSelector />}
                     <GameBoard />
-                    <ArenaControls />
                 </div>
                  <div className={`${cntUser?.theme ?? true ? " lg:bg-gray-900/95 lg:border-gray-800" : ""}`}>
                     <Sidebar />

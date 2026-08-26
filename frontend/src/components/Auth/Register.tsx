@@ -48,14 +48,6 @@ return (
 							Sign Up
 						</button>
 					</div>
-					<div className="p-4 text-lg font-bold flex justify-between">
-						<p> 
-							Already have an account ? /
-							<button  className="formBtnLog" type="button" onClick={() => router.push("/server/login")} >
-								Login
-							</button>
-						</p>
-					</div>
 				</div>
 
 			</form>

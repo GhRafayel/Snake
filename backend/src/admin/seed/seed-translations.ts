@@ -152,6 +152,75 @@ export const LanguageSeed: Record<string, unknown> = {
 			empty: 'Noch keine Freunde',
 			cancel: 'Anfrage',
 		},
+		Footer: {
+			rights: 'Alle Rechte vorbehalten.',
+			privacy: 'Datenschutzerklärung',
+			terms: 'Nutzungsbedingungen',
+		},
+		Legal: {
+			privacyPolicy: {
+				title: 'Datenschutzerklärung',
+				updated: 'Zuletzt aktualisiert: 24. August 2026',
+				intro:
+					'Snake („das Projekt“, „wir“, „uns“) ist ein Echtzeit-Multiplayer-Spiel, das als Lernprojekt für den 42-Lehrplan (ft_transcendence) entwickelt wurde. Diese Erklärung beschreibt, welche Daten wir bei der Nutzung der Anwendung erheben, warum wir sie erheben und welche Wahlmöglichkeiten du hast.',
+				sections: [
+					{
+						heading: '1. Welche Daten wir erheben',
+						items: [
+							{ label: 'Kontodaten:', text: 'E-Mail-Adresse, Benutzername und ein gesalzenes & gehashtes Passwort (bei Registrierung mit E-Mail/Passwort).' },
+							{ label: 'OAuth-Daten:', text: 'wenn du dich mit Google oder GitHub anmeldest, erhalten wir deine Konto-ID beim jeweiligen Anbieter sowie die grundlegenden Profildaten (Name, E-Mail, Avatar), die dieser Anbieter mit uns teilt.' },
+							{ label: 'Spieldaten:', text: 'Spielergebnisse, Punktestände, Siege/Niederlagen, beigetretene Spielräume und deine Freundesliste.' },
+							{ label: 'Einstellungen:', text: 'gewählte Sprache, helles/dunkles Farbthema, Avatar und Schlangenfarbe.' },
+							{ label: 'Sitzungsdaten:', text: 'kurzlebige Zugriffs- und Refresh-Tokens, die als HTTP-Only-Cookies gespeichert werden und ausschließlich dazu dienen, dich angemeldet zu halten.' },
+							{ label: 'Nachrichten an uns:', text: 'Inhalte, die über das In-App-Kontaktformular gesendet werden.' },
+						],
+					},
+					{ heading: '2. Wie wir deine Daten nutzen', text: 'Wir verwenden die oben genannten Daten, um: dich zu authentifizieren und deine Sitzung sicher zu halten; Matchmaking und Echtzeit-Gameplay über WebSockets zu betreiben; dein Profil, deine Statistiken, deinen Matchverlauf und deinen Online-Status deinen Freunden anzuzeigen; deine Sprach- und Themeneinstellungen zu merken; Codes zum Zurücksetzen des Passworts per E-Mail zu versenden; und auf Nachrichten zu antworten, die über das Kontaktformular gesendet wurden.' },
+					{ heading: '3. Cookies & Tokens', text: 'Wir verwenden zwei HTTP-Only-Cookies — ein Zugriffstoken und ein Refresh-Token —, um dich über Anfragen hinweg angemeldet zu halten. Diese Cookies werden nicht für Werbung oder seitenübergreifendes Tracking verwendet. Refresh-Tokens werden serverseitig gespeichert und können jederzeit durch Abmelden widerrufen werden.' },
+					{ heading: '4. Dienste von Drittanbietern', text: 'Wenn du dich für die Anmeldung mit Google oder GitHub entscheidest, verarbeitet dieser Anbieter deine Authentifizierung gemäß seiner eigenen Datenschutzerklärung. Wir erhalten nur die minimal notwendigen Profildaten, um dein Konto zu erstellen oder zuzuordnen. Wir verwenden keine Werbe- oder Analyse-Tracker von Drittanbietern.' },
+					{ heading: '5. Weitergabe von Informationen', text: 'Wir verkaufen oder vermieten deine personenbezogenen Daten nicht. Bestimmte Informationen sind für andere Nutzer im Rahmen der Kernfunktionen der App sichtbar — dein Benutzername, Avatar, Online-Status sowie Match-/Ranglistenergebnisse sind für Freunde und, sofern zutreffend, andere Spieler in einem Spielraum sichtbar.' },
+					{ heading: '6. Speicherung & Löschung von Daten', text: 'Wir bewahren deine Konto- und Spieldaten auf, solange dein Konto besteht. Die meisten deiner Daten kannst du selbst in deinen Profileinstellungen ändern. Um die Löschung deines Kontos und der zugehörigen Daten zu beantragen, kontaktiere uns über das In-App-Kontaktformular; wir bearbeiten die Anfrage innerhalb einer angemessenen Frist.' },
+					{ heading: '7. Sicherheit', text: 'Passwörter werden vor der Speicherung gehasht und gesalzen. Die gesamte Kommunikation zwischen deinem Browser und unserem Backend ist mit HTTPS verschlüsselt. Der Zugriff auf administrative Funktionen ist auf Konten mit der Admin-Rolle beschränkt.' },
+					{ heading: '8. Datenschutz von Kindern', text: 'Das Projekt ist ein studentisches Softwareprojekt und richtet sich nicht an Kinder unter 16 Jahren. Wir erheben wissentlich keine personenbezogenen Daten von Kindern unter diesem Alter.' },
+					{ heading: '9. Änderungen dieser Erklärung', text: 'Wir können diese Erklärung im Zuge der Weiterentwicklung des Projekts aktualisieren. Wesentliche Änderungen spiegeln sich in der Aktualisierung des Datums „Zuletzt aktualisiert“ oben wider.' },
+					{ heading: '10. Kontakt', text: 'Fragen zu dieser Erklärung oder deinen Daten kannst du jederzeit über die Kontakt-Schaltfläche unten rechts in der App senden, oder sieh dir unsere {link} an.' },
+				],
+			},
+			termsOfService: {
+				title: 'Nutzungsbedingungen',
+				updated: 'Zuletzt aktualisiert: 24. August 2026',
+				intro:
+					'Diese Bedingungen regeln deine Nutzung von Snake („das Projekt“), einem Echtzeit-Multiplayer-Spiel, das als Lernprojekt für den 42-Lehrplan (ft_transcendence) entwickelt wurde. Mit der Erstellung eines Kontos oder der Nutzung der App stimmst du diesen Bedingungen zu.',
+				sections: [
+					{ heading: '1. Lernprojekt', text: 'Das Projekt wird von Studierenden im Rahmen eines Schullehrplans entwickelt. Es dient Lern- und Demonstrationszwecken, nicht als kommerzielles Produkt, und wird „wie besehen“ ohne jegliche Gewährleistung bereitgestellt.' },
+					{
+						heading: '2. Dein Konto',
+						items: [
+							{ text: 'Du musst korrekte Registrierungsangaben machen und deine Zugangsdaten vertraulich behandeln.' },
+							{ text: 'Du bist für alle Aktivitäten verantwortlich, die unter deinem Konto stattfinden.' },
+							{ text: 'Ein Konto pro Person. Erstelle keine Konten, um dich als jemand anderen auszugeben.' },
+							{ text: 'Du kannst dein Konto jederzeit in deinen Profileinstellungen löschen.' },
+						],
+					},
+					{
+						heading: '3. Zulässige Nutzung',
+						text: 'Bei der Nutzung des Projekts stimmst du zu, Folgendes zu unterlassen:',
+						items: [
+							{ text: 'Automatisierte Skripte, Bots oder Exploits verwenden, um dir einen unfairen Vorteil in Matches zu verschaffen (der eingebaute KI-Gegner ist der einzige zulässige nicht-menschliche Spieler).' },
+							{ text: 'Andere Spieler über Profile, Freundschaftsanfragen oder Nachrichten belästigen, missbrauchen oder sich als sie ausgeben.' },
+							{ text: 'Versuchen, Authentifizierung, Ratenbegrenzungen oder andere Sicherheitskontrollen zu umgehen oder ohne Erlaubnis auf das Konto eines anderen Nutzers zuzugreifen.' },
+							{ text: 'Rechtswidrige, anstößige oder rechtsverletzende Inhalte über einen beliebigen Teil der App hochladen oder einreichen.' },
+						],
+					},
+					{ heading: '4. Moderation & Durchsetzung', text: 'Konten mit der Administratorrolle können Konten überprüfen, bearbeiten oder entfernen, die gegen diese Bedingungen verstoßen. Wir können den Zugang zum Projekt für jedes Konto aussetzen oder beenden, das gegen Abschnitt 3 verstößt.' },
+					{ heading: '5. Inhalte & geistiges Eigentum', text: 'Der Quellcode, das Design und die Assets des Projekts gehören seinen studentischen Urhebern und werden hier zu Ausbildungszwecken verwendet. Du behältst das Eigentum an allen von dir eingereichten Inhalten (wie deinem gewählten Benutzernamen oder einer über das Kontaktformular gesendeten Nachricht) und gewährst uns eine begrenzte Lizenz, diese zu speichern und anzuzeigen, soweit dies für den Betrieb des Projekts erforderlich ist.' },
+					{ heading: '6. Verfügbarkeit', text: 'Als studentisches Projekt kann das Projekt jederzeit ohne Vorankündigung geändert, unterbrochen oder offline genommen werden, auch zu Bewertungs- oder Wartungszwecken. Wir garantieren keine unterbrechungsfreie Verfügbarkeit.' },
+					{ heading: '7. Haftungsbeschränkung', text: 'Soweit gesetzlich zulässig, haften die Urheber des Projekts nicht für indirekte, zufällige oder Folgeschäden, die aus deiner Nutzung der App entstehen.' },
+					{ heading: '8. Änderungen dieser Bedingungen', text: 'Wir können diese Bedingungen im Zuge der Weiterentwicklung des Projekts aktualisieren. Die fortgesetzte Nutzung der App nach Veröffentlichung von Änderungen gilt als Zustimmung zu den überarbeiteten Bedingungen.' },
+					{ heading: '9. Kontakt', text: 'Fragen zu diesen Bedingungen kannst du über die Kontakt-Schaltfläche unten rechts in der App senden, oder sieh dir unsere {link} an.' },
+				],
+			},
+		},
 	},
 	en: {
 		Header: {
@@ -298,6 +367,75 @@ export const LanguageSeed: Record<string, unknown> = {
 			delete: 'DELETE',
 			empty: 'No friends yet',
 			cancel: 'Cencel',
+		},
+		Footer: {
+			rights: 'All rights reserved.',
+			privacy: 'Privacy Policy',
+			terms: 'Terms of Service',
+		},
+		Legal: {
+			privacyPolicy: {
+				title: 'Privacy Policy',
+				updated: 'Last updated: August 24, 2026',
+				intro:
+					'Snake (“the Project”, “we”, “us”) is a real-time multiplayer game built as an educational project for the 42 curriculum (ft_transcendence). This policy explains what data we collect when you use the application, why we collect it, and what choices you have.',
+				sections: [
+					{
+						heading: '1. Information we collect',
+						items: [
+							{ label: 'Account data:', text: 'email address, username, and a salted & hashed password (if you register with email/password).' },
+							{ label: 'OAuth data:', text: 'if you sign in with Google or GitHub, we receive your provider account ID and the basic profile information (name, email, avatar) that provider shares with us.' },
+							{ label: 'Gameplay data:', text: 'match results, scores, wins/losses, game rooms you join, and your friends list.' },
+							{ label: 'Preferences:', text: 'chosen language, light/dark theme, avatar, and snake color.' },
+							{ label: 'Session data:', text: 'short-lived access and refresh tokens stored as HTTP-only cookies, used solely to keep you signed in.' },
+							{ label: 'Messages you send us:', text: 'content submitted through the in-app Contact form.' },
+						],
+					},
+					{ heading: '2. How we use your information', text: 'We use the data above to: authenticate you and keep your session secure; run matchmaking and real-time gameplay over WebSockets; show your profile, stats, match history, and online status to your friends; remember your language and theme preferences; send password-reset codes by email; and respond to messages sent through the Contact form.' },
+					{ heading: '3. Cookies & tokens', text: 'We use two HTTP-only cookies — an access token and a refresh token — to keep you signed in across requests. These cookies are not used for advertising or cross-site tracking. Refresh tokens are stored server-side and can be revoked at any time by signing out.' },
+					{ heading: '4. Third-party services', text: 'If you choose to sign in with Google or GitHub, that provider processes your authentication under its own privacy policy. We only receive the minimal profile information needed to create or match your account. We do not use third-party advertising or analytics trackers.' },
+					{ heading: '5. Sharing of information', text: 'We do not sell or rent your personal data. Certain information is visible to other users as part of the core features of the app — your username, avatar, online status, and match/leaderboard results are visible to friends and, where applicable, other players in a game room.' },
+					{ heading: '6. Data retention & deletion', text: 'We keep your account and gameplay data for as long as your account exists. You can update most of your data yourself from your profile settings. To request deletion of your account and associated data, contact us through the in-app Contact form; we will process the request within a reasonable time.' },
+					{ heading: '7. Security', text: 'Passwords are hashed and salted before storage. All communication between your browser and our backend is encrypted with HTTPS. Access to administrative functions is restricted to accounts with the admin role.' },
+					{ heading: "8. Children's privacy", text: 'The Project is a student software project and is not directed at children under 16. We do not knowingly collect personal data from children under that age.' },
+					{ heading: '9. Changes to this policy', text: 'We may update this policy as the Project evolves. Material changes will be reflected by updating the “Last updated” date above.' },
+					{ heading: '10. Contact', text: 'Questions about this policy or your data can be sent at any time through the Contact button available in the bottom-right corner of the app, or see our {link}.' },
+				],
+			},
+			termsOfService: {
+				title: 'Terms of Service',
+				updated: 'Last updated: August 24, 2026',
+				intro:
+					'These Terms govern your use of Snake (“the Project”), a real-time multiplayer game built as an educational project for the 42 curriculum (ft_transcendence). By creating an account or using the app, you agree to these Terms.',
+				sections: [
+					{ heading: '1. Educational project', text: 'The Project is developed by students as part of a school curriculum. It is provided for learning and demonstration purposes, not as a commercial product, and is offered “as is” without warranty of any kind.' },
+					{
+						heading: '2. Your account',
+						items: [
+							{ text: 'You must provide accurate registration information and keep your credentials confidential.' },
+							{ text: 'You are responsible for all activity that happens under your account.' },
+							{ text: 'One account per person. Do not create accounts to impersonate someone else.' },
+							{ text: 'You may delete your account at any time from your profile settings.' },
+						],
+					},
+					{
+						heading: '3. Acceptable use',
+						text: 'When using the Project, you agree not to:',
+						items: [
+							{ text: 'Use automated scripts, bots, or exploits to gain an unfair advantage in matches (the built-in AI opponent is the only sanctioned non-human player).' },
+							{ text: 'Harass, abuse, or impersonate other players through profiles, friend requests, or messages.' },
+							{ text: "Attempt to bypass authentication, rate limits, or other security controls, or access another user's account without permission." },
+							{ text: 'Upload or submit unlawful, offensive, or infringing content through any part of the app.' },
+						],
+					},
+					{ heading: '4. Moderation & enforcement', text: 'Accounts with the administrator role may review, edit, or remove accounts that violate these Terms. We may suspend or terminate access to the Project for any account found to be in breach of section 3.' },
+					{ heading: '5. Content & intellectual property', text: "The Project's source code, design, and assets belong to its student authors and are used here for educational evaluation. You retain ownership of any content you submit (such as your chosen username or a message sent through the Contact form), and you grant us a limited license to store and display it as needed to operate the Project." },
+					{ heading: '6. Availability', text: 'As a student project, the Project may be modified, interrupted, or taken offline at any time without notice, including for evaluation or maintenance. We do not guarantee uninterrupted availability.' },
+					{ heading: '7. Limitation of liability', text: 'To the fullest extent permitted by applicable law, the authors of the Project are not liable for any indirect, incidental, or consequential damages arising from your use of the app.' },
+					{ heading: '8. Changes to these Terms', text: 'We may update these Terms as the Project evolves. Continued use of the app after changes are published constitutes acceptance of the revised Terms.' },
+					{ heading: '9. Contact', text: 'Questions about these Terms can be sent through the Contact button available in the bottom-right corner of the app, or see our {link}.' },
+				],
+			},
 		},
 	},
 	it: {
@@ -452,6 +590,75 @@ export const LanguageSeed: Record<string, unknown> = {
 			empty: 'Ancora nessun amico',
 			cancel: 'Annulla',
 		},
+		Footer: {
+			rights: 'Tutti i diritti riservati.',
+			privacy: 'Informativa sulla privacy',
+			terms: 'Termini di servizio',
+		},
+		Legal: {
+			privacyPolicy: {
+				title: 'Informativa sulla privacy',
+				updated: 'Ultimo aggiornamento: 24 agosto 2026',
+				intro:
+					"Snake (“il Progetto”, “noi”) è un gioco multiplayer in tempo reale sviluppato come progetto didattico per il curriculum 42 (ft_transcendence). Questa informativa spiega quali dati raccogliamo quando utilizzi l'applicazione, perché li raccogliamo e quali scelte hai a disposizione.",
+				sections: [
+					{
+						heading: '1. Informazioni che raccogliamo',
+						items: [
+							{ label: "Dati dell'account:", text: 'indirizzo email, nome utente e una password salata e sottoposta a hash (se ti registri con email/password).' },
+							{ label: 'Dati OAuth:', text: "se accedi con Google o GitHub, riceviamo l'ID del tuo account presso quel provider e le informazioni di profilo di base (nome, email, avatar) che il provider condivide con noi." },
+							{ label: 'Dati di gioco:', text: 'risultati delle partite, punteggi, vittorie/sconfitte, le stanze di gioco a cui partecipi e la tua lista amici.' },
+							{ label: 'Preferenze:', text: 'lingua scelta, tema chiaro/scuro, avatar e colore del serpente.' },
+							{ label: 'Dati di sessione:', text: 'token di accesso e di aggiornamento di breve durata, memorizzati come cookie HTTP-only, usati esclusivamente per mantenerti connesso.' },
+							{ label: 'Messaggi che ci invii:', text: "il contenuto inviato tramite il modulo di contatto nell'app." },
+						],
+					},
+					{ heading: '2. Come utilizziamo le tue informazioni', text: "Utilizziamo i dati sopra indicati per: autenticarti e mantenere sicura la tua sessione; gestire il matchmaking e il gioco in tempo reale tramite WebSocket; mostrare il tuo profilo, le statistiche, la cronologia delle partite e lo stato online ai tuoi amici; ricordare le tue preferenze di lingua e tema; inviare via email i codici per il reset della password; e rispondere ai messaggi inviati tramite il modulo di contatto." },
+					{ heading: '3. Cookie e token', text: "Utilizziamo due cookie HTTP-only — un token di accesso e un token di aggiornamento — per mantenerti connesso tra una richiesta e l'altra. Questi cookie non vengono utilizzati per pubblicità o tracciamento cross-site. I token di aggiornamento sono memorizzati lato server e possono essere revocati in qualsiasi momento effettuando il logout." },
+					{ heading: '4. Servizi di terze parti', text: 'Se scegli di accedere con Google o GitHub, quel provider elabora la tua autenticazione secondo la propria informativa sulla privacy. Riceviamo solo le informazioni di profilo minime necessarie per creare o abbinare il tuo account. Non utilizziamo tracker pubblicitari o di analisi di terze parti.' },
+					{ heading: '5. Condivisione delle informazioni', text: 'Non vendiamo né affittiamo i tuoi dati personali. Alcune informazioni sono visibili ad altri utenti come parte delle funzionalità principali dell\'app — il tuo nome utente, avatar, stato online e i risultati delle partite/classifiche sono visibili agli amici e, ove applicabile, agli altri giocatori in una stanza di gioco.' },
+					{ heading: '6. Conservazione ed eliminazione dei dati', text: "Conserviamo i dati del tuo account e di gioco per tutto il tempo in cui il tuo account esiste. Puoi aggiornare la maggior parte dei tuoi dati autonomamente dalle impostazioni del profilo. Per richiedere l'eliminazione del tuo account e dei dati associati, contattaci tramite il modulo di contatto nell'app; elaboreremo la richiesta entro un tempo ragionevole." },
+					{ heading: '7. Sicurezza', text: "Le password vengono sottoposte a hash e salatura prima della memorizzazione. Tutta la comunicazione tra il tuo browser e il nostro backend è crittografata con HTTPS. L'accesso alle funzioni amministrative è limitato agli account con ruolo di amministratore." },
+					{ heading: '8. Privacy dei minori', text: 'Il Progetto è un progetto software realizzato da studenti e non è rivolto a minori di 16 anni. Non raccogliamo consapevolmente dati personali da minori di tale età.' },
+					{ heading: '9. Modifiche a questa informativa', text: 'Potremmo aggiornare questa informativa con l\'evolversi del Progetto. Le modifiche sostanziali saranno riflesse aggiornando la data “Ultimo aggiornamento” sopra indicata.' },
+					{ heading: '10. Contatti', text: "Le domande su questa informativa o sui tuoi dati possono essere inviate in qualsiasi momento tramite il pulsante Contatto disponibile in basso a destra nell'app, oppure consulta i nostri {link}." },
+				],
+			},
+			termsOfService: {
+				title: 'Termini di servizio',
+				updated: 'Ultimo aggiornamento: 24 agosto 2026',
+				intro:
+					"Questi Termini regolano l'utilizzo di Snake (“il Progetto”), un gioco multiplayer in tempo reale sviluppato come progetto didattico per il curriculum 42 (ft_transcendence). Creando un account o utilizzando l'app, accetti questi Termini.",
+				sections: [
+					{ heading: '1. Progetto didattico', text: 'Il Progetto è sviluppato da studenti nell\'ambito di un percorso scolastico. Viene fornito a scopo didattico e dimostrativo, non come prodotto commerciale, ed è offerto “così com\'è” senza garanzie di alcun tipo.' },
+					{
+						heading: '2. Il tuo account',
+						items: [
+							{ text: 'Devi fornire informazioni di registrazione accurate e mantenere riservate le tue credenziali.' },
+							{ text: 'Sei responsabile di tutte le attività che avvengono tramite il tuo account.' },
+							{ text: 'Un account per persona. Non creare account per impersonare qualcun altro.' },
+							{ text: 'Puoi eliminare il tuo account in qualsiasi momento dalle impostazioni del profilo.' },
+						],
+					},
+					{
+						heading: '3. Uso consentito',
+						text: 'Utilizzando il Progetto, ti impegni a non:',
+						items: [
+							{ text: "Utilizzare script automatizzati, bot o exploit per ottenere un vantaggio sleale nelle partite (l'avversario IA integrato è l'unico giocatore non umano consentito)." },
+							{ text: 'Molestare, abusare o impersonare altri giocatori tramite profili, richieste di amicizia o messaggi.' },
+							{ text: "Tentare di aggirare l'autenticazione, i limiti di velocità o altri controlli di sicurezza, oppure accedere all'account di un altro utente senza autorizzazione." },
+							{ text: "Caricare o inviare contenuti illeciti, offensivi o lesivi di diritti altrui attraverso qualsiasi parte dell'app." },
+						],
+					},
+					{ heading: '4. Moderazione e applicazione', text: 'Gli account con ruolo di amministratore possono esaminare, modificare o rimuovere account che violano questi Termini. Possiamo sospendere o terminare l\'accesso al Progetto per qualsiasi account riscontrato in violazione della sezione 3.' },
+					{ heading: '5. Contenuti e proprietà intellettuale', text: "Il codice sorgente, il design e le risorse del Progetto appartengono ai suoi autori studenti e sono utilizzati qui a fini di valutazione didattica. Mantieni la proprietà di qualsiasi contenuto tu invii (come il nome utente scelto o un messaggio inviato tramite il modulo di contatto), e ci concedi una licenza limitata per memorizzarlo e visualizzarlo secondo necessità per il funzionamento del Progetto." },
+					{ heading: '6. Disponibilità', text: 'In quanto progetto studentesco, il Progetto può essere modificato, interrotto o messo offline in qualsiasi momento senza preavviso, anche per valutazione o manutenzione. Non garantiamo una disponibilità ininterrotta.' },
+					{ heading: '7. Limitazione di responsabilità', text: 'Nella misura massima consentita dalla legge applicabile, gli autori del Progetto non sono responsabili per danni indiretti, incidentali o consequenziali derivanti dall\'uso dell\'app.' },
+					{ heading: '8. Modifiche a questi Termini', text: "Potremmo aggiornare questi Termini con l'evolversi del Progetto. L'uso continuato dell'app dopo la pubblicazione delle modifiche costituisce accettazione dei Termini rivisti." },
+					{ heading: '9. Contatti', text: "Le domande su questi Termini possono essere inviate tramite il pulsante Contatto disponibile in basso a destra nell'app, oppure consulta la nostra {link}." },
+				],
+			},
+		},
 	},
 	ru: {
 		Header: {
@@ -604,6 +811,75 @@ export const LanguageSeed: Record<string, unknown> = {
 			delete: 'УДАЛИТЬ',
 			empty: 'Пока нет друзей',
 			cancel: 'Отменить',
+		},
+		Footer: {
+			rights: 'Все права защищены.',
+			privacy: 'Политика конфиденциальности',
+			terms: 'Условия использования',
+		},
+		Legal: {
+			privacyPolicy: {
+				title: 'Политика конфиденциальности',
+				updated: 'Обновлено: 24 августа 2026 г.',
+				intro:
+					'Snake («Проект», «мы») — это многопользовательская игра в реальном времени, созданная как учебный проект в рамках учебной программы 42 (ft_transcendence). В этой политике объясняется, какие данные мы собираем при использовании приложения, зачем мы их собираем и какой у вас есть выбор.',
+				sections: [
+					{
+						heading: '1. Какие данные мы собираем',
+						items: [
+							{ label: 'Данные аккаунта:', text: 'адрес электронной почты, имя пользователя и пароль с солью и хешированием (если вы регистрируетесь по email/паролю).' },
+							{ label: 'Данные OAuth:', text: 'если вы входите через Google или GitHub, мы получаем идентификатор вашего аккаунта у этого провайдера и базовую информацию профиля (имя, email, аватар), которой делится с нами этот провайдер.' },
+							{ label: 'Игровые данные:', text: 'результаты матчей, счёт, победы/поражения, игровые комнаты, к которым вы присоединялись, и список друзей.' },
+							{ label: 'Настройки:', text: 'выбранный язык, светлая/тёмная тема, аватар и цвет змейки.' },
+							{ label: 'Данные сессии:', text: 'недолговечные токены доступа и обновления, хранящиеся в HTTP-only cookie, используемые исключительно для поддержания вашего входа в систему.' },
+							{ label: 'Сообщения, отправленные нам:', text: 'содержимое, отправленное через форму обратной связи внутри приложения.' },
+						],
+					},
+					{ heading: '2. Как мы используем вашу информацию', text: 'Мы используем указанные выше данные, чтобы: аутентифицировать вас и обеспечивать безопасность сессии; проводить подбор матчей и игру в реальном времени через WebSocket; показывать ваш профиль, статистику, историю матчей и статус онлайн вашим друзьям; запоминать ваши настройки языка и темы; отправлять коды сброса пароля по email; и отвечать на сообщения, отправленные через форму обратной связи.' },
+					{ heading: '3. Cookie и токены', text: 'Мы используем два HTTP-only cookie — токен доступа и токен обновления — чтобы поддерживать ваш вход в систему между запросами. Эти cookie не используются для рекламы или межсайтового отслеживания. Токены обновления хранятся на сервере и могут быть отозваны в любой момент при выходе из системы.' },
+					{ heading: '4. Сторонние сервисы', text: 'Если вы выбираете вход через Google или GitHub, этот провайдер обрабатывает вашу аутентификацию в соответствии со своей собственной политикой конфиденциальности. Мы получаем только минимальную информацию профиля, необходимую для создания или сопоставления вашего аккаунта. Мы не используем сторонние рекламные или аналитические трекеры.' },
+					{ heading: '5. Передача информации', text: 'Мы не продаём и не сдаём в аренду ваши персональные данные. Некоторая информация видна другим пользователям в рамках основных функций приложения — ваше имя пользователя, аватар, статус онлайн и результаты матчей/таблицы лидеров видны друзьям и, где применимо, другим игрокам в игровой комнате.' },
+					{ heading: '6. Хранение и удаление данных', text: 'Мы храним данные вашего аккаунта и игровые данные до тех пор, пока существует ваш аккаунт. Большую часть данных вы можете изменить самостоятельно в настройках профиля. Чтобы запросить удаление вашего аккаунта и связанных с ним данных, свяжитесь с нами через форму обратной связи внутри приложения; мы обработаем запрос в разумные сроки.' },
+					{ heading: '7. Безопасность', text: 'Пароли хешируются с солью перед сохранением. Вся связь между вашим браузером и нашим сервером шифруется по HTTPS. Доступ к административным функциям ограничен аккаунтами с ролью администратора.' },
+					{ heading: '8. Конфиденциальность детей', text: 'Проект является студенческим программным проектом и не предназначен для детей младше 16 лет. Мы сознательно не собираем персональные данные детей младше этого возраста.' },
+					{ heading: '9. Изменения в этой политике', text: 'Мы можем обновлять эту политику по мере развития Проекта. Существенные изменения будут отражены обновлением даты «Обновлено» выше.' },
+					{ heading: '10. Контакты', text: 'Вопросы об этой политике или ваших данных можно отправить в любое время через кнопку «Контакты» в правом нижнем углу приложения, либо ознакомьтесь с нашими {link}.' },
+				],
+			},
+			termsOfService: {
+				title: 'Условия использования',
+				updated: 'Обновлено: 24 августа 2026 г.',
+				intro:
+					'Настоящие Условия регулируют использование вами Snake («Проект») — многопользовательской игры в реальном времени, созданной как учебный проект в рамках учебной программы 42 (ft_transcendence). Создавая аккаунт или используя приложение, вы принимаете настоящие Условия.',
+				sections: [
+					{ heading: '1. Учебный проект', text: 'Проект разрабатывается студентами в рамках учебной программы. Он предоставляется в учебных и демонстрационных целях, а не как коммерческий продукт, и предлагается «как есть» без каких-либо гарантий.' },
+					{
+						heading: '2. Ваш аккаунт',
+						items: [
+							{ text: 'Вы должны предоставлять точную регистрационную информацию и хранить свои учётные данные в тайне.' },
+							{ text: 'Вы несёте ответственность за любые действия, совершённые под вашим аккаунтом.' },
+							{ text: 'Один аккаунт на человека. Не создавайте аккаунты, чтобы выдавать себя за другого человека.' },
+							{ text: 'Вы можете удалить свой аккаунт в любое время в настройках профиля.' },
+						],
+					},
+					{
+						heading: '3. Допустимое использование',
+						text: 'Используя Проект, вы соглашаетесь не:',
+						items: [
+							{ text: 'использовать автоматизированные скрипты, ботов или эксплойты для получения нечестного преимущества в матчах (встроенный ИИ-соперник — единственный разрешённый неигровой участник);' },
+							{ text: 'преследовать, оскорблять других игроков или выдавать себя за них через профили, заявки в друзья или сообщения;' },
+							{ text: 'пытаться обойти аутентификацию, ограничения частоты запросов или другие меры безопасности, либо получать доступ к аккаунту другого пользователя без разрешения;' },
+							{ text: 'загружать или отправлять незаконный, оскорбительный или нарушающий чьи-либо права контент через любую часть приложения.' },
+						],
+					},
+					{ heading: '4. Модерация и применение правил', text: 'Аккаунты с ролью администратора могут проверять, изменять или удалять аккаунты, нарушающие настоящие Условия. Мы можем приостановить или прекратить доступ к Проекту для любого аккаунта, нарушившего раздел 3.' },
+					{ heading: '5. Контент и интеллектуальная собственность', text: 'Исходный код, дизайн и ресурсы Проекта принадлежат его студентам-авторам и используются здесь в целях учебной оценки. Вы сохраняете право собственности на любой отправленный вами контент (например, выбранное имя пользователя или сообщение, отправленное через форму обратной связи), и предоставляете нам ограниченную лицензию на его хранение и отображение в объёме, необходимом для работы Проекта.' },
+					{ heading: '6. Доступность', text: 'Как студенческий проект, Проект может быть изменён, прерван или отключён в любое время без предупреждения, в том числе для оценки или обслуживания. Мы не гарантируем бесперебойную доступность.' },
+					{ heading: '7. Ограничение ответственности', text: 'В максимальной степени, разрешённой применимым законодательством, авторы Проекта не несут ответственности за какие-либо косвенные, случайные или вытекающие убытки, возникшие в результате использования вами приложения.' },
+					{ heading: '8. Изменения настоящих Условий', text: 'Мы можем обновлять настоящие Условия по мере развития Проекта. Продолжение использования приложения после публикации изменений означает принятие пересмотренных Условий.' },
+					{ heading: '9. Контакты', text: 'Вопросы об этих Условиях можно отправить через кнопку «Контакты» в правом нижнем углу приложения, либо ознакомьтесь с нашей {link}.' },
+				],
+			},
 		},
 	},
 };

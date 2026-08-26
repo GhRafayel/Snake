@@ -1,0 +1,167 @@
+.contact-container {
+  @apply fixed bottom-6 right-6 z-50 flex flex-col items-end gap-4 pointer-events-none;
+}
+
+.contact-panel {
+  @apply w-[calc(100vw-3rem)] max-w-sm origin-bottom-right rounded-2xl border backdrop-blur-xl shadow-2xl transition-all duration-300 ease-out;
+}
+
+.contact-panel-open {
+  @apply opacity-100 scale-100 translate-y-0 pointer-events-auto;
+}
+
+.contact-panel-closed {
+  @apply opacity-0 scale-90 translate-y-4 pointer-events-none;
+}
+
+.contact-panel-dark {
+  @apply bg-bg-void/90 border-neon-green/20 shadow-[0_0_40px_var(--neon-green-glow)];
+}
+
+.contact-panel-light {
+  @apply bg-white/90 border-gray-200;
+}
+
+.contact-border-dark {
+  @apply border-neon-green/10;
+}
+
+.contact-border-light {
+  @apply border-gray-200;
+}
+
+.contact-header {
+  @apply flex items-center justify-between px-5 py-4 border-b;
+}
+
+.contact-title {
+  @apply font-bungee text-sm;
+}
+
+.contact-title-dark {
+  @apply text-neon-green;
+}
+
+.contact-title-light {
+  @apply text-green-600;
+}
+
+.contact-subtitle {
+  @apply text-xs mt-1;
+}
+
+.contact-muted-dark {
+  @apply text-text-muted;
+}
+
+.contact-muted-light {
+  @apply text-gray-500;
+}
+
+.contact-close-btn {
+  @apply shrink-0 rounded-full p-1.5 transition-colors cursor-grab;
+}
+
+.contact-close-btn-dark {
+  @apply text-text-muted hover:text-neon-green hover:bg-white/5;
+}
+
+.contact-close-btn-light {
+  @apply text-gray-400 hover:text-gray-700 hover:bg-gray-100;
+}
+
+.contact-invites {
+  @apply px-5 pt-4 border-b;
+}
+
+.contact-invites-label {
+  @apply text-xs font-semibold uppercase tracking-wide mb-1;
+}
+
+.contact-invites-list {
+  @apply pb-3;
+}
+
+.contact-form {
+  @apply flex flex-col gap-4 px-5 py-5;
+}
+
+.contact-input-row {
+  @apply flex gap-4;
+}
+
+.contact-divider {
+  @apply w-px shrink-0 rounded-full;
+}
+
+.contact-divider-dark {
+  @apply bg-linear-to-b from-neon-green/60 via-neon-green/20 to-transparent;
+}
+
+.contact-divider-light {
+  @apply bg-linear-to-b from-green-500/60 via-green-500/20 to-transparent;
+}
+
+.contact-textarea {
+  @apply w-full resize-none bg-transparent outline-none text-sm leading-relaxed placeholder:italic;
+}
+
+.contact-textarea-dark {
+  @apply text-text-base placeholder:text-text-muted/60;
+}
+
+.contact-textarea-light {
+  @apply text-gray-700 placeholder:text-gray-400;
+}
+
+.contact-submit-btn {
+  @apply self-end inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold tracking-wide cursor-grab transition-all duration-150;
+}
+
+.contact-submit-btn-dark {
+  @apply bg-neon-green text-black hover:shadow-[0_0_20px_var(--neon-green-glow)];
+}
+
+.contact-submit-btn-light {
+  @apply bg-green-600 text-white hover:bg-green-700;
+}
+
+.contact-fab {
+  @apply relative flex h-14 w-14 items-center justify-center rounded-full cursor-grab transition-all duration-300 ease-out pointer-events-auto hover:scale-110 active:scale-95;
+}
+
+.contact-fab-dark {
+  @apply bg-neon-green text-black shadow-[0_0_25px_var(--neon-green-glow)];
+}
+
+.contact-fab-light {
+  @apply bg-green-600 text-white shadow-lg shadow-green-600/30;
+}
+
+.contact-fab-rotated {
+  @apply rotate-90;
+}
+
+.contact-fab-ping {
+  @apply absolute inset-0 rounded-full animate-ping;
+}
+
+.contact-fab-ping-dark {
+  @apply bg-neon-green/40;
+}
+
+.contact-fab-ping-light {
+  @apply bg-green-500/40;
+}
+
+.contact-badge {
+  @apply absolute -top-1 -right-1 flex h-5 min-w-5 items-center justify-center rounded-full border-2 px-1 text-[10px] font-bold bg-red-500 text-white;
+}
+
+.contact-badge-dark {
+  @apply border-bg-void;
+}
+
+.contact-badge-light {
+  @apply border-white;
+}

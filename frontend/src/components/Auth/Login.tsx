@@ -44,14 +44,6 @@ return (
                             Login
 						</button>
 					</div>
-					<div className="p-4 text-lg font-bold flex justify-between">
-						<p>
-							Don&apos;t have an account ? /
-							<button  className="formBtnLog" type="button"  onClick={() => router.push("/server/register") } >
-								Sign Up
-							</button>
-						</p>
-					</div>
 				</div>
 
 			</form>
@@ -81,7 +73,7 @@ return (
 			</div>
 
 			<div className="text-center">
-				<button type="button" className="bg-transparent hover:border-b hover:border-blue-400 transform-y cursor-pointer"
+				<button type="button" className="bg-transparent hover:border-b hover:border-blue-400 transform-y cursor-grab"
 					onClick={() =>  router.push('/server/reset') } >
 					Forgot your password
 				</button>
