@@ -45,7 +45,6 @@ services:
     env_file: ./.env
     ports:
       - "4000:4000"
-      - "2000:2000"
     command: >
       sh -c "npx prisma db push && npm run start:dev"
     restart: unless-stopped
