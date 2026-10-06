@@ -18,7 +18,7 @@ import { AdminModule } from './admin/admin.module';
   imports: [
     UsersModule,
     DatabaseModule,
-    ConfigModule.forRoot( {  isGlobal: true, } ),
+    ConfigModule.forRoot( {  isGlobal: true, expandVariables: true } ),
     ThrottlerModule.forRoot([
       { name: 'short', ttl: 1000, limit: 3, },
       { name: 'long', ttl: 60000, limit: 100, },
