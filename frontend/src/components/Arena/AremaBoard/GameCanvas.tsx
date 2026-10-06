@@ -7,7 +7,6 @@ import { useArenaStore }           from "@/src/components/Store/useArenaStore";
 import { useGameCanvasStore }      from "@/src/components/Store/useGameCanvasStore";
 import { GameSocket }           from "../hooks/GameSocket";
 import { KeyboardControls }     from "../hooks/KeyboardControls";
-import { useSwipeControls }     from "../hooks/useSwipeControls";
 import { useSendDirection }     from "../hooks/DirectionControl";
 import { WindowFocusPause }     from "../hooks/WindowFocusPause";
 import { useCanvasResize }         from "../hooks/useCanvasResize";
@@ -28,17 +27,23 @@ export default function GameCanvas() {
         setGameState('START');
     }, [setGameState]);
 
+    // On phones, bring the board and the touch controls into view together when the
+    // game starts, so the player doesn't have to scroll (and turn the snake) mid-game.
+    useEffect(() => {
+        if (!window.matchMedia('(pointer: coarse)').matches) return;
+        document.getElementById('canvas-container')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, []);
+
     GameSocket({ socket, myUserId: cntUser?.id });
     KeyboardControls({ socket, myUserId: cntUser?.id });
     const sendDirection = useSendDirection({ socket, myUserId: cntUser?.id });
-    useSwipeControls({ targetRef: canvasRef, onSwipe: sendDirection });
     WindowFocusPause();
     useCanvasResize(canvasRef, 'canvas-container');
     useAnimationLoop({ canvasRef, myUserId: cntUser?.id });
 
     return (
         <div style={{ position: 'relative' }}>
-            <canvas ref={canvasRef} className="rounded-xl border border-white/5 bg-[#1e2224] touch-none" />
+            <canvas ref={canvasRef} className="rounded-xl border border-white/5 bg-[#1e2224]" />
 
             <GameOverlay />
             <ArenaControls />

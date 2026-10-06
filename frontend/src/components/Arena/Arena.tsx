@@ -9,6 +9,7 @@ import ArenaHeader                          from "./ArenaHeader/ArenaHeader";
 import GameBoard                            from "./AremaBoard/GameBoard";
 import Sidebar                              from "./ArenaSidebar/Sidebar";
 import LevelSelector                        from "./LevelSelector";
+import TouchModeToggle                      from "./TouchModeToggle";
 
 
 export default function Arena({ initialMode }: { initialMode: ArenaModeType }) {
@@ -53,7 +54,10 @@ export default function Arena({ initialMode }: { initialMode: ArenaModeType }) {
             <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_320px] w-full min-h-screen">
                 <div className="min-w-0 flex flex-col p-4 lg:p-6 lg:pr-5 ">
                     <ArenaHeader />
-                    {mode === "AI" && <LevelSelector />}
+                    <div className="flex flex-wrap items-center gap-3">
+                        {mode === "AI" && <LevelSelector />}
+                        <TouchModeToggle />
+                    </div>
                     <GameBoard />
                 </div>
                  <div className={`${cntUser?.theme ?? true ? " lg:bg-gray-900/95 lg:border-gray-800" : ""}`}>

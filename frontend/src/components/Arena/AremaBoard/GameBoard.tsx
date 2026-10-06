@@ -30,7 +30,7 @@ export default function GameBoard() {
     }, [rawStatus]);
 
     return (
-        <div id="canvas-container" className="col-span-4 mx-auto aspect-square w-full max-w-[calc(100vh-250px)] max-h-[calc(100vh-250px)] flex flex-col items-center justify-start mt-2" >
+        <div id="canvas-container" className="col-span-4 mx-auto aspect-square w-full max-w-[calc(100vh-250px)] max-h-[calc(100vh-250px)] pointer-coarse:max-w-[calc(100dvh-280px)] pointer-coarse:max-h-[calc(100dvh-280px)] scroll-mt-20 flex flex-col items-center justify-start mt-2" >
             {
                 showCanvas ?
                 (
