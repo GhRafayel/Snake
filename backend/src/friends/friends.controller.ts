@@ -32,7 +32,6 @@ export class FriendsController {
 		return this.friendsService.rejectRequest(userId, requestId);
 	}
 
-
 	@Authorization()
 	@Delete('request')
 	async cancelRequest( @Authorized('userId') userId: number, @Body('receiverId') receiverId: number) {
