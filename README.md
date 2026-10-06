@@ -70,7 +70,6 @@ After running `make admin`, the accounts defined by `ADMIN_1_*` (and `ADMIN_2_*`
 - [Socket.IO Documentation](https://socket.io/docs/v4/)
 - [JWT (RFC 7519)](https://datatracker.ietf.org/doc/html/rfc7519)
 - [Zustand Documentation](https://zustand.docs.pmnd.rs/)
-- [42 ft_transcendence subject](en.subject.pdf)
 
 **AI usage**: AI assistance (Claude Code) was used during this project for:
 - Reviewing the project against the `ft_transcendence` subject requirements and identifying missing mandatory items (Privacy Policy / Terms of Service pages, `.env.example`, README structure).
