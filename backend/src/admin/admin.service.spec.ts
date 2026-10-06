@@ -1,3 +1,4 @@
+import { ForbiddenException, NotFoundException } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import { AdminService } from './admin.service';
 import { UsersService } from 'src/users/users.service';
@@ -154,13 +155,28 @@ describe('AdminService', () => {
   });
 
   describe('remove', () => {
-    it('delegates to usersService.remove', () => {
+    it('delegates to usersService.remove for a non-admin user', async () => {
+      usersService.findById.mockResolvedValue({ id: 5, role: 'PLAYER' } as never);
       usersService.remove.mockResolvedValue({ id: 5 } as never);
 
-      const result = service.remove(5);
+      const result = await service.remove(5);
 
       expect(usersService.remove).toHaveBeenCalledWith(5);
-      expect(result).resolves.toEqual({ id: 5 });
+      expect(result).toEqual({ id: 5 });
+    });
+
+    it('refuses to delete an ADMIN user', async () => {
+      usersService.findById.mockResolvedValue({ id: 1, role: 'ADMIN' } as never);
+
+      await expect(service.remove(1)).rejects.toThrow(ForbiddenException);
+      expect(usersService.remove).not.toHaveBeenCalled();
+    });
+
+    it('throws NotFoundException when the user does not exist', async () => {
+      usersService.findById.mockResolvedValue(null as never);
+
+      await expect(service.remove(99)).rejects.toThrow(NotFoundException);
+      expect(usersService.remove).not.toHaveBeenCalled();
     });
   });
 });

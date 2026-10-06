@@ -18,6 +18,8 @@ export default function AdminUserForm({ user, onCancel }: { user: AdminUserType;
   const [form, setForm] = useState<AdminUpdateType>({Username: user.Username, Email: user.Email, role: user.role, Password: ""})
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const isSelf = cntUser?.id === user.id;
+  // Backend refuses to delete admin accounts (including your own), so don't offer it.
+  const canDelete = user.role !== "ADMIN";
 
   const handleSave = async () => {
     const body: AdminUpdateType = { Username: form.Username, Email: form.Email, role: form.role };
@@ -92,7 +94,7 @@ export default function AdminUserForm({ user, onCancel }: { user: AdminUserType;
           {A_LENG.cancel}
         </button>
 
-        {!showDeleteConfirm && (
+        {canDelete && !showDeleteConfirm && (
           <button className="adm-btn adm-btnDanger ml-auto" onClick={() => setShowDeleteConfirm(true)}>
             <Trash2 size={13} />
             {A_LENG.delete}
@@ -100,7 +102,7 @@ export default function AdminUserForm({ user, onCancel }: { user: AdminUserType;
         )}
       </div>
 
-      {showDeleteConfirm && (
+      {canDelete && showDeleteConfirm && (
         <div className="adm-dangerBox">
           <p className="adm-dangerText">
             <TriangleAlert size={16} className="mt-0.5 shrink-0 text-(--color-danger)" />

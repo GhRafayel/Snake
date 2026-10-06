@@ -16,7 +16,7 @@ export default function Account ({ setWindow, window } : propsType) {
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
     const {LENUAGE} = useAuth();
     const profil = LENUAGE.Profile;
-    const {ChangingCallback} = useAuth();
+    const {ChangingCallback, cntUser} = useAuth();
     const router = useRouter();
     
     return (
@@ -40,6 +40,8 @@ export default function Account ({ setWindow, window } : propsType) {
                 </div>
             </div>
 
+            {/* Admin accounts can't be deleted (the backend refuses it too). */}
+            {cntUser?.role !== "ADMIN" && (
             <div className={`pf-row ${showDeleteConfirm ? 'pf-rowStack' : ''}`}>
                 {!showDeleteConfirm ? (
                     <>
@@ -79,6 +81,7 @@ export default function Account ({ setWindow, window } : propsType) {
                     </div>
                 )}
             </div>
+            )}
 
             {window.request && (
                 <div className="pf-row pf-rowMessage">

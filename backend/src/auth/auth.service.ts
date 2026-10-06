@@ -1,5 +1,5 @@
 
-import { ConflictException, Injectable, UnauthorizedException } from '@nestjs/common';
+import { ConflictException, ForbiddenException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { Role } from '@prisma/client';
 import { CreateUsersDto } from 'src/dto/create-users.dto';
 import { UsersService } from 'src/users/users.service';
@@ -189,6 +189,9 @@ export class AuthService {
     }
     
     async deleteUser(userId: number) {
+        const user = await this.dbService.users.findUnique({ where: { id: userId }, select: { role: true } });
+        if (user?.role === Role.ADMIN)
+            throw new ForbiddenException('ADMIN_CANNOT_BE_DELETED');
         await this.logoutAll(userId);
         const res = await this.usersService.remove(userId);
         return res;
