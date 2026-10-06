@@ -1,14 +1,10 @@
 'use client'
 
-import { useState } from "react";
-import { ChevronUp, ChevronDown, ChevronLeft, ChevronRight, Joystick as JoystickIcon, Grid2x2 } from "lucide-react";
+import { ChevronUp, ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
 import { useArenaStore } from "@/src/components/Store/useArenaStore";
+import { useTouchControlStore } from "@/src/components/Store/useTouchControlStore";
 import { MoveDirectionType } from "./hooks/DirectionControl";
 import Joystick from "./Joystick";
-
-type TouchModeType = 'joystick' | 'buttons';
-
-const MODE_STORAGE_KEY = 'snake-touch-mode';
 
 const BUTTONS: { dir: MoveDirectionType; Icon: typeof ChevronUp; area: string }[] = [
     { dir: 'UP',    Icon: ChevronUp,    area: 'col-start-2 row-start-1' },
@@ -17,31 +13,18 @@ const BUTTONS: { dir: MoveDirectionType; Icon: typeof ChevronUp; area: string }[
     { dir: 'DOWN',  Icon: ChevronDown,  area: 'col-start-2 row-start-3' },
 ];
 
-function readSavedMode(): TouchModeType {
-    try {
-        return localStorage.getItem(MODE_STORAGE_KEY) === 'buttons' ? 'buttons' : 'joystick';
-    } catch {
-        return 'joystick';
-    }
-}
-
 // On-screen controls, only rendered visible on touch devices (coarse pointer).
+// The joystick / buttons choice is made with TouchModeToggle next to the level selector.
 export default function TouchControls({ onDirection }: { onDirection: (dir: MoveDirectionType) => void }) {
     const gameDir = useArenaStore((s) => s.gameDir);
-    const [mode, setMode] = useState<TouchModeType>(readSavedMode);
-
-    const toggleMode = () => {
-        const next = mode === 'joystick' ? 'buttons' : 'joystick';
-        setMode(next);
-        try { localStorage.setItem(MODE_STORAGE_KEY, next); } catch { /* storage unavailable */ }
-    };
+    const mode = useTouchControlStore((s) => s.mode);
 
     return (
-        <div className="hidden pointer-coarse:flex flex-col items-center w-full mt-3 gap-2 touch-none select-none">
+        <div className="hidden pointer-coarse:flex justify-center w-full mt-3 touch-none select-none">
             {mode === 'joystick' ? (
                 <Joystick onDirection={onDirection} />
             ) : (
-                <div className="grid grid-cols-3 grid-rows-3 gap-2 w-44 h-44">
+                <div className="grid grid-cols-3 grid-rows-3 gap-2 w-40 h-40">
                     {BUTTONS.map(({ dir, Icon, area }) => (
                         <button
                             key={dir}
@@ -58,14 +41,6 @@ export default function TouchControls({ onDirection }: { onDirection: (dir: Move
                     ))}
                 </div>
             )}
-            <button
-                type="button"
-                onClick={toggleMode}
-                aria-label={mode === 'joystick' ? 'Switch to buttons' : 'Switch to joystick'}
-                className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-800/80 border border-white/10 text-gray-300 active:scale-90"
-            >
-                {mode === 'joystick' ? <Grid2x2 className="w-5 h-5" /> : <JoystickIcon className="w-5 h-5" />}
-            </button>
         </div>
     );
 }
