@@ -8,7 +8,7 @@ export default function ArenaControls() {
     const AR_LENG = LENUAGE.Arena.control;
     
     return (
-        <div className={`flex items-center justify-center text-xs  py-4`}>
+        <div className={`flex pointer-coarse:hidden items-center justify-center text-xs  py-4`}>
             <div className="w-full flex justify-around">
                 <span className={`kbd ${AR_STORE.gameState === 'START' ? "text-(--color-accent-text)" : ""}`}>{AR_LENG.move}</span>
                 <span className={`kbd ${AR_STORE.gameDir === 'LEFT' ? "text-(--color-warning-text)" : ""}`}>←</span>
