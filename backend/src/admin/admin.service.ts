@@ -1,4 +1,4 @@
-import { Injectable, OnModuleInit } from '@nestjs/common';
+import { ForbiddenException, Injectable, NotFoundException, OnModuleInit } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { Prisma } from '@prisma/client';
 import { AdminUpdateUserDto } from 'src/dto/admin-update-user.dto';
@@ -50,8 +50,11 @@ export class AdminService implements OnModuleInit {
     return this.usersService.update(id, updateUserDto);
   }
 
-  remove(id: number) {
-    
+  async remove(id: number) {
+    const user = await this.usersService.findById(id);
+    if (!user) throw new NotFoundException('User not found');
+    // Admin accounts (including the caller's own) can't be deleted from the panel.
+    if (user.role === 'ADMIN') throw new ForbiddenException('ADMIN_CANNOT_BE_DELETED');
     return this.usersService.remove(id);
   }
 }

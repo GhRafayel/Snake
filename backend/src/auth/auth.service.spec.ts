@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ConflictException, UnauthorizedException } from '@nestjs/common';
+import { ConflictException, ForbiddenException, UnauthorizedException } from '@nestjs/common';
 import { Role } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 import { AuthService } from './auth.service';
@@ -484,6 +484,7 @@ describe('AuthService', () => {
 
     describe('deleteUser', () => {
         it('logs out all sessions before removing the user', async () => {
+            dbService.users.findUnique.mockResolvedValue({ role: 'PLAYER' });
             sessionService.deleteAllUserSessions.mockResolvedValue({ count: 1 });
             usersService.remove.mockResolvedValue({ id: 1 });
 
@@ -492,6 +493,14 @@ describe('AuthService', () => {
             expect(sessionService.deleteAllUserSessions).toHaveBeenCalledWith(1);
             expect(usersService.remove).toHaveBeenCalledWith(1);
             expect(result).toEqual({ id: 1 });
+        });
+
+        it('refuses to delete an ADMIN account', async () => {
+            dbService.users.findUnique.mockResolvedValue({ role: 'ADMIN' });
+
+            await expect(service.deleteUser(1)).rejects.toThrow(ForbiddenException);
+            expect(sessionService.deleteAllUserSessions).not.toHaveBeenCalled();
+            expect(usersService.remove).not.toHaveBeenCalled();
         });
     });
 });
