@@ -38,7 +38,7 @@ export async function proxy(request: NextRequest) {
         response.cookies.set("accessToken", refreshRes.accessToken, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
-            sameSite: "strict",
+            sameSite: "lax",
             maxAge: 60 * 15,
             path: "/",
         });
@@ -46,7 +46,7 @@ export async function proxy(request: NextRequest) {
         response.cookies.set("refreshToken", refreshRes.refreshToken, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
-            sameSite: "strict",
+            sameSite: "lax",
             maxAge: 60 * 60 * 24 * 7,
             path: "/",
         });
