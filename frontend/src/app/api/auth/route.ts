@@ -5,11 +5,14 @@ import { getAccessTokenFromCookie } from "@/src/app/api/edit/route"
 
 const serverUrl = process.env.INTERNAL_API_URL
 
+// sameSite "lax" (not "strict"): after Google/GitHub login the browser arrives here via a
+// cross-site redirect, and Safari/WebKit (every iPhone browser) won't send strict cookies
+// on the follow-up redirect to "/", so the user would look logged out.
 export function setAuthCookies(accessToken: string, refreshToken: string, response: NextResponse = NextResponse.json({ success: true })) {
     response.cookies.set("accessToken", accessToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
-        sameSite: "strict",
+        sameSite: "lax",
         maxAge: 60 * 15,
         path: "/",
     });
@@ -17,7 +20,7 @@ export function setAuthCookies(accessToken: string, refreshToken: string, respon
     response.cookies.set("refreshToken", refreshToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
-        sameSite: "strict",
+        sameSite: "lax",
         maxAge: 60 * 60 * 24 * 7,
         path: "/",
     });
